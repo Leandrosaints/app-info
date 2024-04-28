@@ -1,51 +1,45 @@
-import pandas as pd
-
-#https://docs.google.com/spreadsheets/d/18mk1naW5JCQ1o7uNHVhPlvrMdcQ9xdkWQSBqYouP8Pw/edit#gid=1614386316
-
 import streamlit as st
 
-def main():
-    st.title("Visualizador de Dados do Google Sheets")
+# Definir o layout da página
+st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
-    # URL pública da planilha do Google Sheets (compartilhada como CSV)
+# Título da página
+st.title("Sala de Aula")
 
-    sheet_id = "18mk1naW5JCQ1o7uNHVhPlvrMdcQ9xdkWQSBqYouP8Pw"
-    df = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv')
+# Lista de itens da sala de aula
+classroom_items = [
+    "Projetor funcionando",
+    "Ar condicionado funcionando",
+    "Computador funcionando",
+    "Iluminação adequada",
+    "Quadro branco disponível"
+]
 
+# Criar o card com bordas arredondadas
+st.markdown("""
+<div style="background-color: white; border-radius: 10px; padding: 20px;">
+    <h2>Itens da Sala de Aula</h2>
+    <ul>
+""", unsafe_allow_html=True)
 
+# Exibir a lista de itens dentro do card
+for item in classroom_items:
+    st.markdown(f"    <li>✅ {item}</li>", unsafe_allow_html=True)
 
+st.markdown("""
+    </ul>
+</div>
+""", unsafe_allow_html=True)
 
-    # Exibir os dados na forma de tabela
-    st.write("### Dados da Planilha")
-    st.write(df)
-
-    # Exibir uma descrição estatística resumida dos dados
-    st.write("### Resumo Estatístico")
-    st.write(df.describe())
-    """git init 
-git add README.md 
-git commit -m "primeiro commit" 
-git branch -M main 
-git remote add origin https://github.com/Leandrosaints/app-info.git
- git push -u origem principa
-""" Exibir uma seleção de colunas específicas
-    selected_columns = st.multiselect("Selecione as Colunas", df.columns)
-    if selected_columns:
-        st.write("### Seleção de Colunas")
-        st.write(df[selected_columns])
-
-    # Exibir um gráfico de barras para uma coluna específica
-    selected_column_bar = st.selectbox("Selecione uma Coluna para Gráfico de Barras", df.columns)
-    if selected_column_bar:
-        st.write("### Gráfico de Barras")
-        st.bar_chart(df[selected_column_bar].value_counts())
-
-    # Exibir um gráfico de dispersão para duas colunas específicas
-    selected_column_x = st.selectbox("Selecione a Coluna X para Gráfico de Dispersão", df.columns)
-    selected_column_y = st.selectbox("Selecione a Coluna Y para Gráfico de Dispersão", df.columns)
-    if selected_column_x and selected_column_y:
-        st.write("### Gráfico de Dispersão")
-        st.write(df.plot.scatter(x=selected_column_x, y=selected_column_y))
-
-if __name__ == "__main__":
-    main()
+# Ajustar o estilo da página
+st.markdown("""
+<style>
+    .stApp {
+        background-color: #f0f0f0;
+        padding: 2rem;
+    }
+    .stMarkdown {
+        font-size: 1.2rem;
+    }
+</style>
+""", unsafe_allow_html=True)
