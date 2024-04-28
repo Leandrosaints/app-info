@@ -18,13 +18,13 @@ classroom_items = [
 # Criar o card com bordas arredondadas
 st.markdown("""
 <div style="background-color: white; border-radius: 10px; padding: 20px;">
-    <h2>Itens da Sala de Aula</h2>
-    <ul>
+    <h2 style="color: #333;">Itens da Sala de Aula</h2>
+    <ul style="color: #333; font-size: 1.2rem;">
 """, unsafe_allow_html=True)
 
 # Exibir a lista de itens dentro do card
 for item in classroom_items:
-    st.markdown(f"    <li>✅ {item}</li>", unsafe_allow_html=True)
+    st.markdown(f"    <li style='margin-bottom: 10px;'>✅ {item}</li>", unsafe_allow_html=True)
 
 st.markdown("""
     </ul>
@@ -37,9 +37,6 @@ st.markdown("""
     .stApp {
         background-color: #f0f0f0;
         padding: 2rem;
-    }
-    .stMarkdown {
-        font-size: 1.2rem;
     }
 </style>
 """, unsafe_allow_html=True)
