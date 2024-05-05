@@ -1,63 +1,10 @@
 import base64
 import streamlit as st
 from src.styles_css import custom_css, custom_main, hidden_menu
-
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-        f"""
-    <style>
-    .custom-container {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: cover;
-        background-position: center bottom;
-        background-repeat: no-repeat;
-        position: relative;
-        margin-top: 0px; /* Reduz a margem superior */
-    }}
-    </style>
-    """,
-        unsafe_allow_html=True
-    )
-
-def add_img_app(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-        f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: cover;
-        background-position: center bottom;
-        background-repeat: no-repeat;
-    }}
-    </style>
-    """,
-        unsafe_allow_html=True
-    )
-
+from codes.funcs import add_bg_from_local
+from codes.files import classroom_items, links
 # Definir o layout da página
 st.set_page_config(layout="wide", initial_sidebar_state='auto')
-
-# Lista de itens da sala de aula
-classroom_items = [
-    "Projetor funcionando",
-    "Ar condicionado funcionando",
-    "Computador funcionando",
-    "Iluminação adequada",
-    "Quadro branco disponível",
-]
-
-links = [
-    {"text": "home", "url": "https://example.com/1", "icon": "fa-sharp fa-solid fa-house"},
-    {"text": "form", "url": "https://example.com/2","icon": "fa-solid fa-list-check"},
-    {"text": "contact", "url": "https://example.com/3","icon": "fa-solid fa-mobile" }
-]
-
-
-Ambiente = 'laboratorio'
 
 def generate_links(links):
     links_html = "<div class='st-emotion-cache-18ni7ap'>"
@@ -80,7 +27,7 @@ generate_links(links)
 # Carregar o arquivo CSS personalizado
 st.markdown(hidden_menu, unsafe_allow_html=True)
 st.markdown(custom_css, unsafe_allow_html=True)
-
+Ambiente = 'laboratorio'
 # Usar o estilo personalizado dentro de um contêiner
 with st.container() as container:
     st.markdown('<div class="custom-container"> '
