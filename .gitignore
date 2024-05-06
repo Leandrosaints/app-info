@@ -1,3 +1,5 @@
 venv
 .idea/*
 src/__pycache__/
+__pycache__/
+codes/__pycache__/files.cpython-312.pyc
