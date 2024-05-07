@@ -16,12 +16,12 @@ links = [
 
 json_data = '''
 {
-    "lab01": {
+    "laboratorio 01": {
         "nome": "Laboratorio 01",
         "N_maquinas": 30,
         "softweres_instalados": ["office 365", "Fusion", "arduino", "lego", "chrome", "chrome"]
     },
-    "lab02": {
+    "laboratorio 02": {
         "nome": "Laboratorio 02",
         "N_maquinas": 25,
         "softweres_instalados": ["office 365", "Visual Studio Code", "Arduino IDE", "Anaconda Navigator"]

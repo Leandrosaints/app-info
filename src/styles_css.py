@@ -22,7 +22,8 @@ custom_css = """
             margin-top: 0px; /* Reduz a margem superior */
         }
         .custom-container h1 {
-          
+            color:#065dac;
+            font-size:30px;
             text-align:center;
         }
      
@@ -117,6 +118,7 @@ hidden_menu= """
         .link-item a {
             text-decoration: none;
             color: inherit;
+            color:white;
         }
             
             

@@ -28,7 +28,7 @@ def main():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "client.json", SCOPES
+                "codes/client.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
@@ -42,11 +42,12 @@ def main():
     sheet = service.spreadsheets()
     result = (
         sheet.values()
-        .get(spreadsheetId="1my6YgYtdvjau4bKNTRPWRgn0LpxPGqjq013VkFX44ao", range="Respostas ao formulário 1!A1:O3")
+        .get(spreadsheetId="1D8Lrx73soJV6BblRmsHVFVuDjnGifPf2QZlGsMKeI0E", range="Respostas ao formulário 1!C2:C3")
         .execute()
     )
     values = result.get("values", [])
-    print(values)
+    for valor in values:
+        print(valor[0])
 
 
 
