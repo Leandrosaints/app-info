@@ -12,12 +12,13 @@ def add_bg_from_local(image_file):
         background-position: center bottom;
         background-repeat: no-repeat;
         position: relative;
-        margin-top: 0px; /* Reduz a margem superior */
+        width: 100%; /* Definir a largura para 100% */
     }}
     </style>
     """,
         unsafe_allow_html=True
     )
+
 
 def add_img_app(image_file):
     with open(image_file, "rb") as image_file:

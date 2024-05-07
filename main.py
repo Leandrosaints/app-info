@@ -39,8 +39,10 @@ generate_links(links)
 # Carregar o arquivo CSS personalizado
 st.markdown(hidden_menu, unsafe_allow_html=True)
 st.markdown(custom_css, unsafe_allow_html=True)
-data_dict = json.loads(json_data)
+st.markdown('<h1>Check List de itens</h1></div>', unsafe_allow_html=True)
+
 # Usar o estilo personalizado dentro de um contêiner
+data_dict = json.loads(json_data)
 with st.container() as container:
     labs = list(data_dict.keys())
     # Menu selecionável
@@ -54,9 +56,10 @@ with st.container() as container:
         #st.write('Softwares Instalados:')
 
 
-        st.markdown('<div class="custom-container"> '
+        st.markdown('<div class="custom-container"> ',unsafe_allow_html=True)
     
-                    f'<h1>Check List de itens</h1></div>', unsafe_allow_html=True)
+
+
         add_bg_from_local('src/senai-web.jpg')
 
         custom = "<div class='container-main'>"

@@ -16,7 +16,7 @@ custom_css = """
           
             height:400px;
             width:370px;
-            margin: 0 auto;
+            margin: 0px auto;
             border-radius: 0.5rem;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             margin-top: 0px; /* Reduz a margem superior */
@@ -38,15 +38,15 @@ custom_main = """
         .container-main {
             position: absolute;
             top: 50%;
-            left: 52%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            padding:  0px 50px;
-            width:360px;
+            padding:  0px 20px;
+            width:380px;
             height:auto;
-            margin-top:30px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top:100px;
+            background-color: rgba(255, 255, 255);
+            border-radius: 0px 70px 0 0;
+            box-shadow: 0  0 0 rgba(0, 0, 0, 0.1);
             
     }
         .container-main h5 {
