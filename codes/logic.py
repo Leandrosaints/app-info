@@ -1,55 +1,60 @@
 import os.path
-
-from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-
-# If modifying these scopes, delete the file token.json.
+# Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-#https://docs.google.com/spreadsheets/d/1my6YgYtdvjau4bKNTRPWRgn0LpxPGqjq013VkFX44ao/edit#gid=2148945
-# The ID and range of a sample spreadsheet.
-
 def main():
-    """Shows basic usage of the Sheets API.
-    Prints values from a sample spreadsheet.
-    """
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists("token.json"):
+
+    # Carrega as credenciais do arquivo token.json se existir
+    if os.path.exists("client.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
+
+    # Se não houver credenciais válidas disponíveis, solicita que o usuário faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "codes/client.json", SCOPES
+                "token.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
+
+        # Salva as credenciais para a próxima execução
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
-
+    # Constrói o serviço Sheets
     service = build("sheets", "v4", credentials=creds)
 
-    # Call the Sheets API
-    sheet = service.spreadsheets()
-    result = (
-        sheet.values()
-        .get(spreadsheetId="1D8Lrx73soJV6BblRmsHVFVuDjnGifPf2QZlGsMKeI0E", range="Respostas ao formulário 1!C2:C3")
-        .execute()
+    # ID da planilha e intervalos
+    spreadsheet_id = "1D8Lrx73soJV6BblRmsHVFVuDjnGifPf2QZlGsMKeI0E"
+    ranges = ["Respostas ao formulário 1!A:A", "Respostas ao formulário 1!C:C", "Respostas ao formulário 1!D:D", "Respostas ao formulário 1!P:P2"]
+
+    # Chama a API Sheets para obter os valores dos intervalos especificados
+    request = service.spreadsheets().values().batchGet(
+        spreadsheetId=spreadsheet_id,
+        ranges=ranges,
+        valueRenderOption="UNFORMATTED_VALUE",
+        majorDimension="COLUMNS"
     )
-    values = result.get("values", [])
-    for valor in values:
-        print(valor[0])
+    response = request.execute()
 
+    # Processa as respostas para cada intervalo
+    for value_range in response["valueRanges"]:
+        range_name = value_range["range"]
+        values = value_range.get("values", [])
 
+        if not values:
+            print(f"No data found in range: {range_name}")
+        else:
+
+            for row in values:
+                print(row)
 
 if __name__ == "__main__":
     main()
