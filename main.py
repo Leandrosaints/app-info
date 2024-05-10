@@ -3,13 +3,13 @@ import json
 
 import streamlit as st
 from src.styles_css import custom_css, custom_main, hidden_menu
-from codes.funcs import add_bg_from_local
+from codes.funcs import add_bg_from_local, add_img_app
 from codes.files import json_data, links
 from search import search_bar
 
 # Definir o layout da página
 st.set_page_config(layout="wide", initial_sidebar_state='auto')
-
+#ad_img_app('src/fundo.jpg')
 def generate_links(links):
 
     links_html = "<div class='st-emotion-cache-18ni7ap'>"
@@ -64,8 +64,8 @@ with st.container() as container:
 
         custom = "<div class='container-main'>"
         custom += f'<h3>{lab_info["nome"]}</h3>'
-        custom += f'<h5> ✅ N de maquinas: {lab_info["N_maquinas"]}</h5>'
-        custom += f'<h5> ❗ N Nao funciona: {lab_info["N_maquinas"]}</h5>'
+        custom += f'<h5> ✅ Nº de maquinas: {lab_info["N_maquinas"]}</h5>'
+        custom += f'<h5> ❗ Nº Nao funciona: {lab_info["N_maquinas"]}</h5>'
         custom += f'<h5> ✅ Softwares disponiveis:</h5>'
 
         for software in lab_info["softweres_instalados"]:

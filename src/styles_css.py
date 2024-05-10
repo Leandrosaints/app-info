@@ -18,7 +18,7 @@ custom_css = """
             width:370px;
             margin: 0px auto;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            box-shadow:  4px 0 0px 0 rgba(0, 0, 0, 0.1);
             margin-top: 0px; /* Reduz a margem superior */
         }
         .custom-container h1 {
@@ -41,7 +41,7 @@ custom_main = """
             left: 50%;
             transform: translate(-50%, -50%);
             padding:  0px 20px;
-            width:380px;
+            width:360px;
             height:auto;
             margin-top:100px;
             background-color: rgba(255, 255, 255);
