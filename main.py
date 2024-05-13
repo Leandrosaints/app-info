@@ -3,9 +3,14 @@ import json
 
 import streamlit as st
 from src.styles_css import custom_css, custom_main, hidden_menu
+
 from codes.funcs import add_bg_from_local, add_bg_from_body
 from codes.files import json_data, links
 from test import css
+
+from codes.funcs import add_bg_from_local, add_img_app
+from codes.files import json_string, links
+
 from search import search_bar
 
 # Definir o layout da página
@@ -44,15 +49,20 @@ st.markdown(custom_css, unsafe_allow_html=True)
 st.markdown('<h1 class="h1-title">Check List de itens</h1></div>', unsafe_allow_html=True)
 
 # Usar o estilo personalizado dentro de um contêiner
-data_dict = json.loads(json_data)
+data_dict = json.loads(json_string)
 with st.container() as container:
-    labs = list(data_dict.keys())
+    with open("codes/output.json", "r") as json_file:
+        data = json.load(json_file)
+
+        # Itera sobre os dados e faz o que precisar
+
+    labs = list(data.keys())
     # Menu selecionável
     lab_selecionado = st.selectbox('Selecione um laboratório:', labs)
 
     # Exibir resultado com base no laboratório selecionado
     if lab_selecionado:
-        lab_info = data_dict[lab_selecionado]
+        lab_info = data[lab_selecionado]
         #st.write(f'Nome do Laboratório: {lab_info["nome"]}')
         #st.write(f'Número de Máquinas: {lab_info["N_maquinas"]}')
         #st.write('Softwares Instalados:')
