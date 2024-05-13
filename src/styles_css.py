@@ -11,6 +11,8 @@ cores = """
 """
 custom_css = """
     <style>
+        
+        
       
         .custom-container {
           
@@ -21,11 +23,7 @@ custom_css = """
             box-shadow:  4px 0 0px 0 rgba(0, 0, 0, 0.1);
             margin-top: 0px; /* Reduz a margem superior */
         }
-        .custom-container h1 {
-            color:#065dac;
-            font-size:30px;
-            text-align:center;
-        }
+        
      
         
 
@@ -34,7 +32,9 @@ custom_css = """
 
 custom_main = """
     <style>
-
+ 
+        
+   
         .container-main {
             position: absolute;
             top: 50%;

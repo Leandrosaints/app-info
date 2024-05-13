@@ -3,13 +3,15 @@ import json
 
 import streamlit as st
 from src.styles_css import custom_css, custom_main, hidden_menu
-from codes.funcs import add_bg_from_local, add_img_app
+from codes.funcs import add_bg_from_local, add_bg_from_body
 from codes.files import json_data, links
+from test import css
 from search import search_bar
 
 # Definir o layout da página
 st.set_page_config(layout="wide", initial_sidebar_state='auto')
 #ad_img_app('src/fundo.jpg')
+
 def generate_links(links):
 
     links_html = "<div class='st-emotion-cache-18ni7ap'>"
@@ -39,7 +41,7 @@ generate_links(links)
 # Carregar o arquivo CSS personalizado
 st.markdown(hidden_menu, unsafe_allow_html=True)
 st.markdown(custom_css, unsafe_allow_html=True)
-st.markdown('<h1>Check List de itens</h1></div>', unsafe_allow_html=True)
+st.markdown('<h1 class="h1-title">Check List de itens</h1></div>', unsafe_allow_html=True)
 
 # Usar o estilo personalizado dentro de um contêiner
 data_dict = json.loads(json_data)
@@ -79,3 +81,5 @@ with st.container() as container:
 
 # Carregar o estilo CSS personalizado para a parte principal da página
 st.markdown(custom_main, unsafe_allow_html=True)
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
+add_bg_from_body('src/senai-web.jpg')
