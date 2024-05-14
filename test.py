@@ -43,21 +43,18 @@
 """
 # Definindo o CSS com uma consulta de mídia
 css = """
-@media (max-width: 768px) {
-    .container-main{
-        font-size: 10rem;
-        width:20rem;
-        color:blue;
-    }
-}
 
 @media (min-width: 769px) {
     .container-main  {
         font-size: 16px;
         color:red;
+        height:500px;
         width:800px;
         background-color: rgba(255, 255, 255);
         border-radius:20px;
+        position:relative;
+        top:70px;
+       
     }
     .custom-container {
         display:none;
@@ -87,16 +84,23 @@ css = """
         position: relative;
         left: 246px;
     }
-
+    .st-emotion-cache-z5fcl4 {
+        width: 101%;
+        padding: 0rem 5rem 10rem;
+        min-width: auto;
+        max-width: initial;
+        overflow: hidden;
+    }
     
     .stApp {
-        
         margin:auto;
+        margin-top:100px;
         width:1200px;
         border-radius:30px;
         background-color: rgba(255, 255, 255, 0.5);
-        overflow: hidden;
+        overflow-y: hidden;
         overflow-x: hidden;
+
     }
     body {
         background-color:#b6cee3;
@@ -110,7 +114,7 @@ css = """
         text-align: justify;
         margin-left: 120px;
     }
-    }
+    
     .st-am {
         width:300px;
         text-align:center;
@@ -126,7 +130,7 @@ css = """
         background-color: rgb(240, 242, 246);
         position: absolute;
         left: 125px;
-        top: -70px;
+        top: -80px;
         z-index: 1; /* Adiciona essa linha para colocar o elemento acima do container principal */
     }
     .st-emotion-cache-l9bjmx p {
@@ -145,11 +149,4 @@ css = """
         justify-content: space-evenly;
     }
 }
-
-
 """
-
-# Adicionando o CSS à página
-
-
-# Exemplo de uso da classe CSS

@@ -75,7 +75,7 @@ with st.container() as container:
         add_bg_from_local('src/senai-web.jpg')
 
         custom = "<div class='container-main'>"
-        custom += f'<h3>{lab_info["nome"]}</h3>'
+        custom += f'<h3>{lab_selecionado}</h3>'
         custom += f'<h5> ✅ Nº de maquinas: {lab_info["N_maquinas"]}</h5>'
         custom += f'<h5> ❗ Nº Nao funciona: {lab_info["N_maquinas"]}</h5>'
         custom += f'<h5> ✅ Softwares disponiveis:</h5>'

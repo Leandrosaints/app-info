@@ -1,14 +1,4 @@
 
-cores = """
-
-
-    .color1 { #0444b4 };
-    .color2 { #9ec4f1 };
-    .color3 { #0444ac };
-    .color4 { #033895 };
-    .color5 { #b4c4dc };
-        
-"""
 
 custom_css = """
     <style>

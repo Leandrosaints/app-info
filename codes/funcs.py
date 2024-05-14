@@ -49,10 +49,10 @@ def add_bg_from_body(image_file):
             .stApp {{
                 background-image: url(data:image/png;base64,{encoded_string.decode()});
                 background-size: cover;
-                background-position: center center;
+                background-position: center;
                 background-repeat: no-repeat;
-                
-
+              
+              
             }}
         }}
     </style>
