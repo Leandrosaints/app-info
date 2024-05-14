@@ -9,11 +9,10 @@ cores = """
     .color5 { #b4c4dc };
         
 """
+
 custom_css = """
     <style>
         
-        
-      
         .custom-container {
           
             height:400px;
@@ -24,9 +23,6 @@ custom_css = """
             margin-top: 0px; /* Reduz a margem superior */
         }
         
-     
-        
-
     </style>
 """
 
@@ -73,9 +69,7 @@ custom_main = """
             text-align:justify;
             padding-left:80px;
         {
-            
-     
-      
+               
 
     </style>
 """
@@ -121,8 +115,6 @@ hidden_menu= """
             color:white;
         }
             
-            
-        
         
         #MainMenu {
             visibility: hidden;

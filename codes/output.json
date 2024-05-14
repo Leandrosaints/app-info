@@ -17,5 +17,15 @@
             "Firefox Navegador",
             "Fusion Autocard"
         ]
+    },
+    "laboratorio_3": {
+        "nome": "Lab 03",
+        "N_maquinas": 32,
+        "softweres_instalados": [
+            "Office 365",
+            "Chrome navegador",
+            "Firefox Navegador",
+            "Arduino IDE"
+        ]
     }
 }

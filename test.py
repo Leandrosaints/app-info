@@ -29,6 +29,8 @@
         width:600px;
 
     }
+
+
      h1 {
             color:#065dac;
             font-size:30px;
@@ -41,70 +43,109 @@
 """
 # Definindo o CSS com uma consulta de mídia
 css = """
+@media (max-width: 768px) {
+    .container-main{
+        font-size: 10rem;
+        width:20rem;
+        color:blue;
+    }
+}
 
 @media (min-width: 769px) {
     .container-main  {
         font-size: 16px;
         color:red;
         width:800px;
-        margin-top:150px;
-        height:400px;
-        
         background-color: rgba(255, 255, 255);
-        border-radius:30px;
+        border-radius:20px;
     }
     .custom-container {
         display:none;
     }
     .container-main h5 {
-        font-size:18px; 
-        padding-left:40px;
-            
+        font-family: "Source Sans Pro", sans-serif;
+        font-weight: 600;
+        color: rgb(49, 51, 63);
+        padding: -2px 0px 1rem;
+        margin: 0;
+        text-align: center;
+        display: flex;
+        line-height: 1.5rem;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: space-around;
     }
-  
+    
     .container-main ul {
         text-align:center;
+        
     }
     .container-main li {
-        display: inline-block; /* Faz com que os itens da lista fiquem em linha */
-        text-align:justify;
-        padding-left:80px;        
+        display: block;
+        text-align: justify;
+        position: relative;
+        left: 246px;
     }
-  
+
+    
     .stApp {
-        margin:auto;
-        margin-top:100px;
-        width:1200px;
         
+        margin:auto;
+        width:1200px;
         border-radius:30px;
         background-color: rgba(255, 255, 255, 0.5);
-        overflow-y: hidden;
+        overflow: hidden;
+        overflow-x: hidden;
     }
     body {
         background-color:#b6cee3;
         
+        
     }
-    /*h1 estilizado*/  
     .h1-title {
         font-family: "Source Sans Pro", sans-serif;
         font-weight: 700;
         color: rgb(49, 51, 63);
-        text-align:center;
-        
-        
+        text-align: justify;
+        margin-left: 120px;
+    }
     }
     .st-am {
         width:300px;
-        margin-left:100px;
-        margin-bottom:30px;
         text-align:center;
+        margin:0;
+        padding:0;
+    }
+   
+    .st-ae {
+        margin-bottom:10px;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+    .st-bb {
+        background-color: rgb(240, 242, 246);
+        position: absolute;
+        left: 125px;
+        top: -70px;
+        z-index: 1; /* Adiciona essa linha para colocar o elemento acima do container principal */
     }
     .st-emotion-cache-l9bjmx p {
-        /* word-break: break-word; */
-        margin-bottom: 55px;
-      
-        /* font-size: 14px; */
+        word-break: break-word;
+        margin-bottom: 0px;
+        font-size: 14px;
+    }
+    p {
+        margin-left: 130px;
+        padding-bottom: 80px;
+    }
+    .st-emotion-cache-18ni7ap {
+        height:50px;
+        background:#065dac;
+        display: flex;
+        justify-content: space-evenly;
+    }
 }
+
 
 """
 

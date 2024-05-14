@@ -8,27 +8,30 @@ from googleapiclient.discovery import build
 # Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-
 def main():
     creds = None
 
-    # Carrega as credenciais do arquivo token.json se existir
-    if os.path.exists("client.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    # Obter o caminho absoluto do arquivo token.json
+    token_file = os.path.join(os.path.dirname(__file__), "token.json")
 
+    # Carregar as credenciais do arquivo token.json se existir
+    if os.path.exists(token_file):
+        creds = Credentials.from_authorized_user_file(token_file, SCOPES)
     # Se não houver credenciais válidas disponíveis, solicita que o usuário faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "token.json", SCOPES
+                "client_secre.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
 
-        # Salva as credenciais para a próxima execução
-        with open("token.json", "w") as token:
+        # Salvar as credenciais para a próxima execução
+        with open(token_file, "w") as token:
             token.write(creds.to_json())
+
+    # Construir o serviço Sheets
 
     # Constrói o serviço Sheets
     service = build("sheets", "v4", credentials=creds)
