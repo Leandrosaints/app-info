@@ -4,7 +4,6 @@ custom_css = """
     <style>
         
         .custom-container {
-          
             height:400px;
             width:370px;
             margin: 0px auto;
@@ -18,9 +17,10 @@ custom_css = """
 
 custom_main = """
     <style>
- 
+        .custom-div{
+            display:none;
         
-   
+        }
         .container-main {
             position: absolute;
             top: 50%;

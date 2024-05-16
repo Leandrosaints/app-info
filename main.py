@@ -69,7 +69,10 @@ with st.container() as container:
 
 
         st.markdown('<div class="custom-container"> ',unsafe_allow_html=True)
-    
+        st.markdown("<div class='custom-div'>Conteúdo da div 1</div>", unsafe_allow_html=True)
+        st.markdown("<div class='custom-div'>Conteúdo da div 2</div>", unsafe_allow_html=True)
+        st.markdown("<div class='custom-div'>Conteúdo da div 3</div>", unsafe_allow_html=True)
+        st.markdown("<div class='custom-div'>Conteúdo da div 4</div>", unsafe_allow_html=True)
 
 
         add_bg_from_local('src/senai-web.jpg')
@@ -88,6 +91,7 @@ with st.container() as container:
 
         custom += "</div>"
         st.markdown(custom, unsafe_allow_html=True)
+
 
 # Carregar o estilo CSS personalizado para a parte principal da página
 st.markdown(custom_main, unsafe_allow_html=True)

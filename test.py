@@ -48,12 +48,10 @@ css = """
     .container-main  {
         font-size: 16px;
         color:red;
-        height:500px;
+        height:450px;
         width:800px;
         background-color: rgba(255, 255, 255);
         border-radius:20px;
-        position:relative;
-        top:70px;
        
     }
     .custom-container {
@@ -95,6 +93,7 @@ css = """
     .stApp {
         margin:auto;
         margin-top:100px;
+        margin-bottom:20px;
         width:1200px;
         border-radius:30px;
         background-color: rgba(255, 255, 255, 0.5);
