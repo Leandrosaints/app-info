@@ -2,7 +2,11 @@
 
 custom_css = """
     <style>
-        
+        .h1-title { 
+            text-align:center;
+            margin:20px;
+            
+        }
         .custom-container {
             height:400px;
             width:370px;
@@ -17,47 +21,43 @@ custom_css = """
 
 custom_main = """
     <style>
-        .custom-div{
-            display:none;
         
-        }
         .container-main {
-            position: absolute;
+            position: relative;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding:  0px 20px;
+            padding: 0px 0px;
             width:360px;
             height:auto;
             margin-top:100px;
-            background-color: rgba(255, 255, 255);
-            border-radius: 0px 70px 0 0;
-            box-shadow: 0  0 0 rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 100, 255);
+            border-radius: 20px;
+            box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
             
     }
-        .container-main h5 {
-            font-size:18px; 
-            padding-left:40px;
-            
-    }
-        .container-main h3 {
-            font-size:30px;
-            text-align:center;
-    }   
+        
+         
   
        
         .container-main ul {
             
             padding: 0;
-            margin: 0;  
- 
+            margin: 10px;
+            text-align:justify;
+            
+              
+        li { 
+            list-style-type: none; /
+        }
            
            
         }
-        .container-main li {
+        .container-main a {
             display: inline-block; /* Faz com que os itens da lista fiquem em linha */
-            text-align:justify;
-            padding-left:80px;
+            color:red;
+            margin-left:50px;
+            
         {
                
 
