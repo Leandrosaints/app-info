@@ -1,5 +1,4 @@
-import json
-import os.path
+import os
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -8,7 +7,7 @@ from googleapiclient.discovery import build
 # Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-def main():
+def authenticate():
     creds = None
 
     # Obter o caminho absoluto do arquivo token.json
@@ -23,7 +22,7 @@ def main():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "client_secre.json", SCOPES
+                "client_secret.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
 
@@ -31,46 +30,60 @@ def main():
         with open(token_file, "w") as token:
             token.write(creds.to_json())
 
-    # Construir o serviço Sheets
+    return creds
 
-    # Constrói o serviço Sheets
+def read_sheet(service, spreadsheet_id, range_name):
+    try:
+        request = service.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id,
+            range=range_name,
+            valueRenderOption="UNFORMATTED_VALUE",
+            majorDimension="ROWS"
+        )
+        response = request.execute()
+        return response.get("values", [])
+    except Exception as e:
+        print(f"Erro ao ler a planilha {spreadsheet_id}: {e}")
+        return []
+
+def write_sheet(service, spreadsheet_id, range_name, values):
+    try:
+        body = {
+            "values": values
+        }
+        result = service.spreadsheets().values().update(
+            spreadsheetId=spreadsheet_id,
+            range=range_name,
+            valueInputOption="RAW",
+            body=body
+        ).execute()
+        return result
+    except Exception as e:
+        print(f"Erro ao escrever na planilha {spreadsheet_id}: {e}")
+
+def main():
+    creds = authenticate()
     service = build("sheets", "v4", credentials=creds)
 
-    # ID da planilha e intervalos
-    spreadsheet_id = "1Tk5U-uDoguGsmyMdIqFimDoz4W8opgsxtHbw8EQrvUw"
-    ranges = ["Respostas ao formulário 1!A:N"]
+    # IDs das planilhas de origem e destino
+    source_sheet_id = "1B-T7GZTlzpdCuk9Ve37mjgf2pKNg2CmgG02lm5GvBZg"  # Planilha de origem
+    target_sheet_id = "1B-T7GZTlzpdCuk9Ve37mjgf2pKNg2CmgG02lm5GvBZg"  # Planilha de destino
 
-    # Chama a API Sheets para obter os valores dos intervalos especificados
-    request = service.spreadsheets().values().batchGet(
-        spreadsheetId=spreadsheet_id,
-        ranges=ranges,
-        valueRenderOption="UNFORMATTED_VALUE",
-        majorDimension="COLUMNS"
-    )
-    response = request.execute()
+    # Intervalo da planilha de origem (considerando 9 colunas)
+    source_range = "LAB DE MECANICA AUTOMOTIVA!B1:J100"  # Exemplo de intervalo
 
-    # Processa as respostas para cada intervalo
-    lab_data_dict = {}
-    for value_range in response["valueRanges"]:
-        values = value_range.get("values", [])
+    # Lendo dados da planilha de origem
+    source_data = read_sheet(service, source_sheet_id, source_range)
+    if not source_data:
+        print("Nenhum dado encontrado na planilha de origem.")
+        return
 
-        if not values:
-            print(f"No data found in range")
-        else:
-            # Itera sobre os valores para extrair os dados de cada laboratório
-            for row in range(1, len(values[0])):  # Começa a partir da segunda linha (a primeira linha contém os cabeçalhos)
-                lab_name = values[2][row]  # Nome do laboratório na coluna C
-                lab_data = {
-                    "nome": values[2][row],  # Nome do laboratório
-                    "N_maquinas": int(values[3][row]),  # Número de máquinas (convertido para inteiro)
-                    "softweres_instalados": values[6][row].split(", ")  # Softwares instalados
-                }
-                lab_data_dict[f"laboratorio_{row}"] = lab_data
+    # Intervalo da planilha de destino (considerando 9 colunas)
+    target_range = "LAB DE MECANICA AUTOMOTIVA!A3:I100"  # Exemplo de intervalo
 
-    # Salva os dados em um arquivo JSON
-    with open("output.json", "w") as json_file:
-        json.dump(lab_data_dict, json_file, indent=4)
-
+    # Escrevendo dados na planilha de destino
+    write_sheet(service, target_sheet_id, target_range, source_data)
+    print("Dados escritos na planilha de destino.")
 
 if __name__ == "__main__":
     main()

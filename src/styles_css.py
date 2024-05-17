@@ -1,12 +1,16 @@
-
+""".color1 { #069bdb };
+.color2 { #99edfc };
+.color3 { #088ccd };
+.color4 { #559db5 };
+.color5 { #acc4d1 };"""
 
 custom_css = """
     <style>
         
         .h1-title { 
             text-align:center;
-            margin:20px;
-            margin-bottom:50px;
+            margin:-55px;
+            margin-bottom:70px;
             font-weight: bold;  
             font-size: 40px;
             color:black;
@@ -40,7 +44,7 @@ custom_main = """
             width:360px;
             height:auto;
             margin-top:120px;
-            background-color: rgb(84, 176, 237, 0.5);
+            background-color: rgb(84, 176, 237, 0.7);
             border-radius: 20px;
             box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
             

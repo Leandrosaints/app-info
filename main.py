@@ -1,21 +1,18 @@
-import base64
-import json
+
 
 import streamlit as st
 from src.styles_css import custom_css, custom_main, hidden_menu
-
-from codes.funcs import add_bg_from_local, add_bg_from_body
-
-from test import css
-
-from codes.funcs import add_bg_from_local, add_img_app
+from styles_view import css
+from codes.funcs import  add_img_app, add_bg_from_body
 from codes.files import links_forms,links
-from search import search_bar
+
 
 # Definir o layout da página
 st.set_page_config(layout="wide", initial_sidebar_state='auto')
 #ad_img_app('src/fundo.jpg')
-
+st.markdown("""
+    <meta name="google" content="notranslate">
+""", unsafe_allow_html=True)
 def generate_links(links):
 
     links_html = "<div class='st-emotion-cache-18ni7ap'>"
@@ -54,7 +51,7 @@ with (st.container() as container):
     custom = "<div class='container-main'>"
 
 
-    add_img_app('src/37256872-network-background.jpg')
+    add_img_app('src/img_fundo.jpg')
 
     for link in links_forms:
 

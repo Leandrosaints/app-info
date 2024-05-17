@@ -53,6 +53,7 @@ css = """
         background-color: rgba(255, 255, 255);
         border-radius:20px;
        
+       
     }
     .custom-container {
         display:none;
@@ -70,6 +71,7 @@ css = """
         flex-wrap: wrap;
         justify-content: space-around;
         align-content: space-around;
+        
     }
     
     .container-main ul {
@@ -147,5 +149,22 @@ css = """
         display: flex;
         justify-content: space-evenly;
     }
+    
+}
+
+@media (max-width:320px) {
+   .container-main  {
+        font-size: 16px;
+        color: red;
+        height: 350px; /* Ajuste de altura */
+        width: 290px;
+        background-color: rgba(255, 255, 255);
+        border-radius: 20px;
+        margin: auto;
+        overflow-y: scroll; /* Adicionado rolagem vertical */
+        padding: 10px; /* Adicionado espaçamento interno */
+        
+    }
+   
 }
 """
