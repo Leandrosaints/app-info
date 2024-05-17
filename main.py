@@ -45,7 +45,7 @@ generate_links(links)
 # Carregar o arquivo CSS personalizado
 st.markdown(hidden_menu, unsafe_allow_html=True)
 st.markdown(custom_css, unsafe_allow_html=True)
-st.markdown('<h1 class="h1-title">Levantamentos de laboratórios</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="h1-title">Levantamentos de Laboratórios</h1>', unsafe_allow_html=True)
 
 # Usar o estilo personalizado dentro de um contêiner
 
@@ -53,12 +53,11 @@ with (st.container() as container):
 
     custom = "<div class='container-main'>"
 
+    add_img_app('src/37256872-network-background.jpg')
+
     for link in links_forms:
-        custom += f'<ul>'
-        custom += f'<li>'
-        custom += f"<a href='{link['url']}'>{link['text']}</a>"
-        custom += f'</li>'
-        custom += f'</ul>'
+
+        custom += f"<a href='{link['url']}'>✅ {link['text']}</a>"
 
     custom += "</div>"
     st.markdown(custom, unsafe_allow_html=True)

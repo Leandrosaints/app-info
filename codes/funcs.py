@@ -6,7 +6,7 @@ def add_bg_from_local(image_file):
     st.markdown(
         f"""
     <style>
-    .stApp {{
+    .custom-container {{
         background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
         background-size: cover;
         background-position: center bottom;
@@ -27,9 +27,10 @@ def add_img_app(image_file):
         f"""
     <style>
     .stApp {{
+       
         background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
         background-size: cover;
-        background-position: center bottom;
+        background-position: bottom ;
         background-repeat: no-repeat;
     }}
     </style>
