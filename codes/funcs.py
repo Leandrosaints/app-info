@@ -30,8 +30,9 @@ def add_img_app(image_file):
        
         background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
         background-size: cover;
-        background-position: bottom ;
+        background-position:top left;
         background-repeat: no-repeat;
+        
     }}
     </style>
     """,
