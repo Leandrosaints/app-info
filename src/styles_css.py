@@ -9,6 +9,8 @@ custom_css = """
             margin-bottom:50px;
             font-weight: bold;  
             font-size: 40px;
+            color:black;
+            
             
             
             

@@ -53,6 +53,7 @@ with (st.container() as container):
 
     custom = "<div class='container-main'>"
 
+
     add_img_app('src/37256872-network-background.jpg')
 
     for link in links_forms:
