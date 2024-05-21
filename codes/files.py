@@ -11,6 +11,12 @@ links_forms = [
     {"text": "LAB DE INSTRUMENTAÇÃO", "url": "https://forms.gle/FD985ehNyiTmXLFV7", "icon": "fa-regular fa-play"},
     {"text": "LAB DE MEC IND E USINAGEM", "url": "https://forms.gle/BXyakZG6EBkLr1k98", "icon": "fa-regular fa-play"},
     {"text": "LAB DE AUTOMAÇÃO", "url": "https://forms.gle/9NL3tdKmwy6oeVXP8","icon": "fa-regular fa-play"},
-    {"text": "LAB DE ELÉTRICA PREDIAL", "url": "https://forms.gle/vpbKXt8rXP2ERq977","icon": "fa-regular fa-play"}
+    {"text": "LAB DE ELÉTRICA PREDIAL", "url": "https://forms.gle/vpbKXt8rXP2ERq977","icon": "fa-regular fa-play"},
+    {"text": "LAB DE INFORMATICA 01", "url": "https://forms.gle/e1r2PMEXGC68NGGo7", "icon": "fa-regular fa-play"},
+    {"text": "LAB DE INFORMATICA 02", "url": "https://forms.gle/XzC5BibsQcCY958z6", "icon": "fa-regular fa-play"},
+    {"text": "LAB DE INFORMATICA 03", "url": "https://forms.gle/w3BacpGMpfzVTkWU8", "icon": "fa-regular fa-play"},
+    {"text": "LAB DE INFORMATICA 04", "url": "https://forms.gle/U3xErkVAQqQb4BDw7", "icon": "fa-regular fa-play"},
+    {"text": "LAB DE INFORMATICA 05", "url": "https://forms.gle/DxYrgohi3GzEoUy58", "icon": "fa-regular fa-play"}
+
 ]
 

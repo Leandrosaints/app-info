@@ -13,7 +13,7 @@ custom_css = """
             margin-bottom:70px;
             font-weight: bold;  
             font-size: 40px;
-            color:black;
+            color:white;
             
             
             
@@ -41,12 +41,14 @@ custom_main = """
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 0px 0px;
-            width:360px;
-            height:auto;
-            margin-top:120px;
+            height: 400px; /* altura fixa */
+            max-height: 400px; /* altura máxima */
+            overflow-y: auto; /* habilita o scroll vertical */
+            margin-top:150px;
             background-color: rgb(84, 176, 237, 0.7);
             border-radius: 20px;
             box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+            
             
     }
         .st-emotion-cache-z5fcl4 {
@@ -55,21 +57,19 @@ custom_main = """
             min-width: auto;
             max-width: initial;
             overflow: hidden;
+            background-color: #0000005c;
         }
-         
-  
-       
-       
-           
+   
         
         .container-main a {
             display: inline-block; /* Faz com que os itens da lista fiquem em linha */
-            color:black;
+            color:white;
             margin-left:60px;
             padding:10px;
             text-decoration: none;
             font-weight: bold;       /* Tornar o texto em negrito */
             font-size: 18px;   
+            
             
         {
                
@@ -126,4 +126,15 @@ hidden_menu= """
         footer {visibility: hidden;}
         
     </style> 
+"""
+custom_day = """
+        @media (max-width:420px) {
+            .day-weeke { 
+                color:red;
+                display:flex;
+                flex-direction: row;
+                justify-content: space-around;
+    
+        }
+    }
 """

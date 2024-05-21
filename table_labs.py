@@ -1,28 +1,52 @@
 import streamlit as st
+import pandas as pd
 
-# Criar a tabela
-st.title("Tabela de Agendamentos")
+# Inicializando o DataFrame 5x5
+if 'df' not in st.session_state:
+    st.session_state.df = pd.DataFrame({
+        'Seg': ['João', 'Maria', 'Pedro', 'Ana', 'Lucas'],
+        'Ter': ['Fernanda', 'Rafael', 'Beatriz', 'Guilherme', 'Mariana'],
+        'Qua': ['Isabela', 'Felipe', 'Camila', 'Daniel', 'Gabriela'],
+        'Qui': ['Thiago', 'Larissa', 'Eduardo', 'Letícia', 'Matheus'],
+        'c': ['José', 'Carolina', 'Marcos', 'Júlia', 'Bruna']
+    })
 
-# Dias da semana
-dias_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"]
+# Função para lidar com as edições
+def handle_edit(edits):
+    for key, change in edits.items():
+        # Tratar chaves não numéricas
+        for column, value in change.items():
+            st.session_state.df.at[key, column] = value
 
-# Criar a tabela
-table = st.empty()
+# Personalizar o estilo da tabela
+st.markdown("""
+<style>
+  div[data-baseweb="data_editor"] table {
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
 
-with table.container():
-    cols = st.columns(len(dias_semana))
-    for col, dia in zip(cols, dias_semana):
-        with col:
-            st.write(dia)
+  div[data-baseweb="data_editor"] th, div[data-baseweb="data_editor"] td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
 
-    # Linha com o subtítulo "Matutino"
-    row = st.columns(len(dias_semana))
+  div[data-baseweb="data_editor"] th {
+    background-color: #f2f2f2;
+  }
 
-    st.write("Matutino")
+  div[data-baseweb="data_editor"] input {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+</style>
+""", unsafe_allow_html=True)
 
-    # Células editáveis
-    for i in range(5):
-        row = st.columns(len(dias_semana))
-        for j, _ in enumerate(dias_semana):
-            with row[j]:
-                st.text_area("", key=f"matutino-{j}-{i}", height=100)
+# Renderizando o DataFrame como editável
+edits = st.data_editor(st.session_state.df)
+handle_edit(edits)
