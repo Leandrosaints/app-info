@@ -1,52 +1,25 @@
 import streamlit as st
 import pandas as pd
 
-# Inicializando o DataFrame 5x5
-if 'df' not in st.session_state:
-    st.session_state.df = pd.DataFrame({
-        'Seg': ['João', 'Maria', 'Pedro', 'Ana', 'Lucas'],
-        'Ter': ['Fernanda', 'Rafael', 'Beatriz', 'Guilherme', 'Mariana'],
-        'Qua': ['Isabela', 'Felipe', 'Camila', 'Daniel', 'Gabriela'],
-        'Qui': ['Thiago', 'Larissa', 'Eduardo', 'Letícia', 'Matheus'],
-        'c': ['José', 'Carolina', 'Marcos', 'Júlia', 'Bruna']
-    })
+# Criando um exemplo de dataframe com 7 linhas e 5 colunas (dias da semana)
+data = {
+    'Segunda': [25, 30, 35, 28, 40, 33, 27],
+    'Terça': [22, 27, 32, 25, 38, 31, 24],
+    'Quarta': [28, 33, 38, 31, 43, 36, 29],
+    'Quinta': [20, 25, 30, 23, 35, 28, 21],
+    'Sexta': [24, 29, 34, 27, 39, 32, 25]
+}
+df = pd.DataFrame(data, index=['Lab 01', 'Lab 02', 'Lab 03', 'Lab 04', 'Lab 05', 'Lab 06', 'Lab 07'])
 
-# Função para lidar com as edições
-def handle_edit(edits):
-    for key, change in edits.items():
-        # Tratar chaves não numéricas
-        for column, value in change.items():
-            st.session_state.df.at[key, column] = value
+# Função para editar os valores da tabela
+def edit_cell(row, col, value):
+    df.at[row, df.columns[col]] = value
+    return df
 
-# Personalizar o estilo da tabela
-st.markdown("""
-<style>
-  div[data-baseweb="data_editor"] table {
-    font-size: 16px;
-    font-family: 'Arial', sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
+# Exibindo o dataframe como uma tabela no Streamlit e permitindo a edição
+st.title("Agendamentos de Laboratorios")
+edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True)
 
-  div[data-baseweb="data_editor"] th, div[data-baseweb="data_editor"] td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  div[data-baseweb="data_editor"] th {
-    background-color: #f2f2f2;
-  }
-
-  div[data-baseweb="data_editor"] input {
-    font-size: 16px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-</style>
-""", unsafe_allow_html=True)
-
-# Renderizando o DataFrame como editável
-edits = st.data_editor(st.session_state.df)
-handle_edit(edits)
+# Verificar se a tabela foi editada e atualizar o dataframe
+if edited_df is not None:
+    df = edited_df
