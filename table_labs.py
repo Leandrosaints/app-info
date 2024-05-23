@@ -6,10 +6,10 @@ import streamlit.components.v1 as components
 data = {
     'LAB': ['LAB AUTOMOTIVA', 'Lab 02', 'Lab 03', 'Lab 04', 'Lab 05', 'Lab 06', 'Lab 07'],
     'Seg': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Ter': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
+    'Ter': ['livre', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
     'Qua': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
     'Qui': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Sex': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João']
+    'Sex': ['livre', 'livre', 'livre', 'livre', 'livre', 'livre', 'livre']
 }
 df = pd.DataFrame(data)
 
@@ -19,19 +19,19 @@ def draw_table(df, table_height):
 
     # Construir o cabeçalho da tabela
     thead1 = "<thead><tr><th scope='col'>#</th>"
-    thead_temp = ["<th scope='col' class='text-white'>" + str(col) + "</th>" for col in columns]
+    thead_temp = ["<th scope='col'>" + str(col) + "</th>" for col in columns]
     header = thead1 + "".join(thead_temp) + "</tr></thead>"
 
     # Construir o corpo da tabela
-    rows = ["<tr><th scope='row' class='text-white'>" + str(i+1) + "</th>" for i in range(df.shape[0])]
+    rows = ["<tr><th scope='row'>" + str(i+1) + "</th>" for i in range(df.shape[0])]
     cells = []
     for row in df.values.tolist():
         row_cells = []
         for value in row:
-            if str(value).startswith('prof:'):
-                row_cells.append(f"<td class='text-white'><input type='text' value='{value}' class='form-control'></td>")
+            if str(value).lower() == 'livre':
+                row_cells.append(f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
             else:
-                row_cells.append("<td class='text-white'>" + str(value) + "</td>")
+                row_cells.append(f"<td><input type='text' value='{value}' class='form-control'></td>")
         cells.append("".join(row_cells))
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
 
@@ -39,7 +39,7 @@ def draw_table(df, table_height):
     table_html = f"""
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <table class="table table-bordered table-dark text-center ">
+    <table class="table table-bordered text-center ">
         {header}
         <tbody>
             {body}
@@ -56,11 +56,6 @@ turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"]
 st.write(f"Você selecionou o turno: {turno}")
 
 # Aplicar o estilo da tabela com Bootstrap
-#theme_list = ["", "table-primary", "table-success", "table-warning", "table-danger", "table-info"]
-#theme = st.selectbox("Selecione um tema para a tabela", theme_list)
 edited_df = draw_table(df, table_height=400)
 
 # Verificar se a tabela foi editada e atualizar o dataframe
-"""if edited_df is not None:
-    df = edited_df
-"""
