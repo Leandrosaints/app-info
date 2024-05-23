@@ -1,6 +1,11 @@
+# app.py
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
+from auth_user import handle_authentication
+st.set_page_config(layout="wide")
+# Chama a função para manipular a autenticação
+user_info = handle_authentication()
 
 # Criando um exemplo de dataframe com 7 linhas e 5 colunas (dias da semana)
 data = {
@@ -13,7 +18,8 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# Função para desenhar a tabela com Boostrap
+
+# Função para desenhar a tabela com Bootstrap
 def draw_table(df, table_height):
     columns = df.columns
 
@@ -23,13 +29,15 @@ def draw_table(df, table_height):
     header = thead1 + "".join(thead_temp) + "</tr></thead>"
 
     # Construir o corpo da tabela
-    rows = ["<tr><th scope='row'>" + str(i+1) + "</th>" for i in range(df.shape[0])]
+    rows = ["<tr><th scope='row'>" + str(i + 1) + "</th>" for i in range(df.shape[0])]
     cells = []
     for row in df.values.tolist():
         row_cells = []
         for value in row:
             if str(value).lower() == 'livre':
-                row_cells.append(f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
+                row_cells.append(
+                    f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
+
             else:
                 row_cells.append(f"<td><input type='text' value='{value}' class='form-control'></td>")
         cells.append("".join(row_cells))
@@ -49,13 +57,18 @@ def draw_table(df, table_height):
 
     return components.html(table_html, height=table_height, scrolling=True)
 
+
 # Exibindo o dataframe como uma tabela no Streamlit e permitindo a edição
-st.set_page_config(layout="wide")
+
 st.title("Agendamentos de Laboratórios")
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"])
 st.write(f"Você selecionou o turno: {turno}")
 
-# Aplicar o estilo da tabela com Bootstrap
-edited_df = draw_table(df, table_height=400)
+if user_info:
+    st.write(f"Bem-vindo, {user_info['name']}!")
+    st.write(f"Seu email é: {user_info['email']}")
 
-# Verificar se a tabela foi editada e atualizar o dataframe
+    # Exibir a tabela apenas se o usuário estiver autenticado
+    edited_df = draw_table(df, table_height=400)
+else:
+    st.write("Por favor, faça login para continuar.")
