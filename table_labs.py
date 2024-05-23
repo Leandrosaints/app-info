@@ -1,23 +1,23 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
 from auth_user import handle_authentication
+
 st.set_page_config(layout="wide")
+
 # Chama a função para manipular a autenticação
 user_info = handle_authentication()
 
 # Criando um exemplo de dataframe com 7 linhas e 5 colunas (dias da semana)
 data = {
     'LAB': ['LAB AUTOMOTIVA', 'Lab 02', 'Lab 03', 'Lab 04', 'Lab 05', 'Lab 06', 'Lab 07'],
-    'Seg': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Ter': ['livre', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
+    'Seg': ['prof: Leandro', 'livre', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
+    'Ter': ['livre', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'livre', 'prof: Fernanda', 'prof: João'],
     'Qua': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
     'Qui': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
     'Sex': ['livre', 'livre', 'livre', 'livre', 'livre', 'livre', 'livre']
 }
 df = pd.DataFrame(data)
-
 
 # Função para desenhar a tabela com Bootstrap
 def draw_table(df, table_height):
@@ -37,9 +37,8 @@ def draw_table(df, table_height):
             if str(value).lower() == 'livre':
                 row_cells.append(
                     f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
-
             else:
-                row_cells.append(f"<td><input type='text' value='{value}' class='form-control' style='background-color: yellow;'></td>")
+                row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
         cells.append("".join(row_cells))
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
 
@@ -57,9 +56,7 @@ def draw_table(df, table_height):
 
     return components.html(table_html, height=table_height, scrolling=True)
 
-
 # Exibindo o dataframe como uma tabela no Streamlit e permitindo a edição
-
 st.title("Agendamentos de Laboratórios")
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"])
 st.write(f"Você selecionou o turno: {turno}")
