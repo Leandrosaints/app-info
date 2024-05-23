@@ -39,7 +39,7 @@ def draw_table(df, table_height):
                     f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
 
             else:
-                row_cells.append(f"<td><input type='text' value='{value}' class='form-control'></td>")
+                row_cells.append(f"<td><input type='text' value='{value}' class='form-control' style='background-color: yellow;'></td>")
         cells.append("".join(row_cells))
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
 
