@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import streamlit.components.v1 as components
 
 # Criando um exemplo de dataframe com 7 linhas e 5 colunas (dias da semana)
 data = {
@@ -12,45 +13,54 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# Função para editar os valores da tabela
-def edit_cell(row, col, value):
-    df.at[row, df.columns[col]] = value
-    return df
+# Função para desenhar a tabela com Boostrap
+def draw_table(df, table_height):
+    columns = df.columns
+
+    # Construir o cabeçalho da tabela
+    thead1 = "<thead><tr><th scope='col'>#</th>"
+    thead_temp = ["<th scope='col' class='text-white'>" + str(col) + "</th>" for col in columns]
+    header = thead1 + "".join(thead_temp) + "</tr></thead>"
+
+    # Construir o corpo da tabela
+    rows = ["<tr><th scope='row' class='text-white'>" + str(i+1) + "</th>" for i in range(df.shape[0])]
+    cells = []
+    for row in df.values.tolist():
+        row_cells = []
+        for value in row:
+            if str(value).startswith('prof:'):
+                row_cells.append(f"<td class='text-white'><input type='text' value='{value}' class='form-control'></td>")
+            else:
+                row_cells.append("<td class='text-white'>" + str(value) + "</td>")
+        cells.append("".join(row_cells))
+    body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
+
+    # Montar a tabela completa
+    table_html = f"""
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <table class="table table-bordered table-dark text-center ">
+        {header}
+        <tbody>
+            {body}
+        </tbody>
+    </table>
+    """
+
+    return components.html(table_html, height=table_height, scrolling=True)
 
 # Exibindo o dataframe como uma tabela no Streamlit e permitindo a edição
-st.set_page_config(layout="wide")  # Definir o layout do Streamlit como "wide"
-st.title("Agendamentos de Laboratorios")
+st.set_page_config(layout="wide")
+st.title("Agendamentos de Laboratórios")
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"])
 st.write(f"Você selecionou o turno: {turno}")
 
-# Adicionar estilo CSS personalizado
-st.markdown("""
-<style>
-    .dataframe {
-        font-size: 14px;
-        width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    .dataframe th, .dataframe td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-    @media (max-width: 767px) {
-        .dataframe {
-            font-size: 12px;
-            padding: 5px;
-        }
-        .dataframe th, .dataframe td {
-            padding: 5px;
-        }
-    }
-</style>
-""", unsafe_allow_html=True)
-
-edited_df = st.data_editor(df, num_rows="dynamic", use_container_width=True)
+# Aplicar o estilo da tabela com Bootstrap
+#theme_list = ["", "table-primary", "table-success", "table-warning", "table-danger", "table-info"]
+#theme = st.selectbox("Selecione um tema para a tabela", theme_list)
+edited_df = draw_table(df, table_height=400)
 
 # Verificar se a tabela foi editada e atualizar o dataframe
-if edited_df is not None:
+"""if edited_df is not None:
     df = edited_df
+"""
