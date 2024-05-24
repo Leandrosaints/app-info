@@ -1,0 +1,58 @@
+[
+    {
+        "LAB": "LAB AUTOMOTIVA",
+        "Seg": "prof: Leandro",
+        "Ter": "soares",
+        "Qua": "prof: Leandro",
+        "Qui": "prof: Leandro",
+        "Sex": "rsgfxr"
+    },
+    {
+        "LAB": "Lab 02",
+        "Seg": "marcos",
+        "Ter": "prof: Maria",
+        "Qua": "prof: Maria",
+        "Qui": "prof: Maria",
+        "Sex": "livre"
+    },
+    {
+        "LAB": "Lab 03",
+        "Seg": "prof: Pedro",
+        "Ter": "prof: Pedro",
+        "Qua": "prof: Pedro",
+        "Qui": "prof: Pedro",
+        "Sex": "livre"
+    },
+    {
+        "LAB": "Lab 04",
+        "Seg": "prof: Ana",
+        "Ter": "prof: Ana",
+        "Qua": "prof: Ana",
+        "Qui": "prof: Ana",
+        "Sex": "livre"
+    },
+    {
+        "LAB": "Lab 05",
+        "Seg": "prof: Lucas",
+        "Ter": "livre",
+        "Qua": "prof: Lucas",
+        "Qui": "prof: Lucas",
+        "Sex": "livre"
+    },
+    {
+        "LAB": "Lab 06",
+        "Seg": "prof: Fernanda",
+        "Ter": "prof: Fernanda",
+        "Qua": "prof: Fernanda",
+        "Qui": "prof: Fernanda",
+        "Sex": "livre"
+    },
+    {
+        "LAB": "Lab 07",
+        "Seg": "prof: Jo\u00e3o",
+        "Ter": "prof: Jo\u00e3o",
+        "Qua": "prof: Jo\u00e3o",
+        "Qui": "prof: Jo\u00e3o",
+        "Sex": "livre"
+    }
+]

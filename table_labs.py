@@ -1,62 +1,49 @@
 import streamlit as st
 import pandas as pd
-import streamlit.components.v1 as components
 from auth_user import handle_authentication
+import json
+import os
 
 st.set_page_config(layout="wide")
-
-# Chama a função para manipular a autenticação
 user_info = handle_authentication()
 
-# Criando um exemplo de dataframe com 7 linhas e 5 colunas (dias da semana)
-data = {
-    'LAB': ['LAB AUTOMOTIVA', 'Lab 02', 'Lab 03', 'Lab 04', 'Lab 05', 'Lab 06', 'Lab 07'],
-    'Seg': ['prof: Leandro', 'livre', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Ter': ['livre', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'livre', 'prof: Fernanda', 'prof: João'],
-    'Qua': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Qui': ['prof: Leandro', 'prof: Maria', 'prof: Pedro', 'prof: Ana', 'prof: Lucas', 'prof: Fernanda', 'prof: João'],
-    'Sex': ['livre', 'livre', 'livre', 'livre', 'livre', 'livre', 'livre']
-}
-df = pd.DataFrame(data)
+# Function to define the background color of cells
+def get_cell_background(value):
+    if str(value).lower() == 'livre':
+        return 'background-color: green'
+    elif 'prof:' in str(value):
+        return 'background-color: yellow'
+    else:
+        return 'background-color: white'
 
-# Função para desenhar a tabela com Bootstrap
-def draw_table(df, table_height):
-    columns = df.columns
+# Function to load data from the JSON file
+def load_data():
+    try:
+        if os.path.exists('data.json'):
+            with open('data.json', 'r') as f:
+                data = json.load(f)
+            return pd.DataFrame(data)
+        else:
+            # If the file does not exist, return a DataFrame with default data
+            return None  # pd.DataFrame(data)
+    except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
+        st.error(f"Erro ao carregar os dados: {str(e)}")
+        return pd.DataFrame(data)
 
-    # Construir o cabeçalho da tabela
-    thead1 = "<thead><tr><th scope='col'>#</th>"
-    thead_temp = ["<th scope='col'>" + str(col) + "</th>" for col in columns]
-    header = thead1 + "".join(thead_temp) + "</tr></thead>"
+# Load data from JSON file
+df = load_data()
 
-    # Construir o corpo da tabela
-    rows = ["<tr><th scope='row'>" + str(i + 1) + "</th>" for i in range(df.shape[0])]
-    cells = []
-    for row in df.values.tolist():
-        row_cells = []
-        for value in row:
-            if str(value).lower() == 'livre':
-                row_cells.append(
-                    f"<td><input type='text' value='{value}' class='form-control' style='background-color: green; color: white;'></td>")
-            else:
-                row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
-        cells.append("".join(row_cells))
-    body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
+def save_changes(edited_df):
+    # Save data to JSON file
+    try:
+        data = edited_df.to_dict('records')
+        with open('data.json', 'w') as f:
+            json.dump(data, f, indent=4)
+        st.success("Alterações salvas com sucesso!", icon="✅")
+    except (IOError, json.JSONDecodeError) as e:
+        st.error(f"Erro ao salvar as alterações: {str(e)}")
 
-    # Montar a tabela completa
-    table_html = f"""
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <table class="table table-bordered text-center ">
-        {header}
-        <tbody>
-            {body}
-        </tbody>
-    </table>
-    """
-
-    return components.html(table_html, height=table_height, scrolling=True)
-
-# Exibindo o dataframe como uma tabela no Streamlit e permitindo a edição
+# Display the DataFrame as a table in Streamlit and allow editing
 st.title("Agendamentos de Laboratórios")
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"])
 st.write(f"Você selecionou o turno: {turno}")
@@ -65,7 +52,19 @@ if user_info:
     st.write(f"Bem-vindo, {user_info['name']}!")
     st.write(f"Seu email é: {user_info['email']}")
 
-    # Exibir a tabela apenas se o usuário estiver autenticado
-    edited_df = draw_table(df, table_height=400)
+    if df is not None:
+        # Apply styles to the DataFrame
+        styled_df = df.style.applymap(get_cell_background)
+
+        # Display the styled DataFrame
+        st.write(styled_df, height=400, use_container_width=True)
+
+        # Display an editable version of the DataFrame (without styles)
+        edited_df = st.experimental_data_editor(df)
+
+        if st.button("Salvar Alterações"):
+            save_changes(edited_df)
+    else:
+        st.write("Nenhum dado disponível para exibir.")
 else:
     st.write("Por favor, faça login para continuar.")
