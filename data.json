@@ -2,10 +2,10 @@
     {
         "LAB": "LAB AUTOMOTIVA",
         "Seg": "prof: Leandro",
-        "Ter": "soares",
+        "Ter": "prof:ezeldevar",
         "Qua": "prof: Leandro",
         "Qui": "prof: Leandro",
-        "Sex": "rsgfxr"
+        "Sex": "prof:ezeldevar"
     },
     {
         "LAB": "Lab 02",
@@ -13,7 +13,7 @@
         "Ter": "prof: Maria",
         "Qua": "prof: Maria",
         "Qui": "prof: Maria",
-        "Sex": "livre"
+        "Sex": "eeeee"
     },
     {
         "LAB": "Lab 03",
@@ -21,7 +21,7 @@
         "Ter": "prof: Pedro",
         "Qua": "prof: Pedro",
         "Qui": "prof: Pedro",
-        "Sex": "livre"
+        "Sex": "sssss"
     },
     {
         "LAB": "Lab 04",
@@ -29,15 +29,15 @@
         "Ter": "prof: Ana",
         "Qua": "prof: Ana",
         "Qui": "prof: Ana",
-        "Sex": "livre"
+        "Sex": "d"
     },
     {
         "LAB": "Lab 05",
         "Seg": "prof: Lucas",
-        "Ter": "livre",
+        "Ter": "lab de algo ",
         "Qua": "prof: Lucas",
         "Qui": "prof: Lucas",
-        "Sex": "livre"
+        "Sex": "sim"
     },
     {
         "LAB": "Lab 06",
@@ -45,7 +45,7 @@
         "Ter": "prof: Fernanda",
         "Qua": "prof: Fernanda",
         "Qui": "prof: Fernanda",
-        "Sex": "livre"
+        "Sex": "ee"
     },
     {
         "LAB": "Lab 07",
@@ -53,6 +53,6 @@
         "Ter": "prof: Jo\u00e3o",
         "Qua": "prof: Jo\u00e3o",
         "Qui": "prof: Jo\u00e3o",
-        "Sex": "livre"
+        "Sex": "euuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"
     }
 ]
