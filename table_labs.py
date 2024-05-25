@@ -10,7 +10,7 @@ st.set_page_config(layout="wide")
 
 # Carrega os dados do arquivo JSON
 try:
-    with open('data.json', 'r') as f:
+    with open('data.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
     df = pd.DataFrame(data)
 except FileNotFoundError:

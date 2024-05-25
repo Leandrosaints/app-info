@@ -1,7 +1,7 @@
 [
     {
         "LAB": "LAB AUTOMOTIVA",
-        "Seg": "Livre",
+        "Seg": "Prof: \u00e7",
         "Ter": "Livre",
         "Qua": "Livre",
         "Qui": "Livre",
@@ -16,7 +16,7 @@
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB ELÉTRICA IND",
+        "LAB": "LAB EL\u00c9TRICA IND",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",
@@ -40,7 +40,7 @@
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB AUTOMAÇÃO",
+        "LAB": "LAB AUTOMA\u00c7\u00c3O",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",

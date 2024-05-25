@@ -35,7 +35,7 @@ class LabData(BaseModel):
 async def save_data(data: list[LabData]):
     try:
         logging.debug("Received data: %s", data)
-        with open('data.json', 'w') as f:
+        with open('dados/data.json', 'w') as f:
             json.dump([item.dict() for item in data], f, indent=4)
         logging.debug("Data saved successfully!")
         return {"message": "Data saved successfully!"}
