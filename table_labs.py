@@ -3,33 +3,12 @@ import pandas as pd
 import json
 from codes.render_table import draw_table
 from auth_user import handle_authentication
-
+from style_header import css_style
+from codes.funcs import add_img_app
 # Chama a função para manipular a autenticação
 user_info = handle_authentication()
 st.set_page_config(layout="wide")
-st.markdown(
-    """
-    <style>
-    .table-cell-free {
-        background-color: #d4edda;
-    }
-    .table-cell-prof {
-        background-color: yellow;
-    }
-    .table-cell-default {
-        background-color: white;
-    }
-    .table-sm {
-    padding: 0.2rem .15rem;
-
-    }
-
-
-    
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+add_img_app('src/img_fundo.jpg')
 # Carrega os dados do arquivo JSON
 try:
     with open('data.json', 'r', encoding='utf-8') as f:
@@ -41,13 +20,16 @@ except FileNotFoundError:
 
 # Verifica se o usuário está autenticado
 if user_info:
-    st.write(f"Olá, {user_info['name']} ({user_info['email']})!")
-    st.success("Você está logado.")
+    st.markdown("<div class='title'>Agendamentos de Laboratórios</div>", unsafe_allow_html=True)
+
+    st.markdown(f"<h4 class='user_name'>Olá Professor: {user_info['name']}</h4>", unsafe_allow_html=True)
     editable = True
 
-st.title("Agendamentos de Laboratórios")
-turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"])
-st.write(f"Você selecionou o turno: {turno}")
+# Render CSS styles
+    st.markdown(css_style, unsafe_allow_html=True)
+#st.markdown("<div class='success-message'>Você está logado.</div>", unsafe_allow_html=True)
 
-# Aplicar o estilo da tabela com Bootstrap
-draw_table(df, table_height=400, editable=editable, save_url='http://127.0.0.1:8000/save_data')
+    turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
+    #st.markdown(f"<div class='select-box'>Você selecionou o turno: {turno}</div>", unsafe_allow_html=True)
+    # Aplicar o estilo da tabela com Bootstrap
+    draw_table(df, table_height=480, editable=editable, save_url='http://127.0.0.1:8000/save_data')
