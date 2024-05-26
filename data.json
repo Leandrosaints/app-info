@@ -3,22 +3,22 @@
         "LAB": "LAB AUTOMOTIVA",
         "Seg": "Livre",
         "Ter": "Livre",
-        "Qua": "Livre",
+        "Qua": "Prof: Lleo",
         "Qui": "Livre",
         "Sex": "Livre"
     },
     {
         "LAB": "LAB ALIMENTOS",
         "Seg": "Livre",
-        "Ter": "Livre",
-        "Qua": "Livre",
+        "Ter": "Prof: Livre",
+        "Qua": "Prof: leandro",
         "Qui": "Livre",
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB ELÉTRICA IND",
+        "LAB": "LAB EL\u00c9TRICA IND",
         "Seg": "Livre",
-        "Ter": "Livre",
+        "Ter": "Prof: soares",
         "Qua": "Livre",
         "Qui": "Livre",
         "Sex": "Livre"
@@ -27,7 +27,7 @@
         "LAB": "LAB INSTRU",
         "Seg": "Livre",
         "Ter": "Livre",
-        "Qua": "Livre",
+        "Qua": "Prof: leandrod",
         "Qui": "Livre",
         "Sex": "Livre"
     },
@@ -40,7 +40,7 @@
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB AUTOMAÇÃO",
+        "LAB": "LAB AUTOMA\u00c7\u00c3O",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",

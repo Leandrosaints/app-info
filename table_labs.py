@@ -7,7 +7,29 @@ from auth_user import handle_authentication
 # Chama a função para manipular a autenticação
 user_info = handle_authentication()
 st.set_page_config(layout="wide")
+st.markdown(
+    """
+    <style>
+    .table-cell-free {
+        background-color: #d4edda;
+    }
+    .table-cell-prof {
+        background-color: yellow;
+    }
+    .table-cell-default {
+        background-color: white;
+    }
+    .table-sm {
+    padding: 0.2rem .15rem;
 
+    }
+
+
+    
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # Carrega os dados do arquivo JSON
 try:
     with open('data.json', 'r', encoding='utf-8') as f:
