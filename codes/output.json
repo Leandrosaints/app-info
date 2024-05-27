@@ -1,0 +1,32 @@
+{
+    "laboratorio_1": {
+        "nome": "Lab 01",
+        "N_maquinas": 32,
+        "softweres_instalados": [
+            "Office 365",
+            "Chrome navegador",
+            "Firefox Navegador",
+            "Fusion Autocard",
+            "Arduino IDE",
+		    "Autocard"
+        ]
+    },
+    "laboratorio_2": {
+        "nome": "Lab 02",
+        "N_maquinas": 25,
+        "softweres_instalados": [
+            "Firefox Navegador",
+            "Fusion Autocard"
+        ]
+    },
+    "laboratorio_3": {
+        "nome": "Lab 03",
+        "N_maquinas": 32,
+        "softweres_instalados": [
+            "Office 365",
+            "Chrome navegador",
+            "Firefox Navegador",
+            "Arduino IDE"
+        ]
+    }
+}

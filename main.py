@@ -1,71 +1,67 @@
-import base64
+
+
 import streamlit as st
-from src.styles_css import custom_css, custom_main, custom_menu
-from streamlit_option_menu import option_menu
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-        f"""
-    <style>
-    .custom-container {{
-        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-size: cover;
-        background-position: center bottom;
-        background-repeat: no-repeat;
-        position: relative;
-         margin-top: 0px; /* Reduz a margem superior */
-       
-    }}
-    
-    </style>
-    """,
-        unsafe_allow_html=True
-    )
+from src.styles_css import custom_css, custom_main, hidden_menu
+from styles_view import css
+from codes.funcs import  add_img_app, add_bg_from_body
+from codes.files import links_forms,links
+
 
 # Definir o layout da página
 st.set_page_config(layout="wide", initial_sidebar_state='auto')
+#ad_img_app('src/fundo.jpg')
+st.markdown("""
+    <meta name="google" content="notranslate">
+""", unsafe_allow_html=True)
+def generate_links(links):
 
-# Lista de itens da sala de aula
-classroom_items = [
-    "Projetor funcionando",
-    "Ar condicionado funcionando",
-    "Computador funcionando",
-    "Iluminação adequada",
-    "Quadro branco disponível"
-]
+    links_html = "<div class='st-emotion-cache-18ni7ap'>"
 
-Ambiente = 'laboratorio'
+    links_html += """<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">"""
+    links_html += "<div class='link-container'>"
+
+    for link in links:
+        links_html += "<div class='link-item'>"
+        if "icon" in link:
+            links_html += f"<a href='{link['url']}'><i class='{link['icon']}'></i></a>"
+        links_html += f"<a href='{link['url']}'>{link['text']}</a>"
+        links_html += "</div>"
+
+    links_html += "</div>"
+
+    links_html += "</div>"
+    return st.markdown(links_html, unsafe_allow_html=True)
+
+
+# Adicione os links à página usando st.markdown
+generate_links(links)
+
+
+# Iterar sobre as chaves e valores do dicionário
 
 # Carregar o arquivo CSS personalizado
+st.markdown(hidden_menu, unsafe_allow_html=True)
 st.markdown(custom_css, unsafe_allow_html=True)
-
-
+st.markdown('<h1 class="h1-title">Levantamentos de Laboratórios</h1>', unsafe_allow_html=True)
 
 # Usar o estilo personalizado dentro de um contêiner
-with st.container() as container:
 
-
-
-    selected = option_menu(
-        menu_title=None,
-        options=["Home", "Upload", "Analytics", 'Settings', 'Contact'],
-        icons=['house', 'cloud-upload', "graph-up-arrow", 'gear', 'phone'],
-        menu_icon="cast",
-        orientation='horizontal',
-        styles=custom_menu
-    )
-
-    st.markdown('<div class="custom-container"> '
-                f'<h1>Check List de itens em {Ambiente}</h1>',unsafe_allow_html=True)
-    add_bg_from_local('src/senai-web.jpg')
-
+with (st.container() as container):
 
     custom = "<div class='container-main'>"
-    for item in classroom_items:
-        custom += f'<h5> ✅ {item}</h5>'
+
+
+    add_img_app('src/img_fundo.jpg')
+
+    for link in links_forms:
+
+        custom += f"<a href='{link['url']}'>✅ {link['text']}</a>"
+
     custom += "</div>"
     st.markdown(custom, unsafe_allow_html=True)
 
-st.markdown(custom_main, unsafe_allow_html=True)
 
+# Carregar o estilo CSS personalizado para a parte principal da página
+st.markdown(custom_main, unsafe_allow_html=True)
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
+add_bg_from_body('src/senai-web.jpg')
