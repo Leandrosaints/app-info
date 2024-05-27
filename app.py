@@ -1,48 +1,50 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import json
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
-app = FastAPI()
+app = Flask(__name__)
+CORS(app)
 
-# Configure CORS
-origins = [
-    "http://localhost:8501",
-    "http://192.168.0.106:8501"
-    # Adicione mais URLs se necessário
-]
+class LabData:
+    def __init__(self, LAB, Seg, Ter, Qua, Qui, Sex):
+        self.LAB = LAB
+        self.Seg = Seg
+        self.Ter = Ter
+        self.Qua = Qua
+        self.Qui = Qui
+        self.Sex = Sex
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    def to_dict(self):
+        return {
+            "LAB": self.LAB,
+            "Seg": self.Seg,
+            "Ter": self.Ter,
+            "Qua": self.Qua,
+            "Qui": self.Qui,
+            "Sex": self.Sex
+        }
 
-class LabData(BaseModel):
-    LAB: str
-    Seg: str
-    Ter: str
-    Qua: str
-    Qui: str
-    Sex: str
+@app.route("/save_data", methods=["POST", "OPTIONS"])
+def save_data():
+    if request.method == "OPTIONS":
+        return jsonify({})
 
-@app.post("/save_data")
-async def save_data(data: list[LabData]):
     try:
-        logging.debug("Received data: %s", data)
+        data = request.get_json()
+        lab_data_list = [LabData(**item) for item in data]
+        logging.debug("Received data: %s", lab_data_list)
+
         with open('files/data.json', 'w') as f:
-            json.dump([item.dict() for item in data], f, indent=4)
+            json.dump([item.to_dict() for item in lab_data_list], f, indent=4)
+
         logging.debug("Data saved successfully!")
-        return {"message": "Data saved successfully!"}
+        return jsonify({"message": "Data saved successfully!"})
     except Exception as e:
         logging.error("Error saving data: %s", e)
-        raise HTTPException(status_code=500, detail=str(e))
+        return jsonify({"error": str(e)}), 500
 
-@app.options("/save_data")
-async def options_save_data():
-    return {}
+if __name__ == "__main__":
+    app.run(debug=True)
