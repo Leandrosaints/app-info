@@ -1,7 +1,12 @@
+import pandas as pd
 import streamlit.components.v1 as components
+from codes.logica import read_sheet
 
-def draw_table(df, table_height, editable, save_url):
+def draw_table(table_height, editable, save_url):
+    data = read_sheet()
 
+    dias_da_semana = ["LAB","Se", "Ter", "Qua", "Qu-", "Sex"]
+    df = pd.DataFrame(data, columns=dias_da_semana)
     columns = df.columns
 
     # Construir o cabeçalho da tabela

@@ -63,7 +63,7 @@ def read_data():
     range_name = request.args.get("range_name")
 
     # Chama a função de leitura
-    values = read_sheet(spreadsheet_id, range_name)
+    values = read_sheet()
     return {"values": values}
 
 if __name__ == "__main__":

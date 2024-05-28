@@ -52,20 +52,23 @@ def write_sheet(values):
         print(f"Erro ao escrever na planilha 1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8: {e}")
         return None
 
-def read_sheet(spreadsheet_id, range_name):
+def read_sheet():
     creds = authenticate()
     service = build("sheets", "v4", credentials=creds)
 
     try:
         request = service.spreadsheets().values().get(
-            spreadsheetId=spreadsheet_id,
-            range=range_name,
+            spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
+            range="agendamentos de laboratorios!A2:F8",
             valueRenderOption="UNFORMATTED_VALUE",
             majorDimension="ROWS"
         )
         response = request.execute()
+
         return response.get("values", [])
+
     except Exception as e:
-        print(f"Erro ao ler a planilha {spreadsheet_id}: {e}")
+        print(f"Erro ao ler a planilha  {e}")
         return []
+
 
