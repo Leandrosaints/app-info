@@ -27,26 +27,31 @@ class LabData:
             "Qui": self.Qui,
             "Sex": self.Sex
         }
+import threading
+
+# Criar uma trava global
+write_lock = threading.Lock()
 
 @app.route("/write_data", methods=["POST"])
 def write_data():
-
-    if request.method == "OPTIONS":
-        return jsonify({})
+    # Adquirir a trava antes de escrever na planilha
+    write_lock.acquire()
 
     try:
+        if request.method == "OPTIONS":
+            return jsonify({})
+
         data = request.get_json()
         lab_data_list = [LabData(**item) for item in data]
         logging.debug("Received data: %s", lab_data_list)
         write_sheet([item.to_dict() for item in lab_data_list])
-        """with open('files/data.json', 'w') as f:
-            json.dump([item.to_dict() for item in lab_data_list], f, indent=4)"""
-
         logging.debug("Data saved successfully!")
         return jsonify({"message": "Data saved successfully!"})
-    except Exception as e:
-        logging.error("Error saving data: %s", e)
-        return jsonify({"error": str(e)}), 500
+
+    finally:
+        # Liberar a trava após a operação ser concluída
+        write_lock.release()
+
 # Recebe os dados a serem escritos na planilha
 #data = request.get_json()
 

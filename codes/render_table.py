@@ -1,11 +1,21 @@
 import pandas as pd
 import streamlit.components.v1 as components
 from codes.logica import read_sheet
+import requests
+
+def fetch_sheet_data():
+    response = requests.get("http://127.0.0.1:5000/read_data")
+    if response.status_code == 200:
+
+        return response.json()["values"]
+    else:
+        print("Erro ao buscar os dados da planilha:", response.text)
+        return []
 
 def draw_table(table_height, editable, save_url):
-    data = read_sheet()
+    data = fetch_sheet_data()
 
-    dias_da_semana = ["LAB","Se", "Ter", "Qua", "Qu-", "Sex"]
+    dias_da_semana = ["LAB","Seg", "Ter", "Qua", "Qui", "Sex"]
     df = pd.DataFrame(data, columns=dias_da_semana)
     columns = df.columns
 
@@ -28,6 +38,10 @@ def draw_table(table_height, editable, save_url):
                 row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{value}</td>")
         cells.append("".join(row_cells))
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
+
+    # Montar a tabela completa com modal
+
+
 
     # Montar a tabela completa com modal
     table_html = f"""
@@ -148,5 +162,7 @@ def draw_table(table_height, editable, save_url):
         </div>
     </div>
     """
+
+
 
     return components.html(table_html, height=table_height, scrolling=True)

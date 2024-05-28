@@ -33,4 +33,4 @@ if user_info:
         #st.markdown("<iframe src='http://192.168.0.106:8502' width='100%' height='500'></iframe>", unsafe_allow_html=True)
     #st.markdown(f"<div class='select-box'>Você selecionou o turno: {turno}</div>", unsafe_allow_html=True)
     # Aplicar o estilo da tabela com Bootstrap
-    draw_table(table_height=480, editable=editable, save_url='http://192.168.0.106:8501')
+    draw_table(table_height=480, editable=editable, save_url='http://127.0.0.1:5000/write_data')

@@ -34,23 +34,21 @@ def authenticate():
 
 def write_sheet(values):
     creds = authenticate()
-    service = build("sheets", "v4", credentials=creds)
+    service = build("sheets", "v4", credentials=creds, cache_discovery=False)
     values_list = [[item['LAB'], item['Seg'], item['Ter'], item['Qua'], item['Qui'], item['Sex']] for item in values]
 
-    try:
-        body = {
-            "values": values_list
-        }
-        result = service.spreadsheets().values().update(
-            spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
-            range="agendamentos de laboratorios!B2:F8",
-            valueInputOption="RAW",
-            body=body
-        ).execute()
-        return result
-    except Exception as e:
-        print(f"Erro ao escrever na planilha 1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8: {e}")
-        return None
+
+    body = {
+        "values": values_list
+    }
+    result = service.spreadsheets().values().update(
+        spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
+        range="agendamentos de laboratorios!A2:F8",
+        valueInputOption="RAW",
+        body=body
+    ).execute()
+    return result
+
 
 def read_sheet():
     creds = authenticate()
