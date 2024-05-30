@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 import requests
 
 def fetch_sheet_data():
-    response = requests.get("http://127.0.0.1:5000/read_data")
+    response = requests.get("https://app-info.onrender.com/read_data")
     if response.status_code == 200:
 
         return response.json()["values"]
