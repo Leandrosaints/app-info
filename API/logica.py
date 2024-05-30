@@ -9,7 +9,8 @@ from googleapiclient.discovery import build
 # Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 # Carregar variáveis de ambiente do arquivo .env
-load_dotenv()
+load_dotenv(dotenv_path='API/.env')
+
 
 # Obter o caminho dos arquivos do ambiente
 CLIENT_SECRET_PATH = os.getenv('CLIENT_SECRET_PATH')
