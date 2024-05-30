@@ -1,9 +1,7 @@
-import json
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
-from codes.logica import write_sheet, read_sheet
+from API.logica import write_sheet, read_sheet
 
 logging.basicConfig(level=logging.DEBUG)
 

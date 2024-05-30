@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit.components.v1 as components
-from codes.logica import read_sheet
 import requests
 
 def fetch_sheet_data():

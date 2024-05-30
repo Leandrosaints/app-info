@@ -1,4 +1,6 @@
 import os
+
+from dotenv import load_dotenv
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -6,28 +8,34 @@ from googleapiclient.discovery import build
 
 # Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+# Obter o caminho dos arquivos do ambiente
+CLIENT_SECRET_PATH = os.getenv('CLIENT_SECRET_PATH')
+TOKEN_PATH = os.getenv('TOKEN_PATH')
 
 def authenticate():
     creds = None
 
     # Obter o caminho absoluto do arquivo token.json
-    token_file = os.path.join(os.path.dirname(__file__), "token.json")
+
 
     # Carregar as credenciais do arquivo token.json se existir
-    if os.path.exists(token_file):
-        creds = Credentials.from_authorized_user_file(token_file, SCOPES)
+    if os.path.exists(TOKEN_PATH):
+        creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
     # Se não houver credenciais válidas disponíveis, solicita que o usuário faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "client_secret.json", SCOPES
+                CLIENT_SECRET_PATH, SCOPES
             )
             creds = flow.run_local_server(port=0)
 
         # Salvar as credenciais para a próxima execução
-        with open(token_file, "w") as token:
+        with open(TOKEN_PATH, "w") as token:
             token.write(creds.to_json())
 
     return creds
