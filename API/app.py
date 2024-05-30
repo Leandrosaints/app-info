@@ -3,7 +3,7 @@ from flask_cors import CORS
 import logging
 from logica import write_sheet, read_sheet
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 CORS(app)
