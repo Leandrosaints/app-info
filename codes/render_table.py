@@ -46,6 +46,51 @@ def draw_table(table_height, editable, save_url):
     table_html = f"""
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <style>
+        .table {{
+            border-collapse: collapse;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }}
+
+        .table th,
+        .table td {{
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+        }}
+
+        .table thead th {{
+            background-color: #007bff;
+            color: #fff;
+        }}
+
+        .table tbody td {{
+            background-color: #f8f9fa;
+        }}
+
+        .table tbody td.libre {{
+            background-color: #1ef79399;
+            color: #000;
+        }}
+
+        .table tbody td.professor {{
+            background-color: #ffc107;
+            color: #000;
+        }}
+
+        .table-responsive {{
+            max-width: 100%;
+            overflow-x: auto;
+        }}
+
+        .table {{
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            text-align: center;
+        }}
+    </style>
+
     <script>
         function openModal(row, col, column) {{
             var modal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -55,6 +100,7 @@ def draw_table(table_height, editable, save_url):
             document.getElementById('modalValue').value = document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[col].textContent;
             modal.show();
         }}
+
         function confirmSave() {{
             var value = document.getElementById('modalValue').value;
             if (value.trim() === "" || value.trim().toLowerCase() === "livre") {{
@@ -64,6 +110,7 @@ def draw_table(table_height, editable, save_url):
             var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
             confirmModal.show();
         }}
+
         function saveValue() {{
             var row = document.getElementById('modalRow').value;
             var col = document.getElementById('modalCol').value;
@@ -77,11 +124,13 @@ def draw_table(table_height, editable, save_url):
             document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[col].innerHTML = displayValue;
             updateDataFrame(row, column, displayValue);
         }}
+
         function updateDataFrame(row, column, value) {{
             var df = {df.to_json(orient='split')};
             df.data[row][df.columns.indexOf(column)] = value;
             saveDataToJSON(df);
         }}
+
         function saveDataToJSON(df) {{
            fetch('{save_url}', {{
                 method: 'POST',
@@ -112,6 +161,7 @@ def draw_table(table_height, editable, save_url):
             }});
         }}
     </script>
+
     <div class="table-responsive">
         <table class="table table-bordered table-sm text-center">
             {header}
@@ -120,6 +170,7 @@ def draw_table(table_height, editable, save_url):
             </tbody>
         </table>
     </div>
+
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -143,6 +194,7 @@ def draw_table(table_height, editable, save_url):
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -161,6 +213,8 @@ def draw_table(table_height, editable, save_url):
         </div>
     </div>
     """
+
+
 
 
 
