@@ -44,7 +44,7 @@ def authenticate():
 # Restante do código permanece o mesmo...
 
 
-def write_sheet(values):
+def write_sheet(values, turno):
     creds = authenticate()
     service = build("sheets", "v4", credentials=creds, cache_discovery=False)
     values_list = [[item['LAB'], item['Seg'], item['Ter'], item['Qua'], item['Qui'], item['Sex']] for item in values]
@@ -55,21 +55,21 @@ def write_sheet(values):
     }
     result = service.spreadsheets().values().update(
         spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
-        range="agendamentos de laboratorios!A2:F8",
+        range=f"{turno}!A2:F8",
         valueInputOption="RAW",
         body=body
     ).execute()
     return result
 
 
-def read_sheet():
+def read_sheet(turno):
     creds = authenticate()
     service = build("sheets", "v4", credentials=creds)
 
     try:
         request = service.spreadsheets().values().get(
             spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
-            range="agendamentos de laboratorios!A2:F8",
+            range=f"{turno}!A2:F8",
             valueRenderOption="UNFORMATTED_VALUE",
             majorDimension="ROWS"
         )

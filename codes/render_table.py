@@ -2,8 +2,8 @@ import pandas as pd
 import streamlit.components.v1 as components
 import requests
 
-def fetch_sheet_data():
-    response = requests.get("http://127.0.0.1:5000/read_data")
+def fetch_sheet_data(turno):
+    response = requests.get(f"https://app-info.onrender.com/read_data/{turno}")
     if response.status_code == 200:
 
         return response.json()["values"]
@@ -11,8 +11,8 @@ def fetch_sheet_data():
         print("Erro ao buscar os dados da planilha:", response.text)
         return []
 
-def draw_table(table_height, editable, save_url):
-    data = fetch_sheet_data()
+def draw_table(table_height, editable, save_url, turno):
+    data = fetch_sheet_data(turno)
 
     dias_da_semana = ["LAB","Seg", "Ter", "Qua", "Qui", "Sex"]
     df = pd.DataFrame(data, columns=dias_da_semana)
@@ -184,6 +184,7 @@ def draw_table(table_height, editable, save_url):
                     <input type="hidden" id="modalColumn">
                     <div class="mb-3">
                         <label for="modalValue" class="form-label">Digite apenas seu nome.</label>
+                        <label for="modalValue" class="form-label-one">Antes de salvar, verifique se o turno esta correto.</label>
                         <input type="text" class="form-control" id="modalValue">
                     </div>
                 </div>

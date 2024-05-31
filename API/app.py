@@ -102,23 +102,23 @@ class LabData(BaseModel):
 # Criar uma trava global
 write_lock = threading.Lock()
 
-@app.post("/write_data")
-async def write_data(data: list[LabData]):
+@app.post("/write_data/{turno}")
+async def write_data(data: list[LabData], turno):
     # Adquirir a trava antes de escrever na planilha
     write_lock.acquire()
     try:
         logging.debug("Received data: %s", data)
-        write_sheet([item.dict() for item in data])
+        write_sheet([item.dict() for item in data], turno)
         logging.debug("Data saved successfully!")
         return {"message": "Data saved successfully!"}
     finally:
         # Liberar a trava após a operação ser concluída
         write_lock.release()
 
-@app.get("/read_data")
-async def read_data():
+@app.get("/read_data/{turno}")
+async def read_data(turno):
     # Chama a função de leitura
-    values = read_sheet()
+    values = read_sheet(turno)
     return {"values": values}
 
 if __name__ == "__main__":

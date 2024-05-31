@@ -22,7 +22,7 @@ st.markdown(hidden_menu, unsafe_allow_html=True)
 # Verifica se o usuário está autenticado
 if user_info:
     st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
-    st.markdown(f"<h3 class='user_name'>Olá Professor: {user_info['name']}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h2 class='user_name'>Olá Professor: {user_info['name']}</h2>", unsafe_allow_html=True)
     editable = True
 
 # Render CSS styles
@@ -33,4 +33,4 @@ if user_info:
         #st.markdown("<iframe src='http://192.168.0.106:8502' width='100%' height='500'></iframe>", unsafe_allow_html=True)
     #st.markdown(f"<div class='select-box'>Você selecionou o turno: {turno}</div>", unsafe_allow_html=True)
     # Aplicar o estilo da tabela com Bootstrap
-    draw_table(table_height=480, editable=editable, save_url='https://app-info.onrender.com/write_data')
+    draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)
