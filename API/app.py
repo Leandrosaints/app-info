@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+"""from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
 from logica import write_sheet, read_sheet
@@ -61,13 +61,67 @@ def write_data():
 
 @app.route("/read_data", methods=["GET"])
 def read_data():
-    # Recebe os parâmetros para leitura da planilha
-    spreadsheet_id = request.args.get("spreadsheet_id")
-    range_name = request.args.get("range_name")
+
 
     # Chama a função de leitura
     values = read_sheet()
     return {"values": values}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True)"""
+from fastapi import FastAPI, Request, status
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+import logging
+
+from pydantic import BaseModel
+
+from logica import write_sheet, read_sheet
+import threading
+
+app = FastAPI()
+
+# Configurar CORS
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class LabData(BaseModel):
+    LAB: str
+    Seg: str
+    Ter: str
+    Qua: str
+    Qui: str
+    Sex: str
+
+# Criar uma trava global
+write_lock = threading.Lock()
+
+@app.post("/write_data")
+async def write_data(data: list[LabData]):
+    # Adquirir a trava antes de escrever na planilha
+    write_lock.acquire()
+    try:
+        logging.debug("Received data: %s", data)
+        write_sheet([item.dict() for item in data])
+        logging.debug("Data saved successfully!")
+        return {"message": "Data saved successfully!"}
+    finally:
+        # Liberar a trava após a operação ser concluída
+        write_lock.release()
+
+@app.get("/read_data")
+async def read_data():
+    # Chama a função de leitura
+    values = read_sheet()
+    return {"values": values}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=5000)
+

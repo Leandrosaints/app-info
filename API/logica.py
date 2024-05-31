@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -9,8 +8,7 @@ from googleapiclient.discovery import build
 # Defina as permissões necessárias
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 # Carregar variáveis de ambiente do arquivo .env
-load_dotenv(dotenv_path='API/.env')
-
+load_dotenv(dotenv_path='.env')
 
 # Obter o caminho dos arquivos do ambiente
 CLIENT_SECRET_PATH = os.getenv('CLIENT_SECRET_PATH')
@@ -19,27 +17,32 @@ TOKEN_PATH = os.getenv('TOKEN_PATH')
 def authenticate():
     creds = None
 
-    # Obter o caminho absoluto do arquivo token.json
-
-
     # Carregar as credenciais do arquivo token.json se existir
-    if os.path.exists(TOKEN_PATH):
+    if TOKEN_PATH and os.path.exists(TOKEN_PATH):
         creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
     # Se não houver credenciais válidas disponíveis, solicita que o usuário faça login
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                CLIENT_SECRET_PATH, SCOPES
-            )
-            creds = flow.run_local_server(port=0)
+            if CLIENT_SECRET_PATH and os.path.exists(CLIENT_SECRET_PATH):
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    CLIENT_SECRET_PATH, SCOPES
+                )
+                creds = flow.run_local_server(port=0)
+            else:
+                raise ValueError("O caminho do arquivo 'client_secret.json' não está definido corretamente.")
 
         # Salvar as credenciais para a próxima execução
-        with open(TOKEN_PATH, "w") as token:
-            token.write(creds.to_json())
+        if TOKEN_PATH:
+            with open(TOKEN_PATH, "w") as token:
+                token.write(creds.to_json())
 
     return creds
+
+
+# Restante do código permanece o mesmo...
+
 
 def write_sheet(values):
     creds = authenticate()
