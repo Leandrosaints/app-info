@@ -27,7 +27,8 @@ def autenticar_usuario():
         flow = InstalledAppFlow.from_client_secrets_file(
             CLIENT_SECRET_PATH, SCOPES
         )
-        creds = flow.run_local_server()
+
+        creds = flow.run_local_server(port=0)
 
         # Salvar as credenciais para a próxima execução
         with open(TOKEN_PATH, "w") as token:
