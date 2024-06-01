@@ -49,7 +49,8 @@ def autenticar_usuario():
             CLIENT_SECRET_PATH, SCOPES
         )
 
-        creds = flow.run_local_server(port=0)
+        creds = flow.run_local_server(host='localhost', port=5000)
+
 
         # Salvar as credenciais no cache do Streamlit
         st.session_state['credentials'] = creds.to_json()
