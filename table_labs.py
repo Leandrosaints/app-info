@@ -10,27 +10,14 @@ user_info = handle_authentication()
 st.set_page_config(layout="wide")
 add_img_app('src/img_fundo.jpg')
 st.markdown(hidden_menu, unsafe_allow_html=True)
-# Carrega os dados do arquivo JSON
-#try:
-    #with open('files/data.json', 'r', encoding='utf-8') as f:
-        #data = json.load(f)
-    #df = pd.DataFrame(data)
-#except FileNotFoundError:
-    #st.error("Arquivo 'data.json' não encontrado. Por favor, crie o arquivo antes de executar o programa.")
-    #st.stop()
 
-# Verifica se o usuário está autenticado
 if user_info:
     st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
     st.markdown(f"<h2 class='user_name'>Olá Professor: {user_info['name']}</h2>", unsafe_allow_html=True)
     editable = True
 
-# Render CSS styles
+
     st.markdown(css_style, unsafe_allow_html=True)
-#st.markdown("<div class='success-message'>Você está logado.</div>", unsafe_allow_html=True)
-    turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
-    #if turno == 'Vespertino':
-        #st.markdown("<iframe src='http://192.168.0.106:8502' width='100%' height='500'></iframe>", unsafe_allow_html=True)
-    #st.markdown(f"<div class='select-box'>Você selecionou o turno: {turno}</div>", unsafe_allow_html=True)
-    # Aplicar o estilo da tabela com Bootstrap
+    turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino"], key='select-box')
+
     draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)

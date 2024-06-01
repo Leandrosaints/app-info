@@ -8,7 +8,7 @@ def fetch_sheet_data(turno):
 
         return response.json()["values"]
     else:
-        print("Erro ao buscar os dados da planilha:", response.text)
+        print("Desculpe, houve um erro no sistema, contacte os responsaveis")
         return []
 
 def draw_table(table_height, editable, save_url, turno):
