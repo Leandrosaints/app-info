@@ -1,12 +1,11 @@
 import os
 import streamlit as st
 from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente do arquivo .env
+from dotenv import load_dotenv
 load_dotenv()
 
 # Obter o caminho dos arquivos do ambiente
@@ -15,7 +14,6 @@ TOKEN_PATH = os.getenv('TOKEN_PATH')
 
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile',
           'https://www.googleapis.com/auth/userinfo.email']
-
 
 def autenticar_usuario():
     creds = None
@@ -29,7 +27,7 @@ def autenticar_usuario():
         flow = InstalledAppFlow.from_client_secrets_file(
             CLIENT_SECRET_PATH, SCOPES
         )
-        creds = flow.run_local_server(port=0)
+        creds = flow.run_local_server()
 
         # Salvar as credenciais para a próxima execução
         with open(TOKEN_PATH, "w") as token:
@@ -47,10 +45,6 @@ def autenticar_usuario():
         'name': user_info['names'][0]['displayName']
     }
 
-
 def handle_authentication():
     user_info = autenticar_usuario()
     return user_info
-
-
-
