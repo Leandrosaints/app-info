@@ -30,8 +30,9 @@ css_style = """
     .user_name {
         font-size: 20px;
         color:white;
-       
-    text-align: center;
+        border-radius: 10px;
+        background-color: #cac1c1; 
+        text-align: center;
     }
     .success-message {
         font-size: 18px;
