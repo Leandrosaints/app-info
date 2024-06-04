@@ -31,6 +31,7 @@ def draw_table(table_height, editable, save_url, turno):
                 if editable:
                     row_cells.append(f"<td><button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal({i}, {j}, \"{df.columns[j]}\")'>Livre</button></td>")
                 else:
+
                     row_cells.append(f"<td style='background-color:#1ef79399; color:black;'>Livre</td>")
             elif 'prof' in str(value).lower():
                 row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
