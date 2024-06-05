@@ -1,69 +1,68 @@
 import streamlit as st
 import pandas as pd
-import streamlit.components.v1 as components
 import requests
-def saveDataToJSON(df, save_url):
-    requests.post(save_url, json=df.to_dict('records'))
+import streamlit.components.v1 as components
 
+# Função para salvar os dados no servidor
+def saveDataToJSON(df, save_url):
+    try:
+        response = requests.post(save_url, json=df.to_dict('records'))
+        if response.status_code != 200:
+            st.error("Erro ao salvar os dados.")
+    except Exception as e:
+        st.error(f"Erro: {e}")
+
+# Função para buscar dados do servidor
 def fetch_sheet_data(turno):
-    response = requests.get(f"http://127.0.0.1:8080/read_data/{turno}")
-    if response.status_code == 200:
-        return response.json()["values"]
-    else:
-        st.error("Desculpe, houve um erro no sistema, contacte os responsáveis.")
+    try:
+        response = requests.get(f"http://127.0.0.1:8080/read_data/{turno}")
+        if response.status_code == 200:
+            return response.json()["values"]
+        else:
+            st.error("Desculpe, houve um erro no sistema, contacte os responsáveis.")
+            return []
+    except Exception as e:
+        st.error(f"Erro: {e}")
         return []
+
+# Função para atualizar o valor da célula clicada
+def update_cell_value(df, row, col, new_value):
+    dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
+    df.at[row, dias_da_semana[col]] = new_value
+    return df
+
+# Função para desenhar a tabela
 def draw_table(table_height, editable, save_url, turno):
     data = fetch_sheet_data(turno)
     dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
     df = pd.DataFrame(data, columns=dias_da_semana)
-    columns = df.columns
 
-    thead1 = "<thead><tr><th style='background-color:#098aff;'scope='col'></th>"
-    thead_temp = ["<th style='background-color:#098aff;'scope='col'>" + str(col) + "</th>" for col in columns]
-    header = thead1 + "".join(thead_temp) + "</tr ></thead>"
+    # Estado para armazenar a célula que está sendo editada
+    if 'editing_cell' not in st.session_state:
+        st.session_state.editing_cell = (-1, -1)
 
-    rows = ["<tr><th scope='row'></th>" for _ in range(df.shape[0])]
-    cells = []
-    for i, row in enumerate(df.values.tolist()):
-        row_cells = []
-        for j, value in enumerate(row):
-            if str(value).lower() == 'livre':
-                if editable:
-                    row_cells.append(f"<td><button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal({i}, {j}, \"{df.columns[j]}\")'>Livre</button></td>")
-                else:
+    def handle_click(row, col, df):
+        st.session_state.editing_cell = (row, col)
+        new_value = st.text_input("Novo valor:", value=df.iloc[row, col], key=f"input_{row}_{col}")
+        if st.button("Salvar", key=f"save_{row}_{col}"):
+            dft = update_cell_value(df, row, col, new_value)
+            saveDataToJSON(df, save_url)
+            st.session_state.editing_cell = (-1, -1)
 
-                    row_cells.append(f"<td style='background-color:#1ef79399; color:black;'>Livre</td>")
-            elif 'prof' in str(value).lower():
-                row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
-            else:
-                if editable and str(value).lower() != 'livre':
-                    with st.form(key=f"form_{i}_{j}"):
-                        new_value = st.text_input(f"Celula ({i},{j})", value=value, key=f"input_{i}_{j}")
-                        if st.form_submit_button("Salvar"):
-                            df.at[i, df.columns[j]] = new_value
-                            saveDataToJSON(df, save_url)
-                    row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{new_value}</td>")
-                else:
-                    row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{value}</td>")
-        cells.append("".join(row_cells))
-    body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
+    # Renderizar a tabela
+    st.write("### Tabela")
 
-    table_html = f"""
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <style>
-        /* Estilos da tabela, mantidos iguais */
-    </style>
-    <div class="table-responsive">
-        <table class="table table-bordered table-sm text-center">
-            {header}
-            <tbody>
-                {body}
-            </tbody>
-        </table>
-    </div>
-    """
-    return components.html(table_html, height=table_height, scrolling=True)
+    styled_df = df.style.applymap(
+        lambda val: 'background-color: #1ef79399; color:black;' if str(val).lower() == 'livre' else
+                    'background-color: yellow; color:black;' if 'prof' in str(val).lower() else '',
+        subset=dias_da_semana
+    ).set_properties(**{'text-align': 'center'})
+
+    if st.session_state.editing_cell != (-1, -1):
+        row, col = st.session_state.editing_cell
+        styled_df = styled_df.apply(lambda x: ['background-color: #ffff00' if x.name == row and x.name == dias_da_semana[col] else '' for _ in range(len(x))], axis=1)
+
+    st.write(styled_df)
 
 st.title('Tabela Interativa')
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino"])
