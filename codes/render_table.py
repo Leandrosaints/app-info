@@ -10,6 +10,8 @@ def saveDataToJSON(df, save_url):
         response = requests.post(save_url, json=json_data)
         if response.status_code != 200:
             st.error("Erro ao salvar os dados.")
+        else:
+            st.success("Dados salvos com sucesso.")
     except Exception as e:
         st.error(f"Erro: {e}")
 
@@ -28,10 +30,23 @@ def fetch_sheet_data(turno):
 
 # Função para desenhar a tabela
 def draw_table(editable, save_url, turno):
-    data = fetch_sheet_data(turno)
-    dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-    df = pd.DataFrame(data, columns=dias_da_semana)
+    # Usando st.session_state para armazenar dados originais
+    if 'original_data' not in st.session_state:
+        data = fetch_sheet_data(turno)
+        dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
+        # Ao criar o DataFrame, especificar as colunas diretamente
+        st.session_state.original_data = pd.DataFrame(data, columns=dias_da_semana)
+    else:
+        data = st.session_state.original_data
 
+    df = pd.DataFrame(data)
+
+    # Garantir que os nomes das colunas sejam mantidos corretamente
+    dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
+    df.columns = dias_da_semana
+
+    # Convertendo os nomes das colunas para strings, se necessário
+    df.columns = [str(col) for col in df.columns]
     st.write("### Tabela")
 
     gb = GridOptionsBuilder.from_dataframe(df)
@@ -60,7 +75,7 @@ def draw_table(editable, save_url, turno):
         df,
         gridOptions=grid_options,
         editable=editable,
-        height=400,
+        height=600,
         theme='streamlit',
         allow_unsafe_jscode=True,  # Permitir uso seguro de JsCode
     )
@@ -69,8 +84,10 @@ def draw_table(editable, save_url, turno):
     edited_df = pd.DataFrame(grid_response['data'])
 
     # Comparar os dados para detectar mudanças
-    if edited_df.to_dict('records') != df.to_dict('records'):
+    if not edited_df.equals(df):  # Comparar com os dados originais
         saveDataToJSON(edited_df, save_url)
+        # Atualizar a versão original após salvar
+        st.session_state.original_data = edited_df.copy()
 
     return edited_df
 
