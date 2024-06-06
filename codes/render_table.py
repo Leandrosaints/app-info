@@ -30,14 +30,22 @@ def fetch_sheet_data(turno):
 
 # Função para desenhar a tabela
 def draw_table(editable, save_url, turno):
-    # Usando st.session_state para armazenar dados originais
+    # Usando st.session_state para armazenar dados originais e editados
     if 'original_data' not in st.session_state:
+        st.session_state.original_data = {}
+    if 'edited_data' not in st.session_state:
+        st.session_state.edited_data = {}
+    if 'data_modified' not in st.session_state:
+        st.session_state.data_modified = False
+
+    # Carregar dados apenas se o turno mudou ou se é a primeira vez
+    if turno not in st.session_state.original_data:
         data = fetch_sheet_data(turno)
         dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-        # Ao criar o DataFrame, especificar as colunas diretamente
-        st.session_state.original_data = pd.DataFrame(data, columns=dias_da_semana)
+        st.session_state.original_data[turno] = pd.DataFrame(data, columns=dias_da_semana)
+        st.session_state.edited_data[turno] = st.session_state.original_data[turno].copy()
     else:
-        data = st.session_state.original_data
+        data = st.session_state.edited_data[turno]
 
     df = pd.DataFrame(data)
 
@@ -45,8 +53,6 @@ def draw_table(editable, save_url, turno):
     dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
     df.columns = dias_da_semana
 
-    # Convertendo os nomes das colunas para strings, se necessário
-    df.columns = [str(col) for col in df.columns]
     st.write("### Tabela")
 
     gb = GridOptionsBuilder.from_dataframe(df)
@@ -84,10 +90,16 @@ def draw_table(editable, save_url, turno):
     edited_df = pd.DataFrame(grid_response['data'])
 
     # Comparar os dados para detectar mudanças
-    if not edited_df.equals(df):  # Comparar com os dados originais
-        saveDataToJSON(edited_df, save_url)
-        # Atualizar a versão original após salvar
-        st.session_state.original_data = edited_df.copy()
+    if not edited_df.equals(st.session_state.edited_data[turno]):
+        st.session_state.edited_data[turno] = edited_df.copy()
+        st.session_state.data_modified = True
+
+    # Salvar os dados modificados quando o usuário pressionar o botão
+    if st.session_state.data_modified and st.button("Salvar Alterações"):
+        saveDataToJSON(st.session_state.edited_data[turno], save_url)
+        # Após salvar, atualizar os dados originais e resetar o estado de modificação
+        st.session_state.original_data[turno] = st.session_state.edited_data[turno].copy()
+        st.session_state.data_modified = False
 
     return edited_df
 
