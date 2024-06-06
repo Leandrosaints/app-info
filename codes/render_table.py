@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode
+from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 import requests
 
 # Função para salvar os dados no servidor
@@ -53,7 +53,24 @@ def draw_table(editable, save_url, turno):
     dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
     df.columns = dias_da_semana
 
-    st.write("### Tabela")
+    # Estilizando o contêiner da tabela
+    st.markdown(
+        """
+        <style>
+        iframe {
+            border: none;
+            padding: 0px;
+            font-size:30px;
+            width: 800px;
+            margin-left:20%;
+        }
+        
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    #st.write("### Tabela")
 
     gb = GridOptionsBuilder.from_dataframe(df)
     gb.configure_default_column(editable=editable)
@@ -76,14 +93,43 @@ def draw_table(editable, save_url, turno):
         gb.configure_column(column, cellStyle=cell_style_jscode)
 
     grid_options = gb.build()
+    custom_css = {
+        ".ag-root": {
+            "font-family": "Arial, sans-serif",
+            "border-radius": "8px",
+            "overflow": "hidden",
+        },
+        ".ag-header": {
+            "background-color": "#eaf1ff",  # Azul claro para o cabeçalho
+            "color": "black",  # Cor do texto no cabeçalho
+            "font-size": "16px",  # Tamanho da fonte no cabeçalho
+            "font-weight": "bold",  # Peso da fonte no cabeçalho
+        },
+        ".ag-cell": {
+            "border": "1px solid #ccc",
+            "padding": "0px 0px 0px 15px",
+            "font-size":"16px",
+            "text-align": "justify",
+             # Alinhar texto no centro
+        },
+        ".ag-filters": {
+            "font-size": "14px",  # Tamanho da fonte nos filtros
+        },
+        ".ag-icon-filter": {
+            "font-size": "14px",  # Tamanho do ícone de filtro
+        },
+        ".ag-selected": {
+            "background-color": "#cce5ff",  # Cor de fundo quando selecionado
+        },
+    }
 
     grid_response = AgGrid(
         df,
         gridOptions=grid_options,
         editable=editable,
-        height=600,
         theme='streamlit',
         allow_unsafe_jscode=True,  # Permitir uso seguro de JsCode
+        custom_css=custom_css
     )
 
     # Dataframe com as edições feitas
@@ -102,10 +148,3 @@ def draw_table(editable, save_url, turno):
         st.session_state.data_modified = False
 
     return edited_df
-
-st.title('Tabela Interativa')
-turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino"])
-editable = st.checkbox("Permitir Edição")
-save_url = f"http://127.0.0.1:8080/write_data/{turno}"
-
-draw_table(editable, save_url, turno)
