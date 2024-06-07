@@ -3,6 +3,7 @@ import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 import requests
 
+
 # Função para salvar os dados no servidor
 def saveDataToJSON(df, save_url):
     try:
@@ -14,6 +15,7 @@ def saveDataToJSON(df, save_url):
             st.success("Dados salvos com sucesso.")
     except Exception as e:
         st.error(f"Erro: {e}")
+
 
 # Função para buscar dados do servidor
 def fetch_sheet_data(turno):
@@ -27,6 +29,7 @@ def fetch_sheet_data(turno):
     except Exception as e:
         st.error(f"Erro: {e}")
         return []
+
 
 # Função para desenhar a tabela
 def draw_table(editable, save_url, turno):
@@ -42,7 +45,14 @@ def draw_table(editable, save_url, turno):
     if turno not in st.session_state.original_data:
         data = fetch_sheet_data(turno)
         dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-        st.session_state.original_data[turno] = pd.DataFrame(data, columns=dias_da_semana)
+
+        # Verifique se o tamanho dos dados é igual ao número de colunas esperadas
+        if len(data) > 0 and len(data[0]) == len(dias_da_semana):
+            st.session_state.original_data[turno] = pd.DataFrame(data, columns=dias_da_semana)
+        else:
+            st.error("Dados recebidos não são válidos ou não correspondem às colunas esperadas.")
+            return
+
         st.session_state.edited_data[turno] = st.session_state.original_data[turno].copy()
     else:
         data = st.session_state.edited_data[turno]
@@ -51,7 +61,11 @@ def draw_table(editable, save_url, turno):
 
     # Garantir que os nomes das colunas sejam mantidos corretamente
     dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-    df.columns = dias_da_semana
+    if df.shape[1] == len(dias_da_semana):
+        df.columns = dias_da_semana
+    else:
+        st.error("Número de colunas do DataFrame não corresponde aos dias da semana.")
+        return
 
     # Estilizando o contêiner da tabela
     st.markdown(
@@ -60,18 +74,23 @@ def draw_table(editable, save_url, turno):
         iframe {
             border: none;
             padding: 0px;
-            font-size:30px;
+            font-size: 30px;
             width: 800px;
-            margin-left:20%;
+            height: 400;
+            margin-left: 20%;
+            margin-right: auto;
         }
-        
+        .ag-theme-alpine {
+            height: 200px;  /* Ajuste a altura conforme necessário */
+            width: 100%;
+        }
+      
         </style>
         """,
         unsafe_allow_html=True
     )
 
-    #st.write("### Tabela")
-
+    # Configurando a tabela
     gb = GridOptionsBuilder.from_dataframe(df)
     gb.configure_default_column(editable=editable)
 
@@ -88,47 +107,32 @@ def draw_table(editable, save_url, turno):
     };
     """)
 
+    custom_css = {
+        ".ag-header-cell": {
+            "background-color": "#098aff",
+
+        },
+        ".ag-cell": {
+            "background-color": "#68a9d3"
+        }
+    }
+
     # Aplicando o estilo para todas as colunas
+    """for column in df.columns:
+        gb.configure_column(column, cellStyle=cell_style_jscode)"""
     for column in df.columns:
         gb.configure_column(column, cellStyle=cell_style_jscode)
 
     grid_options = gb.build()
-    custom_css = {
-        ".ag-root": {
-            "font-family": "Arial, sans-serif",
-            "border-radius": "8px",
-            "overflow": "hidden",
-        },
-        ".ag-header": {
-            "background-color": "#eaf1ff",  # Azul claro para o cabeçalho
-            "color": "black",  # Cor do texto no cabeçalho
-            "font-size": "16px",  # Tamanho da fonte no cabeçalho
-            "font-weight": "bold",  # Peso da fonte no cabeçalho
-        },
-        ".ag-cell": {
-            "border": "1px solid #ccc",
-            "padding": "0px 0px 0px 15px",
-            "font-size":"16px",
-            "text-align": "justify",
-             # Alinhar texto no centro
-        },
-        ".ag-filters": {
-            "font-size": "14px",  # Tamanho da fonte nos filtros
-        },
-        ".ag-icon-filter": {
-            "font-size": "14px",  # Tamanho do ícone de filtro
-        },
-        ".ag-selected": {
-            "background-color": "#cce5ff",  # Cor de fundo quando selecionado
-        },
-    }
 
     grid_response = AgGrid(
         df,
         gridOptions=grid_options,
         editable=editable,
-        theme='streamlit',
+        theme='alpine',  # Usando o tema ag-theme-alpine
         allow_unsafe_jscode=True,  # Permitir uso seguro de JsCode
+        height=390,  # Ajuste a altura conforme necessário
+        width='80%',  # Ocupa 100% da largura do contêiner pai
         custom_css=custom_css
     )
 
@@ -148,3 +152,10 @@ def draw_table(editable, save_url, turno):
         st.session_state.data_modified = False
 
     return edited_df
+
+
+# Exemplo de chamada da função draw_table
+turno = "manhã"  # Pode ser dinâmico conforme necessidade
+editable = True  # Exemplo: pode ser False se não quiser permitir edição
+save_url = "http://127.0.0.1:8080/save_data"  # URL para salvar os dados
+draw_table(editable, save_url, turno)
