@@ -155,7 +155,4 @@ def draw_table(editable, save_url, turno):
 
 
 # Exemplo de chamada da função draw_table
-turno = "manhã"  # Pode ser dinâmico conforme necessidade
-editable = True  # Exemplo: pode ser False se não quiser permitir edição
-save_url = "http://127.0.0.1:8080/save_data"  # URL para salvar os dados
-draw_table(editable, save_url, turno)
+
