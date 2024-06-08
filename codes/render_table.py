@@ -76,16 +76,27 @@ def draw_table(editable, save_url, turno):
             style.color = 'gray';
             style.backgroundColor = '#48ff98';
         } else if (params.value.toLowerCase().includes('prof')) {
-            style.color = 'white';
+            style.color = '#fefae0';
             style.backgroundColor = '#e63946';
         }
         return style;
     };
     """)
 
-    # Aplicando o estilo para todas as colunas
+    # Função para concatenar "PROF " aos valores inseridos
+    value_parser_jscode = JsCode("""
+    function(params) {
+        let newValue = params.newValue.trim();
+        if (!newValue.toLowerCase().startsWith('prof ')) {
+            newValue = 'PROF ' + newValue;
+        }
+        return newValue;
+    };
+    """)
+
+    # Aplicando o estilo e o valueParser para todas as colunas
     for column in df.columns:
-        gb.configure_column(column, cellStyle=cell_style_jscode)
+        gb.configure_column(column, cellStyle=cell_style_jscode, valueParser=value_parser_jscode)
 
     grid_options = gb.build()
 
@@ -95,7 +106,7 @@ def draw_table(editable, save_url, turno):
     # Usar a largura da janela do navegador
     grid_width_js = JsCode("""
     function() {
-      return window.innerWidth -50;
+      return window.innerWidth - 50;
     }
     """)
 
@@ -104,17 +115,15 @@ def draw_table(editable, save_url, turno):
             "background-color": "#098aff",
             "font-size": "16px",
             "text-align": "center",
-            "color": "white",
+            "color": "#fefae0",
         },
         ".ag-header-cell-sortable": {
-        "padding-left": "100px"
-
+            "padding-left": "100px"
         },
-
         ".ag-cell": {
             "background-color": "#219ebc",
             "color": "white",
-            "font-weight":"bold",
+            "font-weight": "bold",
             "font-size": "16px",
             "text-align": "center"
         },

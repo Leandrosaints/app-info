@@ -78,7 +78,7 @@ css_style = """
     }
      @media only screen and (max-width: 768px) {
         .user_name {
-           
+
             width:300px; 
             
         }

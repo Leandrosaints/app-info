@@ -17,7 +17,7 @@ st.markdown(f"<h2 class='user_name'>{text}</h2>", unsafe_allow_html=True)
 st.markdown(css_style, unsafe_allow_html=True)
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino"], key='select-box')
 save_url = f"http://127.0.0.1:8080/write_data/{turno}"
-editable = False #st.checkbox("Permitir Edição")
+editable = True #st.checkbox("Permitir Edição")
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)
