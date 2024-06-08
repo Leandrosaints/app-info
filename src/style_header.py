@@ -83,6 +83,28 @@ css_style = """
             
         }
     }
+    @media (min-width: 1200px) {
+    iframe {
+        width: 1430px;
+        border-radius:12px;
+        height: 600px;
+        padding-left:10%;
+        
+    }
+    [data-testid="baseButton-secondary"] {
+        background-color:#e63946; /* Cor de fundo */
+        padding: 20px; /* Espaçamento interno */
+        margin-right:90px;
+        border-radius: 10px; /* Bordas arredondadas */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+        text-align: center; /* Centralizar texto */
+        font-size: 18px; /* Tamanho da fonte */
+        color: #333; /* Cor do texto */
+         float: right; /* Adiciona alinhamento à direita */
+    }
+    
+  
+}
 </style>
 """
 

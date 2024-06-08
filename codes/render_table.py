@@ -66,7 +66,7 @@ def draw_table(editable, save_url, turno):
 
     # Configurando a tabela
     gb = GridOptionsBuilder.from_dataframe(df)
-    gb.configure_default_column(editable=editable, minWidth=207.7)  # Definindo um tamanho mínimo para as colunas
+    gb.configure_default_column(editable=editable, minWidth=215.7)  # Definindo um tamanho mínimo para as colunas
 
     # Definindo estilos personalizados via JsCode
     cell_style_jscode = JsCode("""
@@ -88,7 +88,7 @@ def draw_table(editable, save_url, turno):
     function(params) {
         let newValue = params.newValue.trim();
         if (!newValue.toLowerCase().startsWith('prof ')) {
-            newValue = 'PROF ' + newValue;
+            newValue = 'PROF: ' + newValue;
         }
         return newValue;
     };
@@ -106,7 +106,7 @@ def draw_table(editable, save_url, turno):
     # Usar a largura da janela do navegador
     grid_width_js = JsCode("""
     function() {
-      return window.innerWidth - 50;
+      return window.innerWidth + 300;
     }
     """)
 
@@ -129,8 +129,18 @@ def draw_table(editable, save_url, turno):
         },
         ".ag-ltr": {
             "background-color": "#e7d6d68c"
+
+        },
+        ".ag-theme-alpine .ag-ltr input[class^=ag-][type=text],":{
+            "color":"red"
         }
+
+
+
     }
+    # Contêiner para o botão "Salvar Alterações"
+    button_container = st.empty()
+
 
     grid_response = AgGrid(
         df,
@@ -152,13 +162,17 @@ def draw_table(editable, save_url, turno):
         st.session_state.data_modified = True
 
     # Salvar os dados modificados quando o usuário pressionar o botão
-    if st.session_state.data_modified and st.button("Salvar Alterações"):
-        saveDataToJSON(st.session_state.edited_data[turno], save_url)
-        # Após salvar, atualizar os dados originais e resetar o estado de modificação
-        st.session_state.original_data[turno] = st.session_state.edited_data[turno].copy()
-        st.session_state.data_modified = False
+    if st.session_state.data_modified:
+        with button_container:
+            if st.button("Salvar Alterações", key="save_button"):
+                saveDataToJSON(st.session_state.edited_data[turno], save_url)
+                # Após salvar, atualizar os dados originais e resetar o estado de modificação
+                st.session_state.original_data[turno] = st.session_state.edited_data[turno].copy()
+                st.session_state.data_modified = False
+                # Remover o botão após salvar
+                button_container.empty()
+
+
 
     return edited_df
-
-# Exemplo de uso
 
