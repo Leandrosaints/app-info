@@ -31,7 +31,9 @@ css_style = """
         font-size: 20px;
         color:white;
         border-radius: 10px;
-        background-color: #cac1c1; 
+        background-color: #098aff;
+        width:700px; 
+        margin:auto;
         text-align: center;
     }
     .success-message {
@@ -73,6 +75,13 @@ css_style = """
     .table-responsive {
         overflow-x: hidden;
     
+    }
+     @media only screen and (max-width: 768px) {
+        .user_name {
+           
+            width:300px; 
+            
+        }
     }
 </style>
 """

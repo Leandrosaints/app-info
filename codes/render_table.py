@@ -104,7 +104,7 @@ def draw_table(editable, save_url, turno):
             "background-color": "#098aff",
             "font-size": "16px",
             "text-align": "center",
-            "color":"white",
+            "color": "white",
         },
         ".ag-header-cell-sortable": {
         "padding-left": "100px"
@@ -113,7 +113,7 @@ def draw_table(editable, save_url, turno):
 
         ".ag-cell": {
             "background-color": "#219ebc",
-            "color":"white",
+            "color": "white",
             "font-weight":"bold",
             "font-size": "16px",
             "text-align": "center"
