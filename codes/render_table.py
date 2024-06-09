@@ -18,7 +18,7 @@ def saveDataToJSON(df, save_url):
 # Função para buscar dados do servidor
 def fetch_sheet_data(turno):
     try:
-        response = requests.get(f"http://127.0.0.1:8080/read_data/{turno}")
+        response = requests.get(f"https://app-info.onrender.com/read_data/{turno}")
         if response.status_code == 200:
             return response.json()["values"]
         else:
@@ -47,7 +47,7 @@ def draw_table(editable, save_url, turno):
         if len(data) > 0 and len(data[0]) == len(dias_da_semana):
             st.session_state.original_data[turno] = pd.DataFrame(data, columns=dias_da_semana)
         else:
-            st.error("Dados recebidos não são válidos ou não correspondem às colunas esperadas.")
+            st.error("ERRO-DADOS: CONTACTE OS RESPONSAVEIS. 😨 ")
             return
 
         st.session_state.edited_data[turno] = st.session_state.original_data[turno].copy()

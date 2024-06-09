@@ -20,12 +20,17 @@ css_style = """
         color: #4CAF50;
     }
     
-    h4 {
+    .span-aviso {
         font-family: "Source Sans Pro", sans-serif;
-        font-weight: 600;
-        color: rgb(49, 51, 63);
-        padding: 0px 1rem;
-        margin: 0px;
+        color:white;
+        padding: 20px;
+        background-color:#098aff;
+        margin: 10px;
+        border-radius:10px;
+        width:440px;
+        position: relative;
+        left:38%;
+
     }
     .user_name {
         font-size: 20px;
@@ -34,6 +39,7 @@ css_style = """
         background-color: #098aff;
         width:700px; 
         margin:auto;
+        padding:30px;
         text-align: center;
     }
     .success-message {
