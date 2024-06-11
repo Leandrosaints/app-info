@@ -15,7 +15,7 @@ def save_data_to_json(df, save_url):
 # Função para buscar dados do servidor
 def fetch_sheet_data(turno):
     try:
-        response = requests.get(f"http://127.0.0.1:8080/read_data/{turno}")
+        response = requests.get(f"https://app-info.onrender.com/read_data/{turno}")
         if response.status_code == 200:
             return response.json()["values"]
         else:
@@ -50,9 +50,9 @@ def draw_table(status, save_url, turno):
                 row_cells.append(
                     f"<td><button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal({i}, {j}, \"{df.columns[j]}\")'>{value}</button></td>")
             elif 'prof' in str(value).lower():
-                row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
+                row_cells.append(f"<td style='background-color:#e63946;'>{value}</td>")
             else:
-                row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{value}</td>")
+                row_cells.append(f"<td style='background-color:#615EFC; color:white;'>{value}</td>")
         cells.append("".join(row_cells))
 
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])

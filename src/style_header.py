@@ -29,7 +29,7 @@ css_style = """
         border-radius:10px;
         width:440px;
         position: relative;
-        left:38%;
+        left:35%;
 
     }
     .user_name {
@@ -39,7 +39,7 @@ css_style = """
         background-color: #098aff;
         width:700px; 
         margin:auto;
-        padding:30px;
+        
         text-align: center;
     }
     .success-message {
@@ -84,16 +84,15 @@ css_style = """
     }
      @media only screen and (max-width: 768px) {
         .user_name {
-
             width:300px; 
             
         }
     }
     @media (min-width: 1200px) {
     iframe {
-        width: 1430px;
+        width: 1200px;
         border-radius:12px;
-        height: 600px;
+        height: 550px;
         padding-left:10%;
         
     }
