@@ -87,6 +87,28 @@ css_style = """
             width:300px; 
             
         }
+        .span-aviso {
+            font-family: "Source Sans Pro", sans-serif;
+            color: white;
+            padding: 20px;
+            background-color: #098aff;
+            margin: auto;
+            border-radius: 10px;
+            width: 300px;
+            background-color:#098aff;
+            font-size: 15px;
+            position: relative;
+            left: 0px;
+        }
+        .st-emotion-cache-7ym5gk {
+            background-color:#ff0000;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     }
     @media (min-width: 1200px) {
     iframe {
