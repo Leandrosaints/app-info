@@ -147,13 +147,14 @@ def draw_table(status, save_url, turno):
                         }}))
                     }})
                     .then(response => {{
+                    
                         if (response.ok) {{
                             console.log('Data saved successfully!');
                             var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
                             var confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
                             editModal.hide();
                             confirmModal.hide();
-                            fetchUpdatedData();
+                           
                         }} else {{
                             console.error('Error saving data:', response.status);
                         }}
@@ -162,21 +163,7 @@ def draw_table(status, save_url, turno):
                         console.error('Error saving data:', error);
                     }});
                 }}
-                function fetchUpdatedData() {{
-                    fetch(`http://127.0.0.1:8080/read_data/{turno}`, {{
-                        method: 'GET',
-                        headers: {{
-                            'Content-Type': 'application/json'
-                        }}
-                    }})
-                    .then(response => response.json())
-                    .then(data => {{
-                        updateTable(data.values);
-                    }})
-                    .catch(error => {{
-                        console.error('Error fetching updated data:', error);
-                    }});
-                }}
+                
                // Armazena uma cópia do DataFrame original
                 var originalDF = JSON.parse(`{df.to_json(orient='split')}`);
                 
@@ -184,41 +171,11 @@ def draw_table(status, save_url, turno):
                     // Atualiza o valor no DataFrame global
                     originalDF.data[row][originalDF.columns.indexOf(column)] = value;
                     saveDataToJSON(originalDF);
+
                     
                     // Armazena uma referência direta para o elemento da célula
                     var cellElement = document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[column];
                     cellElement.textContent = value;
-                }}
-
-                
-                function saveDataToJSON(df) {{
-                    fetch('{save_url}', {{
-                        method: 'POST',
-                        headers: {{
-                            'Content-Type': 'application/json'
-                        }},
-                        body: JSON.stringify(df.data.map(row => {{
-                            let obj = {{}};
-                            df.columns.forEach((col, idx) => {{
-                                obj[col] = row[idx];
-                            }});
-                            return obj;
-                        }}))
-                    }})
-                    .then(response => {{
-                        if (response.ok) {{
-                            console.log('Data saved successfully!');
-                            var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-                            var confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
-                            editModal.hide();
-                            confirmModal.hide();
-                        }} else {{
-                            console.error('Error saving data:', response.status);
-                        }}
-                    }})
-                    .catch(error => {{
-                        console.error('Error saving data:', error);
-                    }});
                 }}
 
             </script>
