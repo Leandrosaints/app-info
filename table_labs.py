@@ -32,9 +32,10 @@ st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
 
 st.markdown(css_style, unsafe_allow_html=True)
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino"], key='select-box')
-save_url = f"https://app-info.onrender.com/write_data/{turno}"
-editable = True #st.checkbox("Permitir Edição")
+save_url = f"http://127.0.0.1:8080/write_data/{turno}"
+editable = False#st.checkbox("Permitir Edição")
 st.markdown(f'<h4 class="span-aviso"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
-draw_table(editable, save_url, turno)
+if draw_table(editable, save_url, turno):
+    st.rerun()
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)

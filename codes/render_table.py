@@ -1,24 +1,21 @@
 import streamlit as st
 import pandas as pd
-from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 import requests
+import streamlit.components.v1 as components
+
+# Constantes e Configurações
+DIAS_DA_SEMANA = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
 
 # Função para salvar os dados no servidor
-def saveDataToJSON(df, save_url):
-    try:
-        json_data = df.to_dict(orient='records')
-        response = requests.post(save_url, json=json_data)
-        if response.status_code != 200:
-            st.error("Erro ao salvar os dados.")
-        else:
-            st.success("Dados salvos com sucesso.")
-    except Exception as e:
-        st.error(f"Erro: {e}")
+def save_data_to_json(df, save_url):
+    json_data = df.to_dict(orient='records')
+    response = requests.post(save_url, json=json_data)
+    st.write(response.json())
 
 # Função para buscar dados do servidor
 def fetch_sheet_data(turno):
     try:
-        response = requests.get(f"https://app-info.onrender.com/read_data/{turno}")
+        response = requests.get(f"http://127.0.0.1:8080/read_data/{turno}")
         if response.status_code == 200:
             return response.json()["values"]
         else:
@@ -29,150 +26,233 @@ def fetch_sheet_data(turno):
         return []
 
 # Função para desenhar a tabela
-def draw_table(editable, save_url, turno):
-    # Usando st.session_state para armazenar dados originais e editados
-    if 'original_data' not in st.session_state:
-        st.session_state.original_data = {}
-    if 'edited_data' not in st.session_state:
-        st.session_state.edited_data = {}
-    if 'data_modified' not in st.session_state:
-        st.session_state.data_modified = False
+def draw_table(status, save_url, turno):
 
-    # Carregar dados apenas se o turno mudou ou se é a primeira vez
-    if turno not in st.session_state.original_data:
-        data = fetch_sheet_data(turno)
-        dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-
-        # Verifique se o tamanho dos dados é igual ao número de colunas esperadas
-        if len(data) > 0 and len(data[0]) == len(dias_da_semana):
-            st.session_state.original_data[turno] = pd.DataFrame(data, columns=dias_da_semana)
-        else:
-            st.error("ERRO-DADOS: CONTACTE OS RESPONSAVEIS. 😨 ")
-            return
-
-        st.session_state.edited_data[turno] = st.session_state.original_data[turno].copy()
-    else:
-        data = st.session_state.edited_data[turno]
-
+    data = fetch_sheet_data(turno)
     df = pd.DataFrame(data)
-
-    # Garantir que os nomes das colunas sejam mantidos corretamente
-    dias_da_semana = ["LAB", "Seg", "Ter", "Qua", "Qui", "Sex"]
-    if df.shape[1] == len(dias_da_semana):
-        df.columns = dias_da_semana
+    if df.shape[1] == len(DIAS_DA_SEMANA):
+        df.columns = DIAS_DA_SEMANA
     else:
         st.error("Número de colunas do DataFrame não corresponde aos dias da semana.")
         return
 
-    # Configurando a tabela
-    gb = GridOptionsBuilder.from_dataframe(df)
-    gb.configure_default_column(editable=editable, minWidth=215.7)  # Definindo um tamanho mínimo para as colunas
+    # Gerar HTML da tabela
+    thead1 = "<thead><tr><th style='background-color:#098aff;'scope='col'></th>"
+    thead_temp = ["<th style='background-color:#098aff;'scope='col'>" + str(col) + "</th>" for col in df.columns]
+    header = thead1 + "".join(thead_temp) + "</tr ></thead>"
 
-    # Definindo estilos personalizados via JsCode
-    cell_style_jscode = JsCode("""
-    function(params) {
-        let style = {'font-size': '16px', 'text-align': 'center'};
-        if (params.value.toLowerCase() === 'livre') {
-            style.color = 'gray';
-            style.backgroundColor = '#48ff98';
-        } else if (params.value.toLowerCase().includes('prof')) {
-            style.color = '#fefae0';
-            style.backgroundColor = '#e63946';
-        }
-        return style;
-    };
-    """)
+    rows = ["<tr><th scope='row'></th>" for _ in range(df.shape[0])]
+    cells = []
+    for i, row in enumerate(df.values.tolist()):
+        row_cells = []
+        for j, value in enumerate(row):
+            if str(value).lower() == 'livre':
+                row_cells.append(
+                    f"<td><button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal({i}, {j}, \"{df.columns[j]}\")'>{value}</button></td>")
+            elif 'prof' in str(value).lower():
+                row_cells.append(f"<td style='background-color: yellow;'>{value}</td>")
+            else:
+                row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{value}</td>")
+        cells.append("".join(row_cells))
+    body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
 
-    # Função para concatenar "PROF " aos valores inseridos
-    value_parser_jscode = JsCode("""
-    function(params) {
-        let newValue = params.newValue.trim();
-        if (!newValue.toLowerCase().startsWith('prof ')) {
-            newValue = 'PROF: ' + newValue;
-        }
-        return newValue;
-    };
-    """)
+    table_html = f"""
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            <style>
+                .table {{
+                    border-collapse: collapse;
+                    border: 1px solid #dee2e6;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                }}
+                .table th, .table td {{
+                    border: 1px solid #dee2e6;
+                    padding: 0.75rem;
+                }}
+                .table thead th {{
+                    background-color: #007bff;
+                    color: #fff;
+                }}
+                .table tbody td {{
+                    background-color: #f8f9fa;
+                }}
+                .table tbody td.libre {{
+                    background-color: #1ef79399;
+                    color: #000;
+                }}
+                .table tbody td.professor {{
+                    background-color: #ffc107;
+                    color: #000;
+                }}
+                .table-responsive {{
+                    max-width: 100%;
+                    overflow-x: auto;
+                }}
+                .table {{
+                    width: 100%;
+                    max-width: 100%;
+                    margin-bottom: 1rem;
+                    text-align: center;
+                }}
+            </style>
+            <script>
+                function openModal(row, col, column) {{
+                    var modal = new bootstrap.Modal(document.getElementById('editModal'));
+                    document.getElementById('modalRow').value = row;
+                    document.getElementById('modalCol').value = col;
+                    document.getElementById('modalColumn').value = column;
+                    document.getElementById('modalValue').value = document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[col].textContent;
+                    modal.show();
+                }}
+                function confirmSave() {{
+                    var value = document.getElementById('modalValue').value;
+                    if (value.trim() === "" || value.trim().toLowerCase() === "livre") {{
+                        alert("O campo não pode estar vazio ou ser 'livre'!");
+                        return;
+                    }}
+                    var confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                    confirmModal.show();
+                }}
+                function saveValue() {{
+                    var row = document.getElementById('modalRow').value;
+                    var col = document.getElementById('modalCol').value;
+                    var column = document.getElementById('modalColumn').value;
+                    var value = document.getElementById('modalValue').value;
+                    if (value.trim() === "" || value.trim().toLowerCase() === "livre") {{
+                        alert("O campo não pode estar vazio ou ser 'livre'!");
+                        return;
+                    }}
+                    var displayValue = "Prof: " + value;
+                    document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[col].innerHTML = displayValue;
+                    updateDataFrame(row, column, displayValue);
+                }}
+                function updateDataFrame(row, column, value) {{
+                    var df = {df.to_json(orient='split')};
+                    df.data[row][df.columns.indexOf(column)] = value;
+                    saveDataToJSON(df);
+                }}
+                function saveDataToJSON(df) {{
+                   fetch('{save_url}', {{
+                        method: 'POST',
+                        headers: {{
+                            'Content-Type': 'application/json'
+                        }},
+                        body: JSON.stringify(df.data.map(row => {{
+                            let obj = {{}};
+                            df.columns.forEach((col, idx) => {{
+                                obj[col] = row[idx];
+                            }});
+                            return obj;
+                        }}))
+                    }})
+                    .then(response => {{
+                        if (response.ok) {{
+                            console.log('Data saved successfully!');
+                            var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                            var confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+                            editModal.hide();
+                            confirmModal.hide();
+                            fetchUpdatedData();
+                        }} else {{
+                            console.error('Error saving data:', response.status);
+                        }}
+                    }})
+                    .catch(error => {{
+                        console.error('Error saving data:', error);
+                    }});
+                }}
+                function fetchUpdatedData() {{
+                    fetch(`http://127.0.0.1:8080/read_data/{turno}`, {{
+                        method: 'GET',
+                        headers: {{
+                            'Content-Type': 'application/json'
+                        }}
+                    }})
+                    .then(response => response.json())
+                    .then(data => {{
+                        updateTable(data.values);
+                    }})
+                    .catch(error => {{
+                        console.error('Error fetching updated data:', error);
+                    }});
+                }}
+                function updateTable(data) {{
+                    var tbody = document.querySelector('.table tbody');
+                    tbody.innerHTML = '';
+                    data.forEach((row, i) => {{
+                        var tr = document.createElement('tr');
+                        var th = document.createElement('th');
+                        th.scope = 'row';
+                        tr.appendChild(th);
+                        row.forEach((value, j) => {{
+                            var td = document.createElement('td');
+                            if (value.toLowerCase() === 'livre') {{
+                                td.innerHTML = `<button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal(${i}, ${j}, "{df.columns[j]}")'>{value}</button>`;
+                            }} else if (value.toLowerCase().includes('prof')) {{
+                                td.style.backgroundColor = 'yellow';
+                                td.textContent = value;
+                            }} else {{
+                                td.style.backgroundColor = '#b6b6be';
+                                td.style.color = 'white';
+                                td.textContent = value;
+                            }}
+                            tr.appendChild(td);
+                        }});
+                        tbody.appendChild(tr);
+                    }});
+                }}
+            </script>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm text-center">
+                    {header}
+                    <tbody>
+                        {body}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Nome do professor</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="modalRow">
+                            <input type="hidden" id="modalCol">
+                            <input type="hidden" id="modalColumn">
+                            <div class="mb-3">
+                                <label for="modalValue" class="form-label">Digite apenas seu nome.</label>
+                                <label for="modalValue" class="form-label-one">Antes de salvar, verifique se o turno está correto.</label>
+                                <input type="text" class="form-control" id="modalValue">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-primary" onclick="confirmSave()">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel">Confirmar Salvar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Tem certeza que deseja salvar as alterações?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="saveValue()">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            """
 
-    # Aplicando o estilo e o valueParser para todas as colunas
-    for column in df.columns:
-        gb.configure_column(column, cellStyle=cell_style_jscode, valueParser=value_parser_jscode)
-
-    grid_options = gb.build()
-
-    # Ajustando a altura e largura da tabela
-    table_height = min(400, len(df) * 35 + 120)
-
-    # Usar a largura da janela do navegador
-    grid_width_js = JsCode("""
-    function() {
-      return window.innerWidth + 300;
-    }
-    """)
-
-    custom_css = {
-        ".ag-header-cell": {
-            "background-color": "#098aff",
-            "font-size": "16px",
-            "text-align": "center",
-            "color": "#fefae0",
-        },
-        ".ag-header-cell-sortable": {
-            "padding-left": "100px"
-        },
-        ".ag-cell": {
-            "background-color": "#219ebc",
-            "color": "white",
-            "font-weight": "bold",
-            "font-size": "16px",
-            "text-align": "center"
-        },
-        ".ag-ltr": {
-            "background-color": "#e7d6d68c"
-
-        },
-        ".ag-theme-alpine .ag-ltr input[class^=ag-][type=text],":{
-            "color":"red"
-        }
-
-
-
-    }
-    # Contêiner para o botão "Salvar Alterações"
-    button_container = st.empty()
-
-
-    grid_response = AgGrid(
-        df,
-        gridOptions=grid_options,
-        editable=editable,
-        theme='alpine',
-        allow_unsafe_jscode=True,
-        height=table_height,
-        width=grid_width_js,  # Usar a largura da janela do navegador
-        custom_css=custom_css
-    )
-
-    # Dataframe com as edições feitas
-    edited_df = pd.DataFrame(grid_response['data'])
-
-    # Comparar os dados para detectar mudanças
-    if not edited_df.equals(st.session_state.edited_data[turno]):
-        st.session_state.edited_data[turno] = edited_df.copy()
-        st.session_state.data_modified = True
-
-    # Salvar os dados modificados quando o usuário pressionar o botão
-    if st.session_state.data_modified:
-        with button_container:
-            if st.button("Salvar Alterações", key="save_button"):
-                saveDataToJSON(st.session_state.edited_data[turno], save_url)
-                # Após salvar, atualizar os dados originais e resetar o estado de modificação
-                st.session_state.original_data[turno] = st.session_state.edited_data[turno].copy()
-                st.session_state.data_modified = False
-                # Remover o botão após salvar
-                button_container.empty()
-
-
-
-    return edited_df
+    # Exibir tabela
+    components.html(table_html, height=600, scrolling=True)
 

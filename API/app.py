@@ -69,6 +69,8 @@ def read_data():
 
 if __name__ == "__main__":
     app.run(debug=True)"""
+from urllib import request
+
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
