@@ -54,6 +54,7 @@ def draw_table(status, save_url, turno):
             else:
                 row_cells.append(f"<td style='background-color:#b6b6be; color:white;'>{value}</td>")
         cells.append("".join(row_cells))
+
     body = "".join([rows[i] + cells[i] + "</tr>" for i in range(df.shape[0])])
 
     table_html = f"""
@@ -176,31 +177,50 @@ def draw_table(status, save_url, turno):
                         console.error('Error fetching updated data:', error);
                     }});
                 }}
-                function updateTable(data) {{
-                    var tbody = document.querySelector('.table tbody');
-                    tbody.innerHTML = '';
-                    data.forEach((row, i) => {{
-                        var tr = document.createElement('tr');
-                        var th = document.createElement('th');
-                        th.scope = 'row';
-                        tr.appendChild(th);
-                        row.forEach((value, j) => {{
-                            var td = document.createElement('td');
-                            if (value.toLowerCase() === 'livre') {{
-                                td.innerHTML = `<button style='background-color:#1ef79399; color:black;' class='btn btn-success' onclick='openModal(${i}, ${j}, "{df.columns[j]}")'>{value}</button>`;
-                            }} else if (value.toLowerCase().includes('prof')) {{
-                                td.style.backgroundColor = 'yellow';
-                                td.textContent = value;
-                            }} else {{
-                                td.style.backgroundColor = '#b6b6be';
-                                td.style.color = 'white';
-                                td.textContent = value;
-                            }}
-                            tr.appendChild(td);
-                        }});
-                        tbody.appendChild(tr);
+               // Armazena uma cópia do DataFrame original
+                var originalDF = JSON.parse(`{df.to_json(orient='split')}`);
+                
+                function updateDataFrame(row, column, value) {{
+                    // Atualiza o valor no DataFrame global
+                    originalDF.data[row][originalDF.columns.indexOf(column)] = value;
+                    saveDataToJSON(originalDF);
+                    
+                    // Armazena uma referência direta para o elemento da célula
+                    var cellElement = document.querySelectorAll('tbody tr')[row].querySelectorAll('td')[column];
+                    cellElement.textContent = value;
+                }}
+
+                
+                function saveDataToJSON(df) {{
+                    fetch('{save_url}', {{
+                        method: 'POST',
+                        headers: {{
+                            'Content-Type': 'application/json'
+                        }},
+                        body: JSON.stringify(df.data.map(row => {{
+                            let obj = {{}};
+                            df.columns.forEach((col, idx) => {{
+                                obj[col] = row[idx];
+                            }});
+                            return obj;
+                        }}))
+                    }})
+                    .then(response => {{
+                        if (response.ok) {{
+                            console.log('Data saved successfully!');
+                            var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                            var confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+                            editModal.hide();
+                            confirmModal.hide();
+                        }} else {{
+                            console.error('Error saving data:', response.status);
+                        }}
+                    }})
+                    .catch(error => {{
+                        console.error('Error saving data:', error);
                     }});
                 }}
+
             </script>
             <div class="table-responsive">
                 <table class="table table-bordered table-sm text-center">
