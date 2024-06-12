@@ -14,7 +14,7 @@ def save_data_to_json(df, save_url):
 
 # Função para buscar dados do servidor
 def fetch_sheet_data(turno):
-    try:
+    try:#https://agendamentos-labs-informatica.onrender.com
         response = requests.get(f"https://agendamentos-labs-informatica.onrender.com/read_data/{turno}")
 
         if response.status_code == 200:

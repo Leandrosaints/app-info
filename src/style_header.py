@@ -110,7 +110,7 @@ css_style = """
             cursor: pointer;
         }
     }
-    @media (min-width: 1200px) {
+    @media (min-width: 1300px) {
     iframe {
         width: 1200px;
         border-radius:12px;
@@ -120,14 +120,17 @@ css_style = """
     }
     [data-testid="baseButton-secondary"] {
         background-color:#e63946; /* Cor de fundo */
-        padding: 20px; /* Espaçamento interno */
-        margin-right:90px;
+        padding: 10px; /* Espaçamento interno */
+        margin-right:320px;
         border-radius: 10px; /* Bordas arredondadas */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
         text-align: center; /* Centralizar texto */
         font-size: 18px; /* Tamanho da fonte */
         color: #333; /* Cor do texto */
-         float: right; /* Adiciona alinhamento à direita */
+        top:-50px;
+        float: right; /* Adiciona alinhamento à direita */
+        position:relative;
+        
     }
     
   
@@ -180,4 +183,74 @@ hidden_menu = """
         footer {visibility: hidden;}
 
     </style> 
+"""
+
+prox_style = """
+    <style>
+        
+        .span-aviso {
+            font-family: "Source Sans Pro", sans-serif;
+            color: white;
+            padding: 20px;
+            background-color: #098aff;
+            margin: auto;
+            border-radius: 10px;
+            width: 290px;
+            font-size: 15px;
+            position: relative;
+            top:60px;
+            left: 19.5%;
+        }
+        .span-aviso-prox {
+            font-family: "Source Sans Pro", sans-serif;
+            color: white;
+            padding: 20px;
+            background-color:#74e2ba;
+            margin: auto;
+            border-radius: 10px;
+            width: 460px;
+           
+            font-size: 20px;
+            text-align:center;
+            position: relative;
+            top:118px;
+            right:10%;
+        }
+        @media only screen and (max-width: 768px) {
+     
+        .span-aviso {
+            font-family: "Source Sans Pro", sans-serif;
+            color: white;
+            padding: 20px;
+            background-color: #098aff;
+            margin: auto;
+            border-radius: 10px;
+            width: 300px;
+            background-color:#098aff;
+            font-size: 15px;
+            position: relative;
+            top:-10px;
+            left: 0px;
+        }
+        .span-aviso-prox {
+            font-family: "Source Sans Pro", sans-serif;
+            color: white;
+            padding: 20px;
+            background-color:#74e2ba;
+            margin: auto;
+            border-radius: 10px;
+            width: 460px;
+           
+            font-size: 20px;
+            text-align:center;
+            position: relative;
+            top:-18px;
+            right:10%;
+        }
+        
+    }
+    
+    </style>
+    
+    
 """
