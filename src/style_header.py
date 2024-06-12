@@ -82,6 +82,9 @@ css_style = """
         overflow-x: hidden;
     
     }
+    [data-testid="baseButton-secondary"] {
+        background-color:#e63946; /* Cor de fundo */
+    }
      @media only screen and (max-width: 768px) {
         .user_name {
             width:300px; 
@@ -110,7 +113,7 @@ css_style = """
             cursor: pointer;
         }
     }
-    @media (min-width: 1300px) {
+    @media (min-width: 1600px) {
     iframe {
         width: 1200px;
         border-radius:12px;
@@ -187,7 +190,22 @@ hidden_menu = """
 
 prox_style = """
     <style>
+      
+        [data-testid="baseButton-secondary"] {
+        background-color:#e63946; /* Cor de fundo */
+        padding: 10px; /* Espaçamento interno */
+        margin-right:320px;
+        border-radius: 10px; /* Bordas arredondadas */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+        text-align: center; /* Centralizar texto */
+        font-size: 18px; /* Tamanho da fonte */
+        color: #333; /* Cor do texto */
+        top:-50px;
+        left:310px;
+        float: right; /* Adiciona alinhamento à direita */
+        position:relative;
         
+    }
         .span-aviso {
             font-family: "Source Sans Pro", sans-serif;
             color: white;
@@ -199,7 +217,7 @@ prox_style = """
             font-size: 15px;
             position: relative;
             top:60px;
-            left: 19.5%;
+            left: 40%;
         }
         .span-aviso-prox {
             font-family: "Source Sans Pro", sans-serif;

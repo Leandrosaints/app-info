@@ -68,7 +68,7 @@ def draw_table(status, save_url, turno):
                     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
                 }}
                 .table th, .table td {{
-                    border: 1px solid #dee2e6;
+                    border: 0.5px solid #dee2e6;
                     padding: 0.75rem;
                 }}
                 .table thead th {{
@@ -76,20 +76,11 @@ def draw_table(status, save_url, turno):
                     color: #fff;
                 }}
                 .table tbody td {{
-                    background-color: #f8f9fa;
+                    background-color: #f3e2e8;/*cor de fundo da tabela*/
                 }}
-                .table tbody td.libre {{
-                    background-color: #1ef79399;
-                    color: #000;
-                }}
-                .table tbody td.professor {{
-                    background-color: #ffc107;
-                    color: #000;
-                }}
-                .table-responsive {{
-                    max-width: 100%;
-                    overflow-x: auto;
-                }}
+                
+                
+               
                 .table {{
                     width: 100%;
                     max-width: 100%;
