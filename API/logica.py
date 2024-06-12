@@ -41,6 +41,7 @@ def authenticate():
     return creds
 
 
+
 # Restante do código permanece o mesmo...
 
 
@@ -54,8 +55,8 @@ def write_sheet(values, turno):
         "values": values_list
     }
     result = service.spreadsheets().values().update(
-        spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
-        range=f"{turno}!A2:F8",
+        spreadsheetId='1-UAIpuNLHw9s4-jm7xv_4hrqzH8NK_Jz3cxQgQCVOG8',
+        range=f"{turno}!A2:F6",
         valueInputOption="RAW",
         body=body
     ).execute()
@@ -68,8 +69,9 @@ def read_sheet(turno):
 
     try:
         request = service.spreadsheets().values().get(
-            spreadsheetId='1SckA6j63wLa17J-7wstwL-rA8tN5sKxDBnlfBsJcOk8',
-            range=f"{turno}!A2:F8",
+
+            spreadsheetId='1-UAIpuNLHw9s4-jm7xv_4hrqzH8NK_Jz3cxQgQCVOG8',
+            range=f"{turno}!A2:F6",
             valueRenderOption="UNFORMATTED_VALUE",
             majorDimension="ROWS"
         )

@@ -16,6 +16,7 @@ def save_data_to_json(df, save_url):
 def fetch_sheet_data(turno):
     try:
         response = requests.get(f"https://app-info.onrender.com/read_data/{turno}")
+        print(response.json())
         if response.status_code == 200:
             return response.json()["values"]
         else:
