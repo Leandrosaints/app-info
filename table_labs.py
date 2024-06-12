@@ -32,7 +32,7 @@ st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
 
 st.markdown(css_style, unsafe_allow_html=True)
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
-save_url = f"https://app-info.onrender.com/write_data/{turno}"
+save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False#st.checkbox("Permitir Edição")
 st.markdown(f'<h4 class="span-aviso"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
 atualizar = st.button('Atualizar planilha', key='btn-atualizar')
