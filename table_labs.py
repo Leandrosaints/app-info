@@ -80,7 +80,7 @@ with st.expander('Dicas Rapidas❓', expanded=True):
 
 st.markdown(css_style, unsafe_allow_html=True)
 turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
-save_url = f"http://127.0.0.1:8080/write_data/{turno}"
+save_url = f"https://app-info.onrender.com/write_data/{turno}"
 editable = False#st.checkbox("Permitir Edição")
 obter_dias_uteis_proxima_semana(st)
 
