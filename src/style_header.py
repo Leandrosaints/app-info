@@ -133,36 +133,37 @@ css_style = """
             position: relative;
             left: 0px;
         }
-        .st-emotion-cache-7ym5gk {
-            background-color:#ff0000;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+         [data-testid="baseButton-secondary"] {
+            margin-right: 0;
+            left: 0;
+            top: 0;
+            float: none;
+            margin-top:10px;
+            width: 100%; /* Ajusta a largura para 100% */
+            box-sizing: border-box; /* Inclui o padding e border no cálculo da largura */
         }
     }
-    @media (min-width: 1600px) {
+    @media (min-width: 1300px) {
     iframe {
-        width: 1200px;
+        width: 100%;
         border-radius:12px;
         height: 550px;
-        padding-left:10%;
+        
         
     }
     [data-testid="baseButton-secondary"] {
-        background-color:#e63946; /* Cor de fundo */
-        padding: 10px; /* Espaçamento interno */
+        background-color: #e63946; /* Cor de fundo */
+        padding: 20px; /* Espaçamento interno */
         margin-right:320px;
         border-radius: 10px; /* Bordas arredondadas */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
         text-align: center; /* Centralizar texto */
         font-size: 18px; /* Tamanho da fonte */
         color: #333; /* Cor do texto */
-        top:-50px;
+        top:10px;
         float: right; /* Adiciona alinhamento à direita */
         position:relative;
+        
         
     }
     
@@ -220,85 +221,77 @@ hidden_menu = """
 
 prox_style = """
     <style>
-      
-        [data-testid="baseButton-secondary"] {
-        background-color:#e63946; /* Cor de fundo */
+    
+    [data-testid="baseButton-secondary"] {
+        background-color: #e63946; /* Cor de fundo */
         padding: 10px; /* Espaçamento interno */
-        margin-right:320px;
+     
         border-radius: 10px; /* Bordas arredondadas */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
         text-align: center; /* Centralizar texto */
         font-size: 18px; /* Tamanho da fonte */
         color: #333; /* Cor do texto */
-        top:-50px;
-        left:310px;
-        float: right; /* Adiciona alinhamento à direita */
-        position:relative;
-        
+        top: 5px; /* Ajuste para aproximar do .span-aviso-prox */
+        left: 150px; /* Ajuste para alinhar com .span-aviso-prox */
+        float: left; /* Adiciona alinhamento à direita */
+        position: relative;
     }
-        .span-aviso {
-            font-family: "Source Sans Pro", sans-serif;
-            color: white;
-            padding: 20px;
-            background-color: #098aff;
-            margin: auto;
-            border-radius: 10px;
-            width: 290px;
-            font-size: 15px;
-            position: relative;
-            top:60px;
-            left: 40%;
-        }
-        .span-aviso-prox {
-            font-family: "Source Sans Pro", sans-serif;
-            color: white;
-            padding: 20px;
-            background-color:#74e2ba;
-            margin: auto;
-            border-radius: 10px;
-            width: 460px;
-           
-            font-size: 20px;
-            text-align:center;
-            position: relative;
-            top:118px;
-            right:10%;
-        }
-        @media only screen and (max-width: 768px) {
-     
-        .span-aviso {
-            font-family: "Source Sans Pro", sans-serif;
-            color: white;
-            padding: 20px;
-            background-color: #098aff;
-            margin: auto;
-            border-radius: 10px;
-            width: 300px;
-            background-color:#098aff;
-            font-size: 15px;
-            position: relative;
-            top:-10px;
-            left: 0px;
-        }
-        .span-aviso-prox {
-            font-family: "Source Sans Pro", sans-serif;
-            color: white;
-            padding: 20px;
-            background-color:#74e2ba;
-            margin: auto;
-            border-radius: 10px;
-            width: 460px;
-           
-            font-size: 20px;
-            text-align:center;
-            position: relative;
-            top:-18px;
-            right:10%;
-        }
-        
+
+    .span-aviso {
+        font-family: "Source Sans Pro", sans-serif;
+        color: white;
+        padding: 20px;
+        background-color: #098aff;
+        margin: auto;
+        border-radius: 10px;
+        width: 290px;
+        font-size: 15px;
+        position: relative;
+        top: 50px; /* Ajuste para aproximar do .span-aviso-prox */
+        left: 19%; /* Ajuste para alinhar com .span-aviso-prox */
     }
-    
-    </style>
+
+    .span-aviso-prox {
+        font-family: "Source Sans Pro", sans-serif;
+        color: white;
+        padding: 20px;
+        background-color: #74e2ba;
+        margin: auto;
+        border-radius: 10px;
+        width: 460px;
+        font-size: 20px;
+        text-align: center;
+        position: relative;
+        top: 108px;
+        right: 10%;
+    }
+
+    /* Estilos para telas menores */
+    @media only screen and (max-width: 768px) {
+        [data-testid="baseButton-secondary"] {
+            margin-right: 0;
+            left: 0;
+            top: 0;
+            float: none;
+            width: 100%; /* Ajusta a largura para 100% */
+            box-sizing: border-box; /* Inclui o padding e border no cálculo da largura */
+        }
+
+        .span-aviso {
+            width: calc(100% - 40px); /* Ajusta a largura */
+            left: 0;
+            margin:20px;
+            top: 10px; /* Ajusta a posição */
+        }
+
+        .span-aviso-prox {
+            width: calc(100% - 40px); /* Ajusta a largura */
+            top: 10px; /* Ajusta a posição */
+            right: 0;
+        }
+    }
+</style>
+
     
     
 """

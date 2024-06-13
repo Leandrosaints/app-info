@@ -60,8 +60,10 @@ text = """
     Olá! Bem-vindo ao Sistema Básico de Agendamentos de labs. 
     Esta é uma versão beta, então por favor, tenha paciência, Obrigado 🫡!
 """
+
 st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
 st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
+
 with st.expander('Dicas Rapidas❓', expanded=True):
     st.markdown("""
          <div class='poup-up' style='padding: 20px; background-color:#f0f2f6; border-radius: 10px;'>
@@ -81,8 +83,10 @@ turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"]
 save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False#st.checkbox("Permitir Edição")
 obter_dias_uteis_proxima_semana(st)
-st.markdown(f'<h4 class="span-aviso"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
+
+st.markdown(f'<h4 class="span-aviso" class="container"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
 atualizar = st.button('Atualizar planilha', key='btn-atualizar')
+
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)

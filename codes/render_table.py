@@ -53,6 +53,7 @@ def draw_table(status, save_url, turno):
             elif 'prof' in str(value).lower():
                 row_cells.append(f"<td style='background-color:#e63946;'>{value}</td>")
             else:
+
                 row_cells.append(f"<td style='background-color:#615EFC; color:white;'>{value}</td>")
         cells.append("".join(row_cells))
 
