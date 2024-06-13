@@ -58,6 +58,17 @@ text = """
 """
 st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
 st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
+with st.expander('Dicas Rapidas❓', expanded=True):
+    st.markdown("""
+         <div class='poup-up' style='padding: 20px; background-color:#f0f2f6; border-radius: 10px;'>
+             <h3> Dicas Rápidas de Uso  </h3>
+             <ul style='list-style-type: disc; padding-left: 20px;'>
+                 <li>Insira Apenas o Primeiro Nome: Não é necessário usar prefixos como Prof. ou Professor, pois o sistema já os adiciona automaticamente.</li>
+                 <li>Atualize a Tabela ao Entrar: Sempre que entrar no sistema, atualize a tabela para verificar a disponibilidade correta das salas.</li>
+                 <li>Atualize a Planilha Após Agendar: Após terminar de agendar, clique em "Atualizar planilha" para que os dados sejam refletidos no sistema.</li>
+             </ul>
+         </div>
+     """, unsafe_allow_html=True)
 
 
 
@@ -71,3 +82,4 @@ atualizar = st.button('Atualizar planilha', key='btn-atualizar')
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)
+

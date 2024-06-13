@@ -1,13 +1,39 @@
 css_style = """
 <style>
+    .poup-up {
+        width:400px;
+           
+    }
+    .st-emotion-cache-p5msec {
+            position: relative;
+            display: flex;
+            width: 60%;
+            font-size: 14px;
+            padding: 0.75rem 1rem;
+            list-style-type: 
+    }
     
+
+    .st-emotion-cache-1clstc5 {
+            padding-bottom: 1rem;
+            padding-left: 36%;
+            
+        }
+    .st-emotion-cache-1dtefog {
+        display: flex;
+        gap: 0.5rem;
+        -webkit-box-align: center;
+        align-items: left;
+        -webkit-box-flex: 1;
+        flex-grow: 1;
+        flex-direction: row-reverse;
+    }
+   
     .table {
     
         color: #212529;
         background-color:#0552d43b;
         width:100%;
-
-   
     }
     .st-emotion-cache-uf99v8 {
       
@@ -59,11 +85,10 @@ css_style = """
 
 
     }
-    .select-box {
-        font-size: 20px;
-        
-        margin-bottom:10px;
-         
+    .st-emotion-cache-l9bjmx p {
+        word-break: break-word;
+        margin-bottom: 0px;
+        font-size: 18px;
     }
     
     .st-emotion-cache-z5fcl4 {
@@ -74,6 +99,7 @@ css_style = """
     }
     p {
         color:white;
+        font-size:16px;
          font-weight: bold;
 
     }
@@ -86,6 +112,10 @@ css_style = """
         background-color:#e63946; /* Cor de fundo */
     }
      @media only screen and (max-width: 768px) {
+        .st-emotion-cache-1clstc5 {
+            padding-bottom: 1rem;
+            padding-left: 1%;
+        }
         .user_name {
             width:300px; 
             
