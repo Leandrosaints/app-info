@@ -2,7 +2,7 @@ import streamlit as st
 from src.style_header import css_style,hidden_menu
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
-st.set_page_config(page_title='agendamentos de labs diversos', page_icon='⚙️', layout="wide")
+st.set_page_config(layout="wide")
 add_img_app('src/img_fundo.jpg')
 from datetime import datetime, timedelta
 
