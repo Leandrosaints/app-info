@@ -4,7 +4,7 @@ import streamlit as st
 from src.style_header import css_style,hidden_menu, prox_style
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
-st.set_page_config(page_title='Agendamentos labs ⚙', page_icon='🖥️',layout="wide")
+st.set_page_config(page_title='Agendamentos labs', page_icon='🖥️',layout="wide")
 add_img_app('src/img_fundo.jpg')
 from datetime import datetime, timedelta
 from codes.dias import obter_dias_uteis_proxima_semana
