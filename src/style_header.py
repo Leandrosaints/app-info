@@ -1,5 +1,9 @@
 css_style = """
 <style>
+    .icon {
+        height:30px;
+        width:30px;
+    }
     .poup-up {
         width:400px;
 
