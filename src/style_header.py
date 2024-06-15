@@ -1,5 +1,17 @@
 css_style = """
 <style>
+    .icon {
+        height:35px;
+        width:30px;
+     
+    }
+    .main {
+        display: flex;
+        flex-direction: column;
+        
+        margin-top: 9px;
+       
+    }
     .poup-up {
         width:400px;
            
