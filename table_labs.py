@@ -4,7 +4,7 @@ import streamlit as st
 from src.style_header import css_style,hidden_menu, prox_style
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
-st.set_page_config(page_title='Agendamentos labs ⚙', page_icon='🖥️',layout="wide")
+st.set_page_config(page_title='Agendamentos labs', page_icon='🖥️',layout="wide")
 add_img_app('src/img_fundo.jpg')
 from datetime import datetime, timedelta
 from codes.dias import obter_dias_uteis_proxima_semana
@@ -53,10 +53,8 @@ turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"]
 save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False#st.checkbox("Permitir Edição")
 obter_dias_uteis_proxima_semana(st, prox_style)
-
 st.markdown(f'<h4 class="span-aviso" class="container"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
 atualizar = st.button('Atualizar planilha', key='btn-atualizar')
-
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)

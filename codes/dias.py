@@ -12,19 +12,19 @@ def obter_dias_uteis_proxima_semana(st, style):
         ]
         st.markdown(style, unsafe_allow_html=True)
         st.markdown(
-            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de Seg-{lista_proximos_dias[0]} a Qua-{lista_proximos_dias[1]} livres📅</h4>',
+            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[1]} livres📅</h4>',
             unsafe_allow_html=True
         )
     elif hoje.weekday() == 4:  # Se hoje for sexta-feira
         segunda_proxima_semana = hoje + timedelta(days=3)  # Segunda-feira da próxima semana
-        quinta_proxima_semana = hoje + timedelta(days=6)  # Quinta-feira da próxima semana
+        quinta_proxima_semana = hoje + timedelta(days=7)  # Quinta-feira da próxima semana
         lista_proximos_dias = [
             segunda_proxima_semana.strftime("%d/%m"),
             quinta_proxima_semana.strftime("%d/%m")
         ]
         st.markdown(style, unsafe_allow_html=True)
         st.markdown(
-            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de Seg-{lista_proximos_dias[0]} a Qui-{lista_proximos_dias[1]} livres📅</h4>',
+            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[1]} livres📅</h4>',
             unsafe_allow_html=True
         )
     else:
