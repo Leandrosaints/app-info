@@ -23,8 +23,6 @@ def obter_dias_uteis_semana_atual():
 
 # Exemplo de uso
 dias_uteis = obter_dias_uteis_semana_atual()
-
-
 st.markdown(hidden_menu, unsafe_allow_html=True)
 text = """
                              🙂 🖥️ 🪛⚙️
