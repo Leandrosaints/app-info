@@ -1,12 +1,13 @@
 import streamlit as st
-from src.style_header import css_style,hidden_menu, prox_style
+from src.style_header import css_style, hidden_menu, prox_style
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
-st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️',layout="wide")
-add_img_app('src/img_fundo.jpg')
-import streamlit as st
 from datetime import datetime, timedelta
-def obter_dias_uteis_proxima_semana(st):
+
+st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
+add_img_app('src/img_fundo.jpg')
+
+def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
 
     if hoje.weekday() == 3:  # Se hoje for quinta-feira
@@ -32,8 +33,7 @@ def obter_dias_uteis_proxima_semana(st):
         ]
 
     return lista_proximos_dias
-# Exemplo de uso
-#lista_proximos_dias = obter_dias_uteis_proxima_semana()
+
 iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="30" height="30" frameborder="0" allowfullscreen></iframe>"""
 
 def obter_dias_uteis_semana_atual():
@@ -57,7 +57,7 @@ def obter_dias_uteis_semana_atual():
         seg_prox = dias_uteis[0]
         quinta_prox = dias_uteis[-1]
         st.markdown(
-            f'<h4 class="span-aviso-prox" class="container"> {iframe} Agendamentos de {seg_prox} a {quinta_prox} 📅</h4>',
+            f'<h4 class="span-aviso" class="container"> {iframe} Agendamentos de {seg_prox} a {quinta_prox} 📅</h4>',
             unsafe_allow_html=True)
 
         return dias_uteis
@@ -79,7 +79,6 @@ def obter_dias_uteis_semana_atual():
 
     return dias_uteis
 
-
 # Testando a função
 dias_uteis = obter_dias_uteis_semana_atual()
 
@@ -90,7 +89,6 @@ text = """
     Esta é uma versão beta, então por favor, tenha paciência, Obrigado 🫡!
 """
 # Adicionar o Lottie como ícone
-
 st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
 st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
 
@@ -106,18 +104,35 @@ with st.expander('Dicas Rapidas❓', expanded=True):
          </div>
      """, unsafe_allow_html=True)
 
-
-
 st.markdown(css_style, unsafe_allow_html=True)
-turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
-save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
-editable = False#st.checkbox("Permitir Edição")
-#obter_dias_uteis_proxima_semana(st)
+turno ='matutino'
+
+# Layout para botões de turno
+
+
+
+save_url = f"http://127.0.0.1:8080/write_data/{turno}"
+editable = False
+
 try:
     st.markdown(f'<h4 class="span-aviso" class="container"> {iframe} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
 except:
     pass
-atualizar = st.button('Atualizar planilha', key='btn-atualizar')
+
+
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    if st.button("Matutino"):
+        turno = "Matutino"
+with col2:
+    if st.button("Vespertino"):
+        turno = "Vespertino"
+with col3:
+    if st.button("Noturno"):
+        turno = "Noturno"
+with col4:
+    st.button('Atualizar planilha')
+
 
 draw_table(editable, save_url, turno)
 
