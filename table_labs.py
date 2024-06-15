@@ -53,7 +53,7 @@ turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"]
 save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False#st.checkbox("Permitir Edição")
 obter_dias_uteis_proxima_semana(st, prox_style)
-st.markdown(f'<h4 class="span-aviso" class="container"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
+#st.markdown(f'<h4 class="span-aviso" class="container"> 👉Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
 atualizar = st.button('Atualizar planilha', key='btn-atualizar')
 draw_table(editable, save_url, turno)
 
