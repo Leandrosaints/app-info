@@ -13,7 +13,9 @@ css_style = """
         flex-direction: row;
         align-content: stretch;
     }
-   
+    .turno-one {
+        font-size:20px;
+    }
  
     .main {
         display: flex;
