@@ -6,7 +6,15 @@ from datetime import datetime, timedelta
 
 st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
 add_img_app('src/img_fundo.jpg')
-
+fast = """<iframe src="https://lottie.host/embed/8bbe00c3-6a0f-480a-8a9c-1c3a3b4ca0b3/J8xLuufEsY.json"></iframe>"""
+calendar = """<iframe src="https://lottie.host/embed/db85baef-ab6d-435a-8d62-fdda70e4ee7e/n5NDUXZy8m.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
+iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
+dicas = """<iframe src="https://lottie.host/embed/00f24db4-0620-426d-a7a7-c0c654fd736d/8OhHVJTY3m.json"></iframe>"""
+engrenagem = """<iframe src="https://lottie.host/embed/5b711b44-5a40-4fe4-810b-9667cdf50cd3/CDcya5jczW.json"></iframe>"""
+education = """<iframe src="https://lottie.host/embed/de539e29-e949-4f1c-a4b9-280dac8b715b/aMTJ96nPIP.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
+prof = """<iframe src="https://lottie.host/embed/eb77a318-ea8b-4597-b77d-9b2dcf8bf2c7/hMOVLS0Zex.json"></iframe>"""
+capelo = """<iframe src="https://lottie.host/embed/4d7db023-d7fd-4148-8bd5-2416a50eb723/DhI1FFjxft.json"></iframe>"""
+st.markdown(f'<span class="st-emotion-cache-18ni7ap ezrtsby2">{education} {engrenagem} {dicas} {capelo}</span>',unsafe_allow_html=True)
 def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
 
@@ -20,7 +28,7 @@ def obter_dias_uteis_proxima_semana():
         ]
         st.markdown(prox_style, unsafe_allow_html=True)
         st.markdown(
-            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</h4>',
+            f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</div>',
             unsafe_allow_html=True
         )
     else:
@@ -33,8 +41,6 @@ def obter_dias_uteis_proxima_semana():
         ]
 
     return lista_proximos_dias
-
-iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="30" height="30" frameborder="0" allowfullscreen></iframe>"""
 
 def obter_dias_uteis_semana_atual():
     hoje = datetime.now()
@@ -57,7 +63,7 @@ def obter_dias_uteis_semana_atual():
         seg_prox = dias_uteis[0]
         quinta_prox = dias_uteis[-1]
         st.markdown(
-            f'<h4 class="span-aviso" class="container"> {iframe} Agendamentos de {seg_prox} a {quinta_prox} 📅</h4>',
+            f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {seg_prox} a {quinta_prox} </div>',
             unsafe_allow_html=True)
 
         return dias_uteis
@@ -111,27 +117,30 @@ turno ='matutino'
 
 
 
-save_url = f"http://127.0.0.1:8080/write_data/{turno}"
+save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False
 
 try:
-    st.markdown(f'<h4 class="span-aviso" class="container"> {iframe} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
+    st.markdown(f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]}</div>', unsafe_allow_html=True)
 except:
     pass
 
 
 col1, col2, col3, col4 = st.columns(4)
-with col1:
-    if st.button("Matutino"):
-        turno = "Matutino"
-with col2:
-    if st.button("Vespertino"):
-        turno = "Vespertino"
-with col3:
-    if st.button("Noturno"):
-        turno = "Noturno"
-with col4:
-    st.button('Atualizar planilha')
+try:
+    with col1:
+        if st.button("Matutino"):
+            turno = "Matutino"
+    with col2:
+        if st.button("Vespertino"):
+            turno = "Vespertino"
+    with col3:
+        if st.button("Noturno"):
+            turno = "Noturno"
+    with col4:
+        st.button('Atualizar planilha')
+except:
+    st.error("Desculpe, houve um erro no sistema, contacte os responsáveis.")
 
 
 draw_table(editable, save_url, turno)

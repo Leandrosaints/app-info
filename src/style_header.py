@@ -13,11 +13,8 @@ css_style = """
         flex-direction: row;
         align-content: stretch;
     }
-    .icon {
-        height:35px;
-        width:30px;
-     
-    }
+   
+ 
     .main {
         display: flex;
         flex-direction: column;
@@ -73,15 +70,19 @@ css_style = """
     
     .span-aviso {
         font-family: "Source Sans Pro", sans-serif;
-        color:white;
+        color: white;
+        display: flex;
         padding: 20px;
-        background-color:#098aff;
+        background-color: #098aff;
         margin: 10px;
-        border-radius:10px;
-        width:440px;
+        border-radius: 10px;
+        width: 440px;
         position: relative;
-        left:35%;
-
+        left: 35%;
+        font-size:20px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
     .user_name {
         font-size: 20px;
