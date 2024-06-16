@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
 add_img_app('src/img_fundo.jpg')
-fast = """<iframe src="https://lottie.host/embed/8bbe00c3-6a0f-480a-8a9c-1c3a3b4ca0b3/J8xLuufEsY.json"></iframe>"""
+fast = """<iframe src="https://lottie.host/embed/8bbe00c3-6a0f-480a-8a9c-1c3a3b4ca0b3/J8xLuufEsY.json" width="100" height="70" frameborder="0" allowfullscreen></iframe>"""
 calendar = """<iframe src="https://lottie.host/embed/db85baef-ab6d-435a-8d62-fdda70e4ee7e/n5NDUXZy8m.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
 iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
 dicas = """<iframe src="https://lottie.host/embed/00f24db4-0620-426d-a7a7-c0c654fd736d/8OhHVJTY3m.json"></iframe>"""
@@ -14,6 +14,7 @@ engrenagem = """<iframe src="https://lottie.host/embed/5b711b44-5a40-4fe4-810b-9
 education = """<iframe src="https://lottie.host/embed/de539e29-e949-4f1c-a4b9-280dac8b715b/aMTJ96nPIP.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
 prof = """<iframe src="https://lottie.host/embed/eb77a318-ea8b-4597-b77d-9b2dcf8bf2c7/hMOVLS0Zex.json"></iframe>"""
 capelo = """<iframe src="https://lottie.host/embed/4d7db023-d7fd-4148-8bd5-2416a50eb723/DhI1FFjxft.json"></iframe>"""
+gost = """<iframe src="https://lottie.host/embed/a046c316-bdcf-49cc-a72b-5e7d4694aac0/HrqbNciMBU.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
 st.markdown(f'<span class="st-emotion-cache-18ni7ap ezrtsby2">{education} {engrenagem} {dicas} {capelo}</span>',unsafe_allow_html=True)
 def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
@@ -111,7 +112,7 @@ with st.expander('Dicas Rapidas❓', expanded=True):
      """, unsafe_allow_html=True)
 
 st.markdown(css_style, unsafe_allow_html=True)
-turno ='matutino'
+turno ='Matutino'
 
 # Layout para botões de turno
 
@@ -125,20 +126,36 @@ try:
 except:
     pass
 
-
+st.markdown(f'<span class="turno">Escolha um Periodo</span>', unsafe_allow_html=True)
 col1, col2, col3, col4 = st.columns(4)
+
 try:
+
     with col1:
-        if st.button("Matutino"):
+
+        if st.button("Matutino", key="matutino"):
             turno = "Matutino"
+            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
+
+
     with col2:
-        if st.button("Vespertino"):
+        if st.button("Vespertino", key="vespertino"):
             turno = "Vespertino"
+            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
+
     with col3:
-        if st.button("Noturno"):
+        if st.button("Noturno", key="noturno"):
             turno = "Noturno"
+            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
     with col4:
-        st.button('Atualizar planilha')
+
+        if st.button('Atualizar planilha', key="atualizar"):
+            # Faça algo aqui para atualizar a planilha
+            pass
+
+
+    # Alterar a cor do botão com base no turno selecionado
+
 except:
     st.error("Desculpe, houve um erro no sistema, contacte os responsáveis.")
 
