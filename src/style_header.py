@@ -5,7 +5,7 @@ css_style = """
     .st-emotion-cache-ocqkz7 {
         display: flex;
         flex-wrap: nowrap;
-        background-color:#098aff;
+        background-color:#f3e2e8;
         gap: 100px;
         padding: 15px;
         margin-bottom:-15px;
@@ -16,6 +16,7 @@ css_style = """
     .turno-one {
         font-size:20px;
     }
+    
  
     .main {
         display: flex;

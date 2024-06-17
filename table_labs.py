@@ -15,6 +15,9 @@ education = """<iframe src="https://lottie.host/embed/de539e29-e949-4f1c-a4b9-28
 prof = """<iframe src="https://lottie.host/embed/eb77a318-ea8b-4597-b77d-9b2dcf8bf2c7/hMOVLS0Zex.json"></iframe>"""
 capelo = """<iframe src="https://lottie.host/embed/4d7db023-d7fd-4148-8bd5-2416a50eb723/DhI1FFjxft.json"></iframe>"""
 gost = """<iframe src="https://lottie.host/embed/a046c316-bdcf-49cc-a72b-5e7d4694aac0/HrqbNciMBU.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
+bot = """<iframe src="https://lottie.host/embed/1c566895-3760-446f-be65-4e5844bb3716/pqYAqufAFV.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
+alien = """<iframe src="https://lottie.host/embed/eb14cfd3-693a-456f-9488-a45a7fc9925d/k8IUvM5I4m.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
+point = """<iframe src="https://lottie.host/embed/9b0b1e7c-10d7-4ed3-93df-87b4298759c1/2JovVu7qlh.json" width="100" height="80" frameborder="0" allowfullscreen></iframe>"""
 st.markdown(f'<span class="st-emotion-cache-18ni7ap ezrtsby2">{education} {engrenagem} {dicas} {capelo}</span>',unsafe_allow_html=True)
 def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
@@ -127,37 +130,48 @@ except:
     pass
 
 st.markdown(f'<span class="turno-one">Escolha um Período abaixo</span>', unsafe_allow_html=True)
+
+
+# Create a placeholder to display the selected turno
+import streamlit as st
+
+# Columns for buttons
 col1, col2, col3, col4 = st.columns(4)
 
-try:
+# Placeholders for each button
+placeholder1 = col1.empty()
+placeholder2 = col2.empty()
+placeholder3 = col3.empty()
+placeholder4 = col4.empty()
 
-    with col1:
+# Initialize a variable to store the selected turno
+turno = "Matutino"
 
-        if st.button("Matutino", key="matutino"):
-            turno = "Matutino"
-            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
+# Button click handlers
+with col1:
+    if st.button("Matutino"):
+        turno = "Matutino"
+        placeholder1.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
 
+with col2:
+    if st.button("Vespertino"):
+        turno = "Vespertino"
+        placeholder2.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
 
-    with col2:
-        if st.button("Vespertino", key="vespertino"):
-            turno = "Vespertino"
-            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
+with col3:
+    if st.button("Noturno"):
+        turno = "Noturno"
+        placeholder3.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
 
-    with col3:
-        if st.button("Noturno", key="noturno"):
-            turno = "Noturno"
-            st.markdown(f'<span class="turno">{gost}</span>', unsafe_allow_html=True)
-    with col4:
+with col4:
+    if st.button('Atualizar planilha'):
+        # Faça algo aqui para atualizar a planilha
+        placeholder4.markdown(f'<span class="turno">{fast}</span>', unsafe_allow_html=True)
 
-        if st.button('Atualizar planilha', key="atualizar"):
-            # Faça algo aqui para atualizar a planilha
-            pass
 
 
     # Alterar a cor do botão com base no turno selecionado
 
-except:
-    st.error("Desculpe, houve um erro no sistema, contacte os responsáveis.")
 
 
 draw_table(editable, save_url, turno)
