@@ -115,13 +115,10 @@ with st.expander('Dicas Rapidas❓', expanded=True):
      """, unsafe_allow_html=True)
 
 st.markdown(css_style, unsafe_allow_html=True)
-turno ='Matutino'
 
 # Layout para botões de turno
 
 
-
-save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
 editable = False
 
 try:
@@ -131,11 +128,12 @@ except:
 
 st.markdown(f'<span class="turno-one">Escolha um Período abaixo</span>', unsafe_allow_html=True)
 
+def views_iframe(iframe):
+    st.markdown(f"<div class='stAlert'>{iframe}</div>",unsafe_allow_html=True)
 
-# Create a placeholder to display the selected turno
-import streamlit as st
+# Inicializar a variável para armazenar o turno selecionado
+turno = st.session_state.get('turno', 'Matutino')
 
-# Columns for buttons
 col1, col2, col3, col4 = st.columns(4)
 
 # Placeholders for each button
@@ -144,36 +142,30 @@ placeholder2 = col2.empty()
 placeholder3 = col3.empty()
 placeholder4 = col4.empty()
 
-# Initialize a variable to store the selected turno
-turno = "Matutino"
-
 # Button click handlers
-with col1:
-    if st.button("Matutino"):
-        turno = "Matutino"
-        placeholder1.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
-
-with col2:
-    if st.button("Vespertino"):
-        turno = "Vespertino"
-        placeholder2.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
-
-with col3:
-    if st.button("Noturno"):
-        turno = "Noturno"
-        placeholder3.markdown(f'<span class="turno">{point} </span>', unsafe_allow_html=True)
-
-with col4:
-    if st.button('Atualizar planilha'):
-        # Faça algo aqui para atualizar a planilha
-        placeholder4.markdown(f'<span class="turno">{fast}</span>', unsafe_allow_html=True)
+if placeholder1.button("Matutino"):
+    turno = "Matutino"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e vizualiando Periodo  {turno}', icon="⚠️")
 
 
+if placeholder2.button("Vespertino"):
+    turno = "Vespertino"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e vizualiando Periodo {turno}', icon="⚠️")
 
-    # Alterar a cor do botão com base no turno selecionado
+if placeholder3.button("Noturno"):
+    turno = "Noturno"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e vizualiando o Periodo  {turno}', icon="⚠️")
+
+if placeholder4.button('Atualizar planilha'):
+    # Faça algo aqui para atualizar a planilha
+    pass
 
 
-
+save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
+# Usar o turno selecionado para desenhar a tabela
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)

@@ -1,11 +1,17 @@
 css_style = """
 <style>
-    
+    .st-emotion-cache-us3b1e e1eexb540 > p {
+        font-size:50px;
+    }
+    .stAlert {
+       
+        background-color:#c47d7d;
+    }
     /*container-btn*/
     .st-emotion-cache-ocqkz7 {
         display: flex;
         flex-wrap: nowrap;
-        background-color:#f3e2e8;
+        /*background-color:#f3e2e8;*/
         gap: 100px;
         padding: 15px;
         margin-bottom:-15px;
