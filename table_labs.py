@@ -146,18 +146,18 @@ placeholder4 = col4.empty()
 if placeholder1.button("Matutino"):
     turno = "Matutino"
     st.session_state['turno'] = turno
-    st.warning(f'Esta editando e vizualiando Periodo  {turno}', icon="⚠️")
+    st.warning(f'Esta editando e  Visualizando Periodo  {turno}', icon="⚠️")
 
 
 if placeholder2.button("Vespertino"):
     turno = "Vespertino"
     st.session_state['turno'] = turno
-    st.warning(f'Esta editando e vizualiando Periodo {turno}', icon="⚠️")
+    st.warning(f'Esta editando e Visualizando  Periodo {turno}', icon="⚠️")
 
 if placeholder3.button("Noturno"):
     turno = "Noturno"
     st.session_state['turno'] = turno
-    st.warning(f'Esta editando e vizualiando o Periodo  {turno}', icon="⚠️")
+    st.warning(f'Esta editando e  Visualizando o Periodo  {turno}', icon="⚠️")
 
 if placeholder4.button('Atualizar planilha'):
     # Faça algo aqui para atualizar a planilha
