@@ -88,6 +88,22 @@ def draw_table(status, save_url, turno):
                     margin-bottom: 1rem;
                     text-align: center;
                 }}
+                @media only screen and (max-width: 768px) {{
+       
+                    .table td {{
+                        border: 0.5px solid #dee2e6;
+                        padding: 0rem;
+                    }}
+                    .table th, .table td {{
+                        border: 0.5px solid #dee2e6;
+                        padding: 0.25rem;
+                    }}
+                    .btn {{
+                        padding: 0.375rem 0.25rem;
+                        font-size: 15px;
+                        
+                    }}
+            }}
             </style>
             <script>
                 function openModal(row, col, column) {{
