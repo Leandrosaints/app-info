@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import pytz
 timezone = pytz.timezone('America/Cuiaba')
 
-st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
+st.set_page_config(page_title='Agendamentos labs Diversos', page_icon='🖥️', layout="wide")
 add_img_app('src/img_fundo.jpg')
 fast = """<iframe src="https://lottie.host/embed/8bbe00c3-6a0f-480a-8a9c-1c3a3b4ca0b3/J8xLuufEsY.json" width="100" height="70" frameborder="0" allowfullscreen></iframe>"""
 calendar = """<iframe src="https://lottie.host/embed/db85baef-ab6d-435a-8d62-fdda70e4ee7e/n5NDUXZy8m.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
@@ -172,7 +172,7 @@ if placeholder4.button('Atualizar planilha'):
     pass
 
 
-save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
+save_url = f"https://app-info.onrender.com/write_data/{turno}"
 # Usar o turno selecionado para desenhar a tabela
 draw_table(editable, save_url, turno)
 
