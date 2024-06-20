@@ -12,7 +12,7 @@ css_style = """
         display: flex;
         flex-wrap: nowrap;
         /*background-color:#f3e2e8;*/
-        gap: 100px;
+        gap: 0px;
         padding: 15px;
         margin-bottom:-15px;
         border-radius: 20px 20px 0px 0px;
@@ -188,7 +188,7 @@ css_style = """
             display: flex;
             flex-wrap: nowrap;
 
-            gap: 0rem;
+            gap: 1rem;
             padding: 0x;
 
             border-radius: 20px 20px 0px 0px;
