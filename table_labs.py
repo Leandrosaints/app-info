@@ -1,12 +1,28 @@
 import streamlit as st
-from src.style_header import css_style,hidden_menu, prox_style
+from src.style_header import css_style, hidden_menu, prox_style
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
-st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️',layout="wide")
-add_img_app('src/img_fundo.jpg')
-import streamlit as st
 from datetime import datetime, timedelta
-def obter_dias_uteis_proxima_semana(st):
+import pytz
+timezone = pytz.timezone('America/Cuiaba')
+
+st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
+add_img_app('src/img_fundo.jpg')
+fast = """<iframe src="https://lottie.host/embed/8bbe00c3-6a0f-480a-8a9c-1c3a3b4ca0b3/J8xLuufEsY.json" width="100" height="70" frameborder="0" allowfullscreen></iframe>"""
+calendar = """<iframe src="https://lottie.host/embed/db85baef-ab6d-435a-8d62-fdda70e4ee7e/n5NDUXZy8m.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
+iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="50" height="50" frameborder="0" allowfullscreen></iframe>"""
+dicas = """<iframe src="https://lottie.host/embed/00f24db4-0620-426d-a7a7-c0c654fd736d/8OhHVJTY3m.json"></iframe>"""
+engrenagem = """<iframe src="https://lottie.host/embed/5b711b44-5a40-4fe4-810b-9667cdf50cd3/CDcya5jczW.json"></iframe>"""
+education = """<iframe src="https://lottie.host/embed/de539e29-e949-4f1c-a4b9-280dac8b715b/aMTJ96nPIP.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
+prof = """<iframe src="https://lottie.host/embed/eb77a318-ea8b-4597-b77d-9b2dcf8bf2c7/hMOVLS0Zex.json"></iframe>"""
+capelo = """<iframe src="https://lottie.host/embed/4d7db023-d7fd-4148-8bd5-2416a50eb723/DhI1FFjxft.json"></iframe>"""
+gost = """<iframe src="https://lottie.host/embed/a046c316-bdcf-49cc-a72b-5e7d4694aac0/HrqbNciMBU.json" width="40" height="40" frameborder="0" allowfullscreen></iframe>"""
+bot = """<iframe src="https://lottie.host/embed/1c566895-3760-446f-be65-4e5844bb3716/pqYAqufAFV.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
+alien = """<iframe src="https://lottie.host/embed/eb14cfd3-693a-456f-9488-a45a7fc9925d/k8IUvM5I4m.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
+point = """<iframe src="https://lottie.host/embed/9b0b1e7c-10d7-4ed3-93df-87b4298759c1/2JovVu7qlh.json" width="100" height="80" frameborder="0" allowfullscreen></iframe>"""
+alert = """<iframe src="https://lottie.host/embed/cab2532c-ebc6-47fd-a201-7d478d409083/1u7zaO8gbl.json" height="100"></iframe>"""
+st.markdown(f'<span class="st-emotion-cache-18ni7ap ezrtsby2">{education} {engrenagem} {dicas} {capelo}</span>',unsafe_allow_html=True)
+def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
 
     if hoje.weekday() == 3:  # Se hoje for quinta-feira
@@ -19,7 +35,7 @@ def obter_dias_uteis_proxima_semana(st):
         ]
         st.markdown(prox_style, unsafe_allow_html=True)
         st.markdown(
-            f'<h4 class="span-aviso-prox"> ⚠️Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</h4>',
+            f'<div class="span-aviso" > {bot} Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</div>',
             unsafe_allow_html=True
         )
     else:
@@ -32,18 +48,15 @@ def obter_dias_uteis_proxima_semana(st):
         ]
 
     return lista_proximos_dias
-# Exemplo de uso
-#lista_proximos_dias = obter_dias_uteis_proxima_semana()
-iframe = """<iframe class="icon" src="https://lottie.host/embed/ef00d3f0-670a-4b30-8aee-e85886b4914d/PXvkh2M43V.json" width="30" height="30" frameborder="0" allowfullscreen></iframe>"""
 
 def obter_dias_uteis_semana_atual():
-    hoje = datetime.now()
+    hoje = datetime.now(tz=timezone)
 
     # Cria um objeto para sexta-feira às 17h da semana atual
     sexta_17h = hoje.replace(hour=17, minute=0, second=0, microsecond=0)
-
+    quinta_13h = hoje.replace(hour=13, minute=0, second=0, microsecond=0)
     # Verifica se é quinta-feira
-    if hoje.weekday() == 3:
+    if hoje.weekday() == 3 and (hoje.weekday() == 3 and hoje >= quinta_13h):
         # Ajusta a data para a próxima segunda-feira e próxima quinta-feira
         segunda_proxima = hoje + timedelta(days=(7 - hoje.weekday()))
         quinta_proxima = segunda_proxima + timedelta(days=3)
@@ -54,13 +67,16 @@ def obter_dias_uteis_semana_atual():
 
         # Exibe as datas no formato markdown com st.markdown
 
-        seg_prox = dias_uteis[0]
-        quinta_prox = dias_uteis[-1]
+        #seg_prox = dias_uteis[0]
+        #quinta_prox = dias_uteis[-1]
+        st.markdown(prox_style, unsafe_allow_html=True)
+
         st.markdown(
-            f'<h4 class="span-aviso-prox" class="container"> {iframe} Agendamentos de {seg_prox} a {quinta_prox} 📅</h4>',
+            f'<div class="span-aviso-prox" class="st-emotion-cache-18ni7ap ezrtsby2"> {alert} Agendamentos de Seg-{dias_uteis[0]} a Qui-{dias_uteis[-1]} disponíveis</div>',
             unsafe_allow_html=True)
 
-        return dias_uteis
+
+
 
     # Verifica se é sexta-feira após as 17h ou qualquer dia após sexta-feira
     if hoje.weekday() > 4 or (hoje.weekday() == 4 and hoje >= sexta_17h):
@@ -72,13 +88,12 @@ def obter_dias_uteis_semana_atual():
     inicio_semana = hoje - timedelta(days=hoje.weekday())  # Segunda-feira desta semana
     fim_semana = inicio_semana + timedelta(days=4)  # Sexta-feira desta semana
 
-    # Cria a lista de datas úteis
+# Cria a lista de datas úteis
     dias_uteis = [(inicio_semana + timedelta(days=i)).strftime("%d/%m")
                   for i in range((fim_semana - inicio_semana).days + 1)
                   if (inicio_semana + timedelta(days=i)).weekday() < 5]
 
     return dias_uteis
-
 
 # Testando a função
 dias_uteis = obter_dias_uteis_semana_atual()
@@ -90,7 +105,6 @@ text = """
     Esta é uma versão beta, então por favor, tenha paciência, Obrigado 🫡!
 """
 # Adicionar o Lottie como ícone
-
 st.markdown("<h1 class='title'>Agendamentos de Laboratórios</h1>", unsafe_allow_html=True)
 st.markdown(f"<h2 class='user_name'>{text} </h2>", unsafe_allow_html=True)
 
@@ -106,19 +120,60 @@ with st.expander('Dicas Rapidas❓', expanded=True):
          </div>
      """, unsafe_allow_html=True)
 
-
-
 st.markdown(css_style, unsafe_allow_html=True)
-turno = st.selectbox("Selecione o turno:", ["Matutino", "Vespertino", "Noturno"], key='select-box')
-save_url = f"https://app-info.onrender.com/write_data/{turno}"
-editable = False#st.checkbox("Permitir Edição")
-#obter_dias_uteis_proxima_semana(st)
+
+# Layout para botões de turno
+
+
+editable = False
+
 try:
-    st.markdown(f'<h4 class="span-aviso" class="container"> {iframe} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]} 📅</h4>', unsafe_allow_html=True)
+
+
+
+    st.markdown(f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]}</div>', unsafe_allow_html=True)
+
 except:
     pass
-atualizar = st.button('Atualizar planilha', key='btn-atualizar')
 
+st.markdown(f'<span class="turno-one">Escolha um Período abaixo</span>', unsafe_allow_html=True)
+
+
+# Inicializar a variável para armazenar o turno selecionado
+turno = st.session_state.get('turno', 'Matutino')
+
+col1, col2, col3, col4 = st.columns(4)
+
+# Placeholders for each button
+placeholder1 = col1.empty()
+placeholder2 = col2.empty()
+placeholder3 = col3.empty()
+placeholder4 = col4.empty()
+
+# Button click handlers
+if placeholder1.button("Matutino"):
+    turno = "Matutino"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e  Visualizando Periodo  {turno}', icon="⚠️")
+
+
+if placeholder2.button("Vespertino"):
+    turno = "Vespertino"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e Visualizando  Periodo {turno}', icon="⚠️")
+
+if placeholder3.button("Noturno"):
+    turno = "Noturno"
+    st.session_state['turno'] = turno
+    st.warning(f'Esta editando e  Visualizando o Periodo  {turno}', icon="⚠️")
+
+if placeholder4.button('Atualizar planilha'):
+    # Faça algo aqui para atualizar a planilha
+    pass
+
+
+save_url = f"https://agendamentos-labs-informatica.onrender.com/write_data/{turno}"
+# Usar o turno selecionado para desenhar a tabela
 draw_table(editable, save_url, turno)
 
 #draw_table(table_height=480, editable=editable, save_url=f'https://app-info.onrender.com/write_data/{turno}', turno=turno)
