@@ -14,10 +14,11 @@ engrenagem = """<iframe src="https://lottie.host/embed/5b711b44-5a40-4fe4-810b-9
 education = """<iframe src="https://lottie.host/embed/de539e29-e949-4f1c-a4b9-280dac8b715b/aMTJ96nPIP.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
 prof = """<iframe src="https://lottie.host/embed/eb77a318-ea8b-4597-b77d-9b2dcf8bf2c7/hMOVLS0Zex.json"></iframe>"""
 capelo = """<iframe src="https://lottie.host/embed/4d7db023-d7fd-4148-8bd5-2416a50eb723/DhI1FFjxft.json"></iframe>"""
-gost = """<iframe src="https://lottie.host/embed/a046c316-bdcf-49cc-a72b-5e7d4694aac0/HrqbNciMBU.json" width="60" height="60" frameborder="0" allowfullscreen></iframe>"""
+gost = """<iframe src="https://lottie.host/embed/a046c316-bdcf-49cc-a72b-5e7d4694aac0/HrqbNciMBU.json" width="40" height="40" frameborder="0" allowfullscreen></iframe>"""
 bot = """<iframe src="https://lottie.host/embed/1c566895-3760-446f-be65-4e5844bb3716/pqYAqufAFV.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
 alien = """<iframe src="https://lottie.host/embed/eb14cfd3-693a-456f-9488-a45a7fc9925d/k8IUvM5I4m.json" width="80" height="100" frameborder="0" allowfullscreen></iframe>"""
 point = """<iframe src="https://lottie.host/embed/9b0b1e7c-10d7-4ed3-93df-87b4298759c1/2JovVu7qlh.json" width="100" height="80" frameborder="0" allowfullscreen></iframe>"""
+alert = """<iframe src="https://lottie.host/embed/cab2532c-ebc6-47fd-a201-7d478d409083/1u7zaO8gbl.json" height="100"></iframe>"""
 st.markdown(f'<span class="st-emotion-cache-18ni7ap ezrtsby2">{education} {engrenagem} {dicas} {capelo}</span>',unsafe_allow_html=True)
 def obter_dias_uteis_proxima_semana():
     hoje = datetime.now()
@@ -32,7 +33,7 @@ def obter_dias_uteis_proxima_semana():
         ]
         st.markdown(prox_style, unsafe_allow_html=True)
         st.markdown(
-            f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</div>',
+            f'<div class="span-aviso" > {bot} Agendamentos de {lista_proximos_dias[0]} a {lista_proximos_dias[2]} livres📅</div>',
             unsafe_allow_html=True
         )
     else:
@@ -51,9 +52,9 @@ def obter_dias_uteis_semana_atual():
 
     # Cria um objeto para sexta-feira às 17h da semana atual
     sexta_17h = hoje.replace(hour=17, minute=0, second=0, microsecond=0)
-
+    quinta_13h = hoje.replace(hour=13, minute=0, second=0, microsecond=0)
     # Verifica se é quinta-feira
-    if hoje.weekday() == 3:
+    if hoje.weekday() == 3 and (hoje.weekday() == 3 and hoje >= quinta_13h):
         # Ajusta a data para a próxima segunda-feira e próxima quinta-feira
         segunda_proxima = hoje + timedelta(days=(7 - hoje.weekday()))
         quinta_proxima = segunda_proxima + timedelta(days=3)
@@ -64,13 +65,16 @@ def obter_dias_uteis_semana_atual():
 
         # Exibe as datas no formato markdown com st.markdown
 
-        seg_prox = dias_uteis[0]
-        quinta_prox = dias_uteis[-1]
+        #seg_prox = dias_uteis[0]
+        #quinta_prox = dias_uteis[-1]
+        st.markdown(prox_style, unsafe_allow_html=True)
+
         st.markdown(
-            f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {seg_prox} a {quinta_prox} </div>',
+            f'<div class="span-aviso-prox" class="st-emotion-cache-18ni7ap ezrtsby2"> {alert} Agendamentos de Seg-{dias_uteis[0]} a Qui-{dias_uteis[-1]} disponíveis</div>',
             unsafe_allow_html=True)
 
-        return dias_uteis
+
+
 
     # Verifica se é sexta-feira após as 17h ou qualquer dia após sexta-feira
     if hoje.weekday() > 4 or (hoje.weekday() == 4 and hoje >= sexta_17h):
@@ -82,7 +86,7 @@ def obter_dias_uteis_semana_atual():
     inicio_semana = hoje - timedelta(days=hoje.weekday())  # Segunda-feira desta semana
     fim_semana = inicio_semana + timedelta(days=4)  # Sexta-feira desta semana
 
-    # Cria a lista de datas úteis
+# Cria a lista de datas úteis
     dias_uteis = [(inicio_semana + timedelta(days=i)).strftime("%d/%m")
                   for i in range((fim_semana - inicio_semana).days + 1)
                   if (inicio_semana + timedelta(days=i)).weekday() < 5]
@@ -122,14 +126,16 @@ st.markdown(css_style, unsafe_allow_html=True)
 editable = False
 
 try:
+
+
+
     st.markdown(f'<div class="span-aviso" id="container-aviso"> {calendar} Agendamentos de {dias_uteis[0]} a {dias_uteis[4]}</div>', unsafe_allow_html=True)
+
 except:
     pass
 
 st.markdown(f'<span class="turno-one">Escolha um Período abaixo</span>', unsafe_allow_html=True)
 
-def views_iframe(iframe):
-    st.markdown(f"<div class='stAlert'>{iframe}</div>",unsafe_allow_html=True)
 
 # Inicializar a variável para armazenar o turno selecionado
 turno = st.session_state.get('turno', 'Matutino')

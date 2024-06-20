@@ -283,6 +283,7 @@ hidden_menu = """
 
 prox_style = """
     <style>
+   
     
     [data-testid="baseButton-secondary"] {
         background-color: #e63946; /* Cor de fundo */
@@ -316,16 +317,15 @@ prox_style = """
     .span-aviso-prox {
         font-family: "Source Sans Pro", sans-serif;
         color: white;
-        padding: 20px;
+        padding:3px;
         background-color: #74e2ba;
         margin: auto;
         border-radius: 10px;
-        width: 460px;
-        font-size: 20px;
+        width: 300px;
+        font-size: 25px;
         text-align: center;
-        position: relative;
-        top: 108px;
-        right: 10%;
+        z-index:0;
+        left: 5%;
     }
 
     /* Estilos para telas menores */
