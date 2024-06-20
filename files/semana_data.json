@@ -1,38 +1,6 @@
 [
     {
-        "LAB": "LAB MEC AUTOMOTIVA",
-        "Seg": "Prof: eu",
-        "Ter": "Prof: bia",
-        "Qua": "Prof: Lleo",
-        "Qui": "Livre",
-        "Sex": "Livre"
-    },
-    {
-        "LAB": "LAB ALIMENTOS",
-        "Seg": "Prof: eu",
-        "Ter": "Prof: Livre",
-        "Qua": "Prof: leandro",
-        "Qui": "Livre",
-        "Sex": "Livre"
-    },
-    {
-        "LAB": "LAB EL\u00c9TRICA IND",
-        "Seg": "Prof: livia",
-        "Ter": "Prof: soares",
-        "Qua": "Livre",
-        "Qui": "Livre",
-        "Sex": "Livre"
-    },
-    {
-        "LAB": "LAB INSTRU",
-        "Seg": "Livre",
-        "Ter": "Prof: ddd",
-        "Qua": "Prof: leandrod",
-        "Qui": "Livre",
-        "Sex": "Livre"
-    },
-    {
-        "LAB": "LAB MEC IND E USINAGEM",
+        "LAB": "LAB AUTOMOTIVA",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",
@@ -40,7 +8,7 @@
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB AUTOMA\u00c7\u00c3O",
+        "LAB": "Lab 02",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",
@@ -48,7 +16,39 @@
         "Sex": "Livre"
     },
     {
-        "LAB": "LAB ELE PREDIAL",
+        "LAB": "Lab 03",
+        "Seg": "Livre",
+        "Ter": "Livre",
+        "Qua": "Livre",
+        "Qui": "Livre",
+        "Sex": "Livre"
+    },
+    {
+        "LAB": "Lab 04",
+        "Seg": "Livre",
+        "Ter": "Livre",
+        "Qua": "Livre",
+        "Qui": "Livre",
+        "Sex": "Livre"
+    },
+    {
+        "LAB": "Lab 05",
+        "Seg": "Livre",
+        "Ter": "Livre",
+        "Qua": "Livre",
+        "Qui": "Livre",
+        "Sex": "Livre"
+    },
+    {
+        "LAB": "Lab 06",
+        "Seg": "Livre",
+        "Ter": "Livre",
+        "Qua": "Livre",
+        "Qui": "Livre",
+        "Sex": "Livre"
+    },
+    {
+        "LAB": "Lab 07",
         "Seg": "Livre",
         "Ter": "Livre",
         "Qua": "Livre",
