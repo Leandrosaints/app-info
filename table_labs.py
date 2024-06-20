@@ -3,6 +3,8 @@ from src.style_header import css_style, hidden_menu, prox_style
 from codes.funcs import add_img_app
 from codes.render_table import draw_table
 from datetime import datetime, timedelta
+import pytz
+timezone = pytz.timezone('America/Cuiaba')
 
 st.set_page_config(page_title='Agendamentos labs info', page_icon='🖥️', layout="wide")
 add_img_app('src/img_fundo.jpg')
@@ -48,7 +50,7 @@ def obter_dias_uteis_proxima_semana():
     return lista_proximos_dias
 
 def obter_dias_uteis_semana_atual():
-    hoje = datetime.now()
+    hoje = datetime.now(tz=timezone)
 
     # Cria um objeto para sexta-feira às 17h da semana atual
     sexta_17h = hoje.replace(hour=17, minute=0, second=0, microsecond=0)
