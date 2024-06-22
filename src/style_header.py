@@ -187,7 +187,7 @@ css_style = """
         .st-emotion-cache-ocqkz7 {
             display: flex;
             flex-wrap: nowrap; 
-            gap: 1rem;
+            gap: 0.3rem;
             padding: 0x;
 
             border-radius: 20px 20px 0px 0px;
